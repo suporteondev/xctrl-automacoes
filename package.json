@@ -1,0 +1,72 @@
+{
+  "name": "xctrl",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Central de automações da XCtrl.",
+  "main": "public/electron.js",
+  "author": "xctrl",
+  "build": {
+    "appId": "xctrl",
+    "npmRebuild": "false",
+    "win": {
+      "icon": "build/icon.png"
+    }
+  },
+  "repository": "git+https://github.com/suporteondev/xctrl-automacoes.git",
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suporteondev/xctrl-automacoes/issues"
+  },
+  "homepage": "./",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^2.0.0",
+    "electron-store": "^8.0.2",
+    "express": "^4.17.3",
+    "gerador": "^0.1.0",
+    "mongoose": "^6.2.7",
+    "puppeteer-core": "^13.5.1",
+    "styled-components": "^5.3.5",
+    "user-agents": "^1.0.1001"
+  },
+  "scripts": {
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder",
+    "build": "npm run react-build && npm run electron-build",
+    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\" "
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.5",
+    "concurrently": "^7.0.0",
+    "electron": "^17.1.2",
+    "electron-builder": "^22.14.13",
+    "postcss": "^8.4.12",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "wait-on": "^6.0.1"
+  }
+}

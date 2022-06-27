@@ -1,2 +1,2 @@
-# xctrl-automacoes
-Central de automações da XCtrl.
+# xctrl-desktop-gerenciador
+Gerenciador de perfis da XCtrl na versão desktop.
