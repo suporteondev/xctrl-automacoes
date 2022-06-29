@@ -25,10 +25,10 @@ const Fundo = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         white-space: nowrap;
+        color: #0A84FF;
     }
 
     :hover{
-        transition: 300ms ease-in-out;
         background-color: ${props => props.theme.linhas};
 
         span{

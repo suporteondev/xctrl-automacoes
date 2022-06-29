@@ -11,6 +11,9 @@ import Montador from './pages/montador'
 import Engajamentos from './pages/engajamentos'
 import Realizador from './pages/realizador'
 import Removedor from './pages/removedor'
+import Configuracoes from './pages/configuracoes'
+import Comprar from './pages/comprar'
+import Comprovantes from './pages/comprovantes'
 
 export default function App() {
     return (
@@ -22,6 +25,9 @@ export default function App() {
                             <Routes>
                                 <Route exact path='/' element={<Acessar/>} />
                                 <Route exact path='/painel' element={<Painel/>} />
+                                <Route exact path='/configuracoes' element={<Configuracoes/>} />
+                                <Route exact path='/comprar' element={<Comprar/>} />
+                                <Route exact path='/comprovantes' element={<Comprovantes/>} />
                                 <Route exact path='/criador' element={<Criador/>} />
                                 <Route exact path='/engajamentos' element={<Engajamentos/>} />
                                 <Route exact path='/montador' element={<Montador/>} />
