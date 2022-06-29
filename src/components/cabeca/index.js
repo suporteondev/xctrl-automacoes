@@ -9,8 +9,10 @@ import { minimizar } from './functions/minimizar'
 import { fechar } from './functions/fechar'
 import { useNavigate } from 'react-router-dom'
 import logoSVG from './svg/logo.svg'
+import minimizarIMG from './svg/minimizar.svg'
+import voltarIMG from './svg/voltar.svg'
+import fecharIMG from './svg/fechar.svg'
 import { redirecionar } from '../../functions/redirecionar'
-import { maximizar as maximize } from './functions/maximizar'
 
 const Cabeca = ({ voltar, blur })=>{
 
@@ -24,12 +26,18 @@ const Cabeca = ({ voltar, blur })=>{
             </Esquerda>
             <Direita>
                 {voltar === 'false' ? '' : 
-                    <Circulo corFundo='#FFF50D' onClick={() => {
+                    <Circulo onClick={() => {
                         voltar === undefined ? sair(Router) : redirecionar(Router, voltar)
-                    }}>&crarr;</Circulo>
+                    }}>
+                        <img src={voltarIMG}/>
+                    </Circulo>
                 }
-                <Circulo corFundo='orange' onClick={minimizar}>-</Circulo>
-                <Circulo corFundo='#E53535' onClick={fechar} >X</Circulo>
+                <Circulo onClick={minimizar}>
+                    <img src={minimizarIMG}/>
+                </Circulo>
+                <Circulo onClick={fechar} >
+                    <img src={fecharIMG}/>
+                </Circulo>
             </Direita>
         </CaixaCabeca>
     )

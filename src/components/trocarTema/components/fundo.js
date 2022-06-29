@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 const Fundo = styled.div`
     width: 50px;
-    height: 26px;
+    height: 30px;
     border-radius: 20px;
-    background-color: ${props => props.theme.linhas};
+    border: 1px solid ${props => props.theme.linhas};
     display: flex;
     align-items: center;
     justify-content: ${props => props.alinhamento};

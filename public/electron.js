@@ -120,7 +120,7 @@ app.on('ready', async () => {
         }
         
         mainWindow.setResizable(true)
-        mainWindow.setSize(300, 300)
+        mainWindow.setSize(350, 340)
         mainWindow.setResizable(false)
         event.returnValue = true
     })
@@ -131,7 +131,7 @@ app.on('ready', async () => {
         }
 
         mainWindow.setResizable(true)
-        mainWindow.setSize(400, 500)
+        mainWindow.setSize(350, 500)
         mainWindow.setResizable(false)
         event.returnValue = true
     })
@@ -142,7 +142,7 @@ app.on('ready', async () => {
         }
 
         mainWindow.setResizable(true)
-        mainWindow.setSize(350, 340)
+        mainWindow.setSize(350, 500)
         mainWindow.setResizable(false)
         event.returnValue = true
     })

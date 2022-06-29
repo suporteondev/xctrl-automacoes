@@ -12,6 +12,7 @@ import { Botao } from './components/botao'
 import { acessarPlataforma } from './functions/acessarPlataforma'
 import { Cabeca } from '../../components/cabeca/index'
 import { Rodape } from '../../components/rodape/index'
+import { Titulo } from './components/titulo'
 
 const Acessar = ()=>{
 
@@ -37,6 +38,7 @@ const Acessar = ()=>{
                     Mensagem
                 )}
             >
+                <Titulo>Acessar plataforma</Titulo>
                 <Caixa>
                     <Etiqueta>Email</Etiqueta>
                     <Entrada 
@@ -60,7 +62,7 @@ const Acessar = ()=>{
                 {mensagem}
                 <Botao>Acessar conta</Botao>
             </Formulario>
-            <Rodape>Acessar</Rodape>
+            <Rodape>V1.0.0</Rodape>
         </Conteudos>
     )
 }
