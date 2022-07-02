@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Entrada = styled.input`
+const Select = styled.select`
     height: 45px;
     width: 100%;
     border: 0.5px solid ${props => props.theme.linhas};
@@ -12,4 +12,4 @@ const Entrada = styled.input`
     font-size: 12px;
 `
 
-export { Entrada }
+export { Select }

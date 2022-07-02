@@ -1,8 +1,8 @@
 import { Fundo } from './components/fundo'
 
-const Opcao = ({ children, funcao })=>{
+const Opcao = ({ children, funcao, cor })=>{
     return (
-        <Fundo onClick={()=> funcao()}>
+        <Fundo onClick={()=> funcao()} cor={cor}>
             {children}
         </Fundo>
     )

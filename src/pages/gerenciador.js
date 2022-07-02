@@ -3,20 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { Gerenciador } from '../features/gerenciador/index'
 import { Esquema } from '../components/esquema/index'
 import { PerfisProvider } from '../features/gerenciador/hooks/perfis'
+import { deslogado } from '../functions/deslogado'
 
 export default function Page(){
 
     const Router = useNavigate()
 
     useEffect(()=>{
-        if(
-            window.api.ipcRenderer.sendSync('logado') === undefined || 
-            window.api.ipcRenderer.sendSync('logado') === 'undefined'
-        ){
-            Router('/')
-        }
-
-        window.api.ipcRenderer.sendSync('tamanho-gerenciador')
+        deslogado(Router, 'tamanho-gerenciador')
     }, [Router])
 
     return (

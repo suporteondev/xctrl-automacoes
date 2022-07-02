@@ -49,7 +49,7 @@ const Tabela = styled.div`
                     font-size: 12px;
                     padding: 0 15px;
                     text-align: center;
-                    background-color: ${props => props.theme.fundoTabela};
+                    background-color: ${props => props.theme.linhas};
                 }
             }
         }

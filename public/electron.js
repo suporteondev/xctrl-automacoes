@@ -20,8 +20,16 @@ app.on('ready', async () => {
         store.set('tema', 'light')
     }
 
-    if(store.get('caminhoNavegador') == undefined || store.get('caminhoNavegador') == 'undefined'){
-        store.set('caminhoNavegador', '')
+    if(store.get('configuracoesVerificador') == undefined || store.get('configuracoesVerificador') == 'undefined'){
+        store.set('configuracoesVerificador', {
+            caminhoNavegador: 'Não configurado',
+            modoInvisivel: 'sim',
+            modoAnonimo: 'sim',
+            userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
+            limparLogin: 'sim',
+            esperarSegundos: '0',
+            modoVerificacao: 'linha'
+        })
     }
 
     const porta = server.listen(0, ()=>{
@@ -57,8 +65,6 @@ app.on('ready', async () => {
 
     mainWindow.loadURL(url)
     mainWindow.once('ready-to-show', ()=>{
-        // mainWindow.setResizable(false)
-        // mainWindow.maximize()
         mainWindow.show()
     })
 
@@ -90,12 +96,12 @@ app.on('ready', async () => {
         event.returnValue = store.set('tema', store.get('tema') === 'light' ? 'dark': 'light')
     })
 
-    ipcMain.on('setCaminhoNavegador', (event, args)=>{
-        event.returnValue = store.set('caminhoNavegador', args)
+    ipcMain.on('setConfiguracoesVerificador', (event, args)=>{
+        event.returnValue = store.set('configuracoesVerificador', args)
     })
 
-    ipcMain.on('caminhoNavegador', (event)=>{
-        event.returnValue = store.get('caminhoNavegador')
+    ipcMain.on('configuracoesVerificador', (event)=>{
+        event.returnValue = store.get('configuracoesVerificador')
     })
     
     ipcMain.on('tema', (event)=>{
@@ -114,33 +120,14 @@ app.on('ready', async () => {
         event.returnValue = store.delete('logado')
     })
 
-    ipcMain.on('nao-redimensionar', (event)=>{
-        if(mainWindow.isMaximized()){
-            mainWindow.restore()
-        }
-        
+    ipcMain.on('tamanho-pequeno', (event)=>{
         mainWindow.setResizable(true)
-        mainWindow.setSize(350, 340)
+        mainWindow.setSize(300, 300)
         mainWindow.setResizable(false)
         event.returnValue = true
     })
 
     ipcMain.on('tamanho-medio', (event)=>{
-        if(mainWindow.isMaximized()){
-            mainWindow.restore()
-        }
-
-        mainWindow.setResizable(true)
-        mainWindow.setSize(350, 500)
-        mainWindow.setResizable(false)
-        event.returnValue = true
-    })
-
-    ipcMain.on('tamanho-acessar', (event)=>{
-        if(mainWindow.isMaximized()){
-            mainWindow.restore()
-        }
-
         mainWindow.setResizable(true)
         mainWindow.setSize(350, 500)
         mainWindow.setResizable(false)
@@ -148,27 +135,10 @@ app.on('ready', async () => {
     })
 
     ipcMain.on('tamanho-gerenciador', (event)=>{
-        if(mainWindow.isMaximized()){
-            mainWindow.restore()
-        }
-        
         mainWindow.setResizable(true)
-        mainWindow.setSize(650, 500)
+        mainWindow.setSize(700, 500)
         mainWindow.setResizable(false)
         event.returnValue = true
-    })
-
-    ipcMain.on('maximizar', (event)=>{
-        if(mainWindow.isMaximized()){
-            mainWindow.setResizable(true)
-            mainWindow.restore()
-            mainWindow.setSize(650, 500)
-            mainWindow.setResizable(false)
-        }else{
-            mainWindow.setResizable(true)
-            mainWindow.maximize()
-            mainWindow.setResizable(false)
-        }
     })
 })
 

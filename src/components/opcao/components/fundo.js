@@ -13,6 +13,7 @@ const Fundo = styled.div`
     cursor: pointer;
     -webkit-app-region: no-drag;
     position: relative;
+    color: ${props => props.cor ? props.cor : props.theme.textos};
 
     span{
         visibility: hidden;
@@ -25,7 +26,7 @@ const Fundo = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         white-space: nowrap;
-        color: #0A84FF;
+        color:  ${props => props.cor ? props.cor : props.theme.textos};
     }
 
     :hover{

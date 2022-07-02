@@ -1,21 +1,15 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Esquema } from '../components/esquema/index'
-import { Montador } from '../features/montador/index'
+import { Montador } from '../features/montador'
+import { deslogado } from '../functions/deslogado'
 
 export default function Page(){
 
     const Router = useNavigate()
 
     useEffect(()=>{
-        if(
-            window.api.ipcRenderer.sendSync('logado') === undefined || 
-            window.api.ipcRenderer.sendSync('logado') === 'undefined'
-        ){
-            Router('/')
-        }
-
-        window.api.ipcRenderer.sendSync('tamanho-medio')
+        deslogado(Router, 'tamanho-medio')
     }, [Router])
 
     return (

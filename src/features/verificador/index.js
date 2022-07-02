@@ -20,7 +20,7 @@ import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
 
-const Montador = ()=>{
+const Verificador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
@@ -36,9 +36,9 @@ const Montador = ()=>{
         <>
             {executando == false ? 
                 <>
-                    <Cabeca voltar='/painel'/>
+                    <Cabeca voltar='/gerenciador'/>
                     <Conteudos>
-                        <Titulo>Montador de perfis</Titulo>
+                        <Titulo>Verificador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
                                 <Etiqueta>Caminho do navegador</Etiqueta>
@@ -91,11 +91,11 @@ const Montador = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Esperar entre as montagens (Segundos)</Etiqueta>
+                                <Etiqueta>Esperar entre as verificações (Segundos)</Etiqueta>
                                 <Entrada name='esperarSegundos' type='number' defaultValue={configuracoesVerificador.esperarSegundos}/>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Modo de montagens</Etiqueta>
+                                <Etiqueta>Modo de verificação</Etiqueta>
                                 <Select name='modoVerificacao' defaultValue={configuracoesVerificador.modoVerificacao}>
                                     <option value='linha'>Modo linha</option>
                                     <option value='coluna'>Modo coluna</option>
@@ -163,4 +163,4 @@ const Montador = ()=>{
     )
 }
 
-export { Montador }
+export { Verificador }

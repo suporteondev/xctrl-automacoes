@@ -4,7 +4,7 @@ const Opcao = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    background-color: ${props => props.cor ? props.cor : props.theme.linhas};
+    border: 1px solid ${props => props.cor ? props.cor : props.theme.linhas};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,7 @@ const Opcao = styled.div`
     span{
         visibility: hidden;
         background-color: ${props => props.cor ? props.cor : props.theme.linhas};
-        color: ${props => props.corTexto ? props.corTexto : '#fff'};
+        color: ${props => props.theme.textos};
         padding: 5px 10px;
         font-size: 12px;
         font-weight: 500;
@@ -32,7 +32,7 @@ const Opcao = styled.div`
     }
 
     img{
-        width: 16px;
+        height: 20px;
     }
 `
 

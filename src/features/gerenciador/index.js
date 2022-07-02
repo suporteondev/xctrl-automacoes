@@ -6,6 +6,9 @@ import novamenteIMG from './svg/tentar-novamente.svg'
 import copiarperfisIMG from './svg/copiarperfis.svg'
 import transferirIMG from './svg/transferir.svg'
 import pesquisarIMG from './svg/pesquisar.svg'
+import tutorialIMG from './svg/tutorial.svg'
+import dataIMG from './svg/data.svg'
+import verificadorIMG from './svg/verificador.svg'    
 
 import { useState } from 'react'
 
@@ -25,6 +28,8 @@ import { listarPerfis } from './functions/listarPerfis'
 import { copiarPerfis } from './functions/copiarPerfis'
 import { filtrarPerfis } from './functions/filtrarPerfis'
 import { transferirPerfis } from './functions/transferirPerfis'
+import { redirecionar } from '../../functions/redirecionar'
+import { useNavigate } from 'react-router-dom'
  
 const Gerenciador = ()=>{
 
@@ -34,6 +39,7 @@ const Gerenciador = ()=>{
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayTransferir, setDisplayTransferir ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
+    const Router = useNavigate()
 
     return (
         <div>
@@ -158,7 +164,7 @@ const Gerenciador = ()=>{
                                 <td>Usuário</td>
                                 <td>Senha</td>
                                 <td>S</td>
-                                <td>S</td>
+                                <td>Seguindo</td>
                                 <td>P</td>
                             </tr>
                         </thead>
@@ -209,14 +215,31 @@ const Gerenciador = ()=>{
             </Conteudos>
 
             <Rodape blur={blur}>
-                <Opcao cor='#236EFF' onClick={()=>{
+                <Opcao>
+                    <span>Expira dia 02/07/2022</span>
+                    <img src={dataIMG}/>
+                </Opcao>
+                <Opcao onClick={()=>{
+                        setDisplayFiltrar(true)
+                        setBlur(true)
+                    }}>
+                    <span>Manual de uso</span>
+                    <img src={tutorialIMG}/>
+                </Opcao>
+                <Opcao onClick={()=>{
+                        redirecionar(Router, '/verificador')
+                    }}>
+                    <span>Verificar perfis</span>
+                    <img src={verificadorIMG}/>
+                </Opcao>
+                <Opcao onClick={()=>{
                     setDisplayFiltrar(true)
                     setBlur(true)
                 }}>
                     <span>Filtrar</span>
                     <img src={filtrarIMG}/>
                 </Opcao>
-                <Opcao cor='#05A660' onClick={()=>{
+                <Opcao onClick={()=>{
                     setDisplayCopiar(true)
                     setBlur(true)
                     listarPerfis()
@@ -224,14 +247,14 @@ const Gerenciador = ()=>{
                     <span>Copiar</span>
                     <img src={copiarperfisIMG}/>
                 </Opcao>
-                <Opcao cor='#8257E5' onClick={()=>{
+                <Opcao onClick={()=>{
                     setDisplayTransferir(true)
                     setBlur(true)
                 }}>
                     <span>Transferir</span>
                     <img src={transferirIMG}/>
                 </Opcao>
-                <Opcao cor='#E53535' onClick={()=>{
+                <Opcao onClick={()=>{
                     setDisplayApagar(true)
                     setBlur(true)
                 }}>
