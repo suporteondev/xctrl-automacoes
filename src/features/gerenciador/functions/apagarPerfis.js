@@ -1,4 +1,6 @@
-export async function apagarPerfis(setPerfis, setDisplayApagar, setBlur){
+export async function apagarPerfis(setPerfis, setDisplayApagar, setBlur, setDisplayApagarCarregando){
+
+    setDisplayApagarCarregando('flex')
     const check = document.querySelectorAll('.checkbox')
     const perfis = []
 
@@ -22,6 +24,7 @@ export async function apagarPerfis(setPerfis, setDisplayApagar, setBlur){
     const resultado = await api.json()
     
     if(resultado.ok == true){
+        setDisplayApagarCarregando('none')
         setPerfis(resultado.perfis)
         setDisplayApagar(false)
         setBlur(false)

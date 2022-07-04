@@ -17,7 +17,7 @@ const Logs = styled.div`
 
     p{
         font-size: 12px;
-        color: ${props => props.theme.descricoes};
+        color: ${props => props.theme.textos};
     }
 
     button{

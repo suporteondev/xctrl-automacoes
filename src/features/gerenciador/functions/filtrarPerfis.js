@@ -1,4 +1,6 @@
-export async function filtrarPerfis(setPerfis, setDisplayFiltrar, setBlur){
+export async function filtrarPerfis(setPerfis, setDisplayFiltrar, setBlur, setDisplayFiltrarCarregando){
+
+    setDisplayFiltrarCarregando('flex')
 
     const configs = {
         method: 'POST',
@@ -14,6 +16,7 @@ export async function filtrarPerfis(setPerfis, setDisplayFiltrar, setBlur){
     const resultado = await api.json()
 
     if(resultado.ok == true){
+        setDisplayFiltrarCarregando('none')
         setPerfis(resultado.perfis)
         setDisplayFiltrar(false)
         setBlur(false)

@@ -8,6 +8,8 @@ const EstiloGlobal = createGlobalStyle`
         list-style: none;
         text-decoration: none;
         box-sizing: border-box;
+        box-shadow: 0 0 0 0;
+        outline: 0;
     }
 
     body{

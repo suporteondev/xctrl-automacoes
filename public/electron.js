@@ -22,13 +22,25 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesVerificador') == undefined || store.get('configuracoesVerificador') == 'undefined'){
         store.set('configuracoesVerificador', {
-            caminhoNavegador: 'Não configurado',
+            caminhoNavegador: '',
             modoInvisivel: 'sim',
             modoAnonimo: 'sim',
             userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
             limparLogin: 'sim',
             esperarSegundos: '0',
             modoVerificacao: 'linha'
+        })
+    }
+
+    if(store.get('configuracoesRemovedor') == undefined || store.get('configuracoesRemovedor') == 'undefined'){
+        store.set('configuracoesRemovedor', {
+            caminhoNavegador: '',
+            modoInvisivel: 'sim',
+            modoAnonimo: 'sim',
+            userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
+            emailPlataforma: '',
+            senhaPlataforma: '',
+            tipoAcao: 'ver'
         })
     }
 
@@ -103,7 +115,15 @@ app.on('ready', async () => {
     ipcMain.on('configuracoesVerificador', (event)=>{
         event.returnValue = store.get('configuracoesVerificador')
     })
-    
+
+    ipcMain.on('setConfiguracoesRemovedor', (event, args)=>{
+        event.returnValue = store.set('configuracoesRemovedor', args)
+    })
+
+    ipcMain.on('configuracoesRemovedor', (event)=>{
+        event.returnValue = store.get('configuracoesRemovedor')
+    })
+
     ipcMain.on('tema', (event)=>{
         event.returnValue = store.get('tema')
     })
@@ -112,8 +132,8 @@ app.on('ready', async () => {
         event.returnValue = global.verificar
     })
 
-    ipcMain.on('logRemoverPerfisGni', (event)=>{
-        event.returnValue = global.removerperfisgni
+    ipcMain.on('logRemovedor', (event)=>{
+        event.returnValue = global.removedor
     })
 
     ipcMain.on('sair', (event)=>{

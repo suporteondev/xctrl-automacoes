@@ -12,6 +12,10 @@ const Opcao = styled.div`
     position: relative;
     cursor: ${props => props.cursor ? props.cursor : 'pointer'};
 
+    :hover{
+        background-color: ${props => props.cor ? props.cor : props.theme.linhas};
+    }
+
     span{
         visibility: hidden;
         background-color: ${props => props.cor ? props.cor : props.theme.linhas};

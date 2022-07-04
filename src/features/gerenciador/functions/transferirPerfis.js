@@ -1,4 +1,6 @@
-export async function transferirPerfis(setPerfis, setDisplayTransferir, setBlur){
+export async function transferirPerfis(setPerfis, setDisplayTransferir, setBlur, setDisplayTransferirCarregando){
+
+    setDisplayTransferirCarregando('flex')
 
     const check = document.querySelectorAll('.checkbox')
     const email = document.querySelector('input[name="email"]').value
@@ -24,6 +26,7 @@ export async function transferirPerfis(setPerfis, setDisplayTransferir, setBlur)
     const resultado = await api.json()
     
     if(resultado.ok == true){
+        setDisplayTransferirCarregando('none')
         setPerfis(resultado.perfis)
         setDisplayTransferir(false)
         setBlur(false)

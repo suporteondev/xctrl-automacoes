@@ -32,7 +32,7 @@ const Topo = styled.div`
         div{
             width: 50px;
             height: 40px;
-            background-color: #236EFF;
+            background-color: ${props => props.theme.linhas};
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
             cursor: pointer;

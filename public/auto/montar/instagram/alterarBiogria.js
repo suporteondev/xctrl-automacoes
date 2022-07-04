@@ -47,6 +47,7 @@ const alterarBiogria = async(pagina, usuario, biografia, contador, logs)=>{
 
         return true 
     }catch(erro){
+        console.log('Erro ao tentar alterar a biografia: ' + erro.message)
         if(contador < 3){
 
             logs.push(`${usuario} - Não conseguimos alterar a biografia, mas não se preocupe, estamos tentando novamente!`)

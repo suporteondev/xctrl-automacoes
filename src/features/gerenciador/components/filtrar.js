@@ -16,13 +16,14 @@ const Filtrar = styled.div`
         width: 350px;
         display: flex;
         flex-direction: column;
-        background-color: ${props => props.theme.fundoTabela};
+        background-color: ${props => props.theme.fundos};
         padding: 20px;
-        box-shadow: 0 0 1em ${props => props.theme.fundos};
+        box-shadow: 0 0 1em ${props => props.theme.linhas};
         border-radius: 10px;
 
         h1{
             font-size: 20px;
+            text-align: left;
         }
 
         label{
@@ -31,6 +32,7 @@ const Filtrar = styled.div`
             color: ${props => props.theme.textos};
             margin-top: 5px;
             margin-bottom: 5px;
+            text-align: left;
         }
 
         input{

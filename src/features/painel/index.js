@@ -9,8 +9,11 @@ import { Descricao } from './components/descricao'
 import { Servicos } from './components/servicos'
 import { Servico } from './components/servico'
 import { redirecionar } from '../../functions/redirecionar'
-import criadorIMG from './svg/criador.svg'
+import verificadorIMG from './svg/verificador.svg'
+import gerenciadorIMG from './svg/gerenciador.svg'
+import removedorIMG from './svg/removedor.svg'
 import comprarIMG from './svg/comprar.svg'
+import criadorIMG from './svg/criador.svg'
 
 const Painel = ()=>{
 
@@ -24,25 +27,25 @@ const Painel = ()=>{
                 <Titulo>Olá, {nome}!</Titulo>
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
-                    <Servico onClick={()=>{ redirecionar(Router, '/montador') }}>
+                    <Servico onClick={()=>{ redirecionar(Router, '/verificador') }}>
                         <div>
-                            <img src={criadorIMG}/>
+                            <img src={verificadorIMG}/>
                         </div>
-                        <h1>Montador</h1>
+                        <h1>Verificador</h1>
                         <p>Ativo</p>
                     </Servico>
                     <Servico onClick={()=>{ redirecionar(Router, '/gerenciador') }}>
                         <div>
-                            <img src={criadorIMG}/>
+                            <img src={gerenciadorIMG}/>
                         </div>
                         <h1>Gerenciador</h1>
                         <p>Ativo</p>
                     </Servico>
                     <Servico onClick={()=>{ redirecionar(Router, '/removedor') }}>
                         <div>
-                            <img src={criadorIMG}/>
+                            <img src={removedorIMG}/>
                         </div>
-                        <h1>Removedor</h1>
+                        <h1>Removedor GNI</h1>
                         <p>Ativo</p>
                     </Servico>
                 </Servicos>

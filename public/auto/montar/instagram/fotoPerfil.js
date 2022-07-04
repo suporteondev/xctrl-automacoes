@@ -18,7 +18,7 @@ const fotoPerfil = async(pagina, perfil, usuario, contador, logs)=>{
 
         // Esperando os dados aparecerem
         logs.push(usuario + ' - Esperando os dados aparecerem.')
-        await pagina.waitForSelector('.XX1Wc')
+        await pagina.waitForSelector('._acan._acao._acas')
 
         // Verificando se tem que alterar ou adicionar uma nova foto de perfil
         await pagina.waitForTimeout(2000)
@@ -31,12 +31,12 @@ const fotoPerfil = async(pagina, perfil, usuario, contador, logs)=>{
         })
 
         if(resultado == 'alterar'){
-            await atalhos.clicar(pagina, '.XX1Wc > button')
+            await atalhos.clicar(pagina, '._acan._acao._acas')
 
             logs.push(usuario + ' - Selecionando a foto de perfil.')
             const [ instaUploadProfile ] = await Promise.all([
                 pagina.waitForFileChooser(),
-                atalhos.clicar(pagina,'.mt3GC > button')
+                atalhos.clicar(pagina, 'button[class="_a9-- _a9_0"]')
             ]);
 
             await instaUploadProfile.accept([ perfil ]);
@@ -68,7 +68,7 @@ const fotoPerfil = async(pagina, perfil, usuario, contador, logs)=>{
 
         // Selecionando um efeito
         logs.push(usuario + ' - Selecionando um efeito.')
-        await atalhos.clicar(pagina, 'button[role="menuitem"]')
+        await atalhos.clicar(pagina, 'button._ab5p')
         await pagina.waitForTimeout(2000)
         await pagina.evaluate(()=>{
             const efeitos = document.querySelectorAll('button.cwqzn.fq6ji > img')
@@ -88,13 +88,13 @@ const fotoPerfil = async(pagina, perfil, usuario, contador, logs)=>{
 
         await pagina.waitForTimeout(2000)
         logs.push(usuario + ' - Publicando a foto de perfil.')
-        await atalhos.clicar(pagina, 'button.UP43G')
         await pagina.waitForTimeout(3000)
         await atalhos.acessar(pagina, 'https://www.instagram.com/' + usuario)
         logs.push(usuario + ' - Foto de perfil alterada com sucesso!')
         
         return true
     }catch(erro){
+        console.log('Erro ao tentar publicar foto de perfil: ' + erro.message)
         if(contador < 3){
 
             logs.push(`${usuario} - Não conseguimos alterar a foto de perfil, mas não se preocupe, estamos tentando novamente!`)

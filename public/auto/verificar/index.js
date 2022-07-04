@@ -106,9 +106,9 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
                 // Limpando atividade de login
                 logs.push('Limpando atividade de login')
                 logs.push(`${logado} - Acessando configurações`)
-                await pagina.goto('https://www.instagram.com/session/login_activity/')
+                await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
                 logs.push(`${logado} - Esperando carregar`)
-                await pagina.waitForSelector('._abl-')
+                await pagina.waitForSelector('._abl-', { timeout: 60000 })
                 logs.push(`${logado} - Apagando o login`)
                 await pagina.click('._abl-')
                 await pagina.waitForTimeout(2000)
@@ -120,7 +120,6 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
                         }
                     })
                 })
-                await pagina.waitForSelector('input[name="username"]')
                 logs.push(`${logado} - Login limpo com sucesso!`)
             }catch(erro){
                 logs.push(`${logado} - Erro ao tentar limpar o login`)
@@ -128,9 +127,9 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
                 // Limpando atividade de login
                 logs.push('Limpando atividade de login')
                 logs.push(`${logado} - Acessando configurações`)
-                await pagina.goto('https://www.instagram.com/session/login_activity/')
+                await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
                 logs.push(`${logado} - Esperando carregar`)
-                await pagina.waitForSelector('._abl-')
+                await pagina.waitForSelector('._abl-', { timeout: 60000 })
                 logs.push(`${logado} - Apagando o login`)
                 await pagina.click('._abl-')
                 await pagina.waitForTimeout(2000)
@@ -142,7 +141,6 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
                         }
                     })
                 })
-                await pagina.waitForSelector('input[name="username"]')
                 logs.push(`${logado} - Login limpo com sucesso!`)
             }
         }

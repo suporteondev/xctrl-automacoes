@@ -75,6 +75,7 @@ const acessarInstagram = async(pagina, usuario, senha, logs)=>{
         // Retornando sucesso
         return true   
     }catch(erro){
+        console.log('Erro ao tentar acessar instagram: ' + erro.message)
         logs.push(`${usuario} - Não conseguimos acessar esse perfil!`)
         return false
     }

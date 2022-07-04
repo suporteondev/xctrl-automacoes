@@ -1,5 +1,6 @@
 const publicarFotos = async(pagina, usuario, publicacoes, logs)=>{
 
+    if(publicacoes == false) return true
     logs.push('Publicando fotos no feed')
     
     logs.push(usuario + ' - Redirecionando para o perfil.')
@@ -93,6 +94,7 @@ const publicarFotos = async(pagina, usuario, publicacoes, logs)=>{
                     
                     logs.push(`${usuario} - ${y + 1}ª publicação realizada com sucesso!`)
                 }catch(erro){
+                    console.log('Erro ao tentar publicar fotos: ' + erro.message)
                     logs.push(`${usuario} - Não conseguimos realizar a publicação!`)
                     continue
                 }
