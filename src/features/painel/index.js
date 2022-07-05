@@ -27,6 +27,13 @@ const Painel = ()=>{
                 <Titulo>Olá, {nome}!</Titulo>
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
+                    <Servico onClick={()=>{ redirecionar(Router, '/criador') }}>
+                        <div>
+                            <img src={criadorIMG}/>
+                        </div>
+                        <h1>Criador</h1>
+                        <p>Ativo</p>
+                    </Servico>
                     <Servico onClick={()=>{ redirecionar(Router, '/verificador') }}>
                         <div>
                             <img src={verificadorIMG}/>

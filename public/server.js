@@ -14,11 +14,13 @@ let rotas = [
     'deletarperfis',
     'filtrar',
     'removedor',
-    'transferirperfis'
+    'transferirperfis',
+    'criador'
 ]
 
 global.verificar = []
 global.removedor = []
+global.criador = []
 
 rotas.forEach(rota => {
     server.use('/api/', require(`./routes/${rota}`))

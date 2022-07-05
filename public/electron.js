@@ -44,6 +44,22 @@ app.on('ready', async () => {
         })
     }
 
+    if(store.get('configuracoesCriador') == undefined || store.get('configuracoesCriador') == 'undefined'){
+        store.set('configuracoesCriador', {
+            caminhoNavegador: '',
+            modoInvisivel: 'sim',
+            modoAnonimo: 'sim',
+            userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
+            provedorEmail: 'cryptogmail',
+            quantidadePerfis: '999999',
+            generoPerfis: 'feminino',
+            comoSalvar: 'linha',
+            ondeSalvar: '',
+            senhaPerfis: '',
+            esperarSegundos: '0'
+        })
+    }
+
     const porta = server.listen(0, ()=>{
         global.porta = porta.address().port
     })
@@ -124,6 +140,14 @@ app.on('ready', async () => {
         event.returnValue = store.get('configuracoesRemovedor')
     })
 
+    ipcMain.on('setConfiguracoesCriador', (event, args)=>{
+        event.returnValue = store.set('configuracoesCriador', args)
+    })
+
+    ipcMain.on('configuracoesCriador', (event)=>{
+        event.returnValue = store.get('configuracoesCriador')
+    })
+
     ipcMain.on('tema', (event)=>{
         event.returnValue = store.get('tema')
     })
@@ -134,6 +158,10 @@ app.on('ready', async () => {
 
     ipcMain.on('logRemovedor', (event)=>{
         event.returnValue = global.removedor
+    })
+
+    ipcMain.on('logCriador', (event)=>{
+        event.returnValue = global.criador
     })
 
     ipcMain.on('sair', (event)=>{
