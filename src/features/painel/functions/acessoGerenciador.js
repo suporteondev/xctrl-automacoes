@@ -11,10 +11,8 @@ async function acessoGerenciador(setMeuAcessoGerenciador){
     const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessogerenciador`, configs)
     const resultado = await api.json()
 
-    console.log(resultado)
-
     if(resultado.ok == true){
-        setMeuAcessoGerenciador(true)
+        setMeuAcessoGerenciador(resultado.status)
     }
 }
 

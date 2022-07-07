@@ -29,6 +29,7 @@
     "gerador": "^0.1.0",
     "mercadopago": "^1.5.13",
     "mongoose": "^6.2.7",
+    "open": "^8.4.0",
     "puppeteer-core": "^13.5.1",
     "styled-components": "^5.3.5",
     "user-agents": "^1.0.1001"

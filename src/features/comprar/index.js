@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Entrada } from './components/entrada'
 import { redirecionar } from '../../functions/redirecionar'
+import { Descricao } from './components/descricao'
 
 const Comprar = ()=>{
 
@@ -27,13 +28,8 @@ const Comprar = ()=>{
             <Cabeca voltar='/painel'/>
             {pagamentoGerado == false ?
                 <Conteudos>
-                    <Titulo>Comprar serviços</Titulo>
-                    <Caixa>
-                        <Etiqueta>Qual serviço?</Etiqueta>
-                        <Select name='servicos'>
-                            <option value='gerenciador'>Gerenciador - 30 reais por mês</option>
-                        </Select>
-                    </Caixa>
+                    <Titulo>Comprar gerenciador de perfis</Titulo>
+                    <Descricao>Por apenas 30 reais por mês</Descricao>
                     <Botao onClick={()=> gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCopiaCola)}>Gerar pagamento</Botao>
                 </Conteudos>
                 :
@@ -41,7 +37,7 @@ const Comprar = ()=>{
                     <Titulo>Finalizar compra</Titulo>
                     <Caixa>
                         <Etiqueta>PIX Copia e cola</Etiqueta>
-                        <Entrada type='text' value={pixCopiaCola}/>
+                        <Entrada type='text' defaultValue={pixCopiaCola}/>
                     </Caixa>
                     <Caixa>
                         <Etiqueta>PIX QR Code</Etiqueta>

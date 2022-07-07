@@ -19,18 +19,22 @@ import { useConfiguracoesRemovedor } from '../../providers/configuracoesRemovedo
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
+import { dataGerenciador } from './functions/dataGerenciador'
 
 const Removedor = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
+    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
     const [ meusLogs, setMeusLogs ] = useState([])
-
     const [ perfisDesativados, setPerfisDesativados ] = useState(0)
     const [ saldoPerdido, setSaldoPerdido ] = useState('R$0.00')
-
     const { configuracoesRemovedor, setConfiguracoesRemovedor } = useConfiguracoesRemovedor()
+
+    useEffect(async()=>{
+        await dataGerenciador(setDataAcesso)
+    }, [])
 
     return (
         <>
@@ -103,7 +107,13 @@ const Removedor = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            <span>Encerra dia 29/06/2022</span>
+                            {dataAcesso == 'Sem acesso' ? 
+                                ''
+                                :
+                                <span>
+                                    {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                                </span>
+                            }
                             <img src={tempoIMG}/>
                         </Opcao>
                         <Opcao>

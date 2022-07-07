@@ -19,11 +19,13 @@ import { useConfiguracoesVerificador } from '../../providers/configuracoesVerifi
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
+import { dataGerenciador } from './functions/dataGerenciador'
 
 const Verificador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
+    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ ativos, setAtivos ] = useState(0)
@@ -31,6 +33,10 @@ const Verificador = ()=>{
     const [ novamentes, setNovamentes ] = useState(0)
     const [ averificar, setAverificar ] = useState(0)
     const { configuracoesVerificador, setConfiguracoesVerificador } = useConfiguracoesVerificador()
+
+    useEffect(async()=>{
+        await dataGerenciador(setDataAcesso)
+    }, [])
 
     return (
         <>
@@ -110,7 +116,13 @@ const Verificador = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            <span>Encerra dia 29/06/2022</span>
+                            {dataAcesso == 'Sem acesso' ? 
+                                ''
+                                :
+                                <span>
+                                    {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                                </span>
+                            }
                             <img src={tempoIMG}/>
                         </Opcao>
                         <Opcao>

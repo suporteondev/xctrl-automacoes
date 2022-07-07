@@ -1,11 +1,11 @@
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
-const connectDB = require('../configs/connectDB')
+const connectDB = require('../middlewares/connectDB')
 const Store = require('electron-store')
 const store = new Store();
 
-router.post('/acessar', async(req, res)=>{
+router.post('/acessar', connectDB, async(req, res)=>{
 
     const { email, senha } = req.body
 
@@ -26,16 +26,6 @@ router.post('/acessar', async(req, res)=>{
     }
 
     let usuario = null
-
-    try{
-        await connectDB() 
-    }catch(erro){
-        console.log(erro.message)
-        return res.json({ 
-            ok: false, 
-            mensagem: 'Não conseguimos conectar ao banco. Verifique sua rede e tente novamente.',
-        })
-    }
 
     try{
         // Procurando o email digitado no banco de dados

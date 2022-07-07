@@ -227,7 +227,7 @@ const Gerenciador = ()=>{
                                         </td>
                                         <td className='usuario'>{perfil.usuario}</td>
                                         <td className='senha'>
-                                            <input type={senhaVisivel} value={perfil.senha}/>
+                                            <input type={senhaVisivel} defaultValue={perfil.senha}/>
                                         </td>
                                         <td>{perfil.seguidores}</td>
                                         <td>{perfil.seguindo}</td>

@@ -10,7 +10,6 @@ import Gerenciador from './pages/gerenciador'
 import Verificador from './pages/verificador'
 import Removedor from './pages/removedor'
 import Comprar from './pages/comprar'
-import Criador from './pages/criador'
 import Suporte from './pages/suporte'
 
 export default function App() {
@@ -29,7 +28,6 @@ export default function App() {
                                     <Route exact path='/gerenciador' element={<Gerenciador/>} />
                                     <Route exact path='/verificador' element={<Verificador/>} />
                                     <Route exact path='/removedor' element={<Removedor/>} />
-                                    <Route exact path='/criador' element={<Criador/>} />
                                 </Routes>
                             </HashRouter>
                         </TemaProvider>

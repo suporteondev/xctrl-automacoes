@@ -1,7 +1,4 @@
 export async function gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCopiaCola){
-
-    const servico = document.querySelector('[name="servicos"]').value
-
     const configs = {
         method: 'POST',
         headers: {
@@ -9,7 +6,7 @@ export async function gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCop
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-            servico
+            servico: 'gerenciador'
         })
     }
 

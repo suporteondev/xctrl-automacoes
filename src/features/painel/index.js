@@ -16,6 +16,7 @@ import comprarIMG from './svg/comprar.svg'
 import suporteIMG from './svg/suporte.svg'
 import { useEffect, useState } from 'react'
 import { acessoGerenciador } from './functions/acessoGerenciador'
+import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const Painel = ()=>{
 
@@ -55,7 +56,7 @@ const Painel = ()=>{
                 </Servicos>
             </Conteudos>
             <Rodape>
-                <Opcao funcao={()=> redirecionar(Router, '/suporte') }>
+                <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561991663171&text=Ol%C3%A1,%20tudo%20bem?') }>
                     <span>Suporte da plataforma</span>
                     <img src={suporteIMG}/>
                 </Opcao>
