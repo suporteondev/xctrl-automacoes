@@ -27,6 +27,7 @@
     "electron-store": "^8.0.2",
     "express": "^4.17.3",
     "gerador": "^0.1.0",
+    "mercadopago": "^1.5.13",
     "mongoose": "^6.2.7",
     "puppeteer-core": "^13.5.1",
     "styled-components": "^5.3.5",

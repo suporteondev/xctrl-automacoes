@@ -63,7 +63,7 @@ export async function iniciar(
             if(window.api.ipcRenderer.sendSync('logRemovedor')[window.api.ipcRenderer.sendSync('logRemovedor').length - 1] == 'O robô terminou, pode voltar!'){
                 setTimeout(clearInterval(intervalo), 3000)
                 logs.scrollTop = logs.scrollHeight
-                setDisplayVoltar('/painel')
+                setDisplayVoltar('/gerenciador')
             }
 
         }, 1000)

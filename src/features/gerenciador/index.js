@@ -9,9 +9,10 @@ import pesquisarIMG from './svg/pesquisar.svg'
 import tutorialIMG from '../../assets/svg/tutorial.svg'
 import dataIMG from '../../assets/svg/tempo.svg'
 import verificadorIMG from './svg/verificador.svg'    
+import removedorIMG from './svg/removedor.svg'    
 import olhoIMG from './svg/olho.svg'    
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Conteudos } from './components/conteudos'
 import { Cabeca } from '../../components/cabeca'
@@ -33,22 +34,26 @@ import { redirecionar } from '../../functions/redirecionar'
 import { useNavigate } from 'react-router-dom'
 import { mostrarSenhas } from './functions/mostrarSenhas'
 import { Carregando } from '../../components/carregando'
+import { dataGerenciador } from './functions/dataGerenciador'
  
 const Gerenciador = ()=>{
 
     const { perfis, setPerfis } = usePerfis()
     const [ blur, setBlur ] = useState(false)
-
+    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
     const [ displayFiltrarCarregando, setDisplayFiltrarCarregando ] = useState('none')
     const [ displayTransferirCarregando, setDisplayTransferirCarregando ] = useState('none')
     const [ displayApagarCarregando, setDisplayApagarCarregando ] = useState('none')
-    
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayTransferir, setDisplayTransferir ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
+
+    useEffect(async()=>{
+        await dataGerenciador(setDataAcesso)
+    }, [])
 
     return (
         <div>
@@ -237,7 +242,13 @@ const Gerenciador = ()=>{
 
             <Rodape blur={blur}>
                 <Opcao>
-                    <span>Expira dia 02/07/2022</span>
+                    {dataAcesso == 'Sem acesso' ? 
+                        ''
+                        :
+                        <span>
+                            {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                        </span>
+                    }
                     <img src={dataIMG}/>
                 </Opcao>
                 <Opcao>
@@ -245,10 +256,16 @@ const Gerenciador = ()=>{
                     <img src={tutorialIMG}/>
                 </Opcao>
                 <Opcao onClick={()=>{
+                    redirecionar(Router, '/verificador')
+                }}>
+                    <span>Verificar perfis</span>
+                    <img src={verificadorIMG}/>
+                </Opcao>
+                <Opcao onClick={()=>{
                     setDisplayFiltrar(true)
                     setBlur(true)
                 }}>
-                    <span>Filtrar</span>
+                    <span>Filtrar perfis</span>
                     <img src={filtrarIMG}/>
                 </Opcao>
                 <Opcao onClick={()=>{
@@ -256,22 +273,28 @@ const Gerenciador = ()=>{
                     setBlur(true)
                     listarPerfis()
                 }}>
-                    <span>Copiar</span>
+                    <span>Copiar perfis</span>
                     <img src={copiarperfisIMG}/>
                 </Opcao>
                 <Opcao onClick={()=>{
                     setDisplayTransferir(true)
                     setBlur(true)
                 }}>
-                    <span>Transferir</span>
+                    <span>Transferir perfis</span>
                     <img src={transferirIMG}/>
                 </Opcao>
                 <Opcao onClick={()=>{
                     setDisplayApagar(true)
                     setBlur(true)
                 }}>
-                    <span>Apagar</span>
+                    <span>Apagar perfis</span>
                     <img src={apagarIMG}/>
+                </Opcao>
+                <Opcao onClick={()=>{
+                    redirecionar(Router, '/removedor')
+                }}>
+                    <span>Remover perfis desativados GNI</span>
+                    <img src={removedorIMG}/>
                 </Opcao>
             </Rodape>
         </div>

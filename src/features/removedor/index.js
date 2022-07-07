@@ -36,7 +36,7 @@ const Removedor = ()=>{
         <>
             {executando == false ? 
                 <>
-                    <Cabeca voltar='/painel'/>
+                    <Cabeca voltar='/gerenciador'/>
                     <Conteudos>
                         <Titulo>Removedor de perfis</Titulo>
                         <Configuracoes>

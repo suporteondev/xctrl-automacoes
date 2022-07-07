@@ -15,7 +15,9 @@ let rotas = [
     'filtrar',
     'removedor',
     'transferirperfis',
-    'criador'
+    'criador',
+    'pagamentos',
+    'acessogerenciador'
 ]
 
 global.verificar = []

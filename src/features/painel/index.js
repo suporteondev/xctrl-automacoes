@@ -13,13 +13,20 @@ import verificadorIMG from './svg/verificador.svg'
 import gerenciadorIMG from './svg/gerenciador.svg'
 import removedorIMG from './svg/removedor.svg'
 import comprarIMG from './svg/comprar.svg'
-import criadorIMG from './svg/criador.svg'
+import suporteIMG from './svg/suporte.svg'
+import { useEffect, useState } from 'react'
+import { acessoGerenciador } from './functions/acessoGerenciador'
 
 const Painel = ()=>{
 
     const { nome } = useNome()
     const Router = useNavigate()
-    
+    const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
+
+    useEffect(async()=>{
+        await acessoGerenciador(setMeuAcessoGerenciador)
+    }, [])
+
     return (
         <>
             <Cabeca/>
@@ -27,40 +34,30 @@ const Painel = ()=>{
                 <Titulo>Olá, {nome}!</Titulo>
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
-                    <Servico onClick={()=>{ redirecionar(Router, '/criador') }}>
-                        <div>
-                            <img src={criadorIMG}/>
-                        </div>
-                        <h1>Criador</h1>
-                        <p>Ativo</p>
-                    </Servico>
-                    <Servico onClick={()=>{ redirecionar(Router, '/verificador') }}>
-                        <div>
-                            <img src={verificadorIMG}/>
-                        </div>
-                        <h1>Verificador</h1>
-                        <p>Ativo</p>
-                    </Servico>
-                    <Servico onClick={()=>{ redirecionar(Router, '/gerenciador') }}>
+                    <Servico 
+                        ativo={meuAcessoGerenciador}
+                        onClick={()=>{ 
+                            {meuAcessoGerenciador == true ? 
+                                redirecionar(Router, '/gerenciador')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
                         <div>
                             <img src={gerenciadorIMG}/>
                         </div>
                         <h1>Gerenciador</h1>
-                        <p>Ativo</p>
-                    </Servico>
-                    <Servico onClick={()=>{ redirecionar(Router, '/removedor') }}>
-                        <div>
-                            <img src={removedorIMG}/>
-                        </div>
-                        <h1>Removedor GNI</h1>
-                        <p>Ativo</p>
+                        <p>
+                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
+                        </p>
                     </Servico>
                 </Servicos>
             </Conteudos>
             <Rodape>
-                <Opcao funcao={()=> redirecionar(Router, '/comprar') }>
-                    <span>Comprar serviços</span>
-                    <img src={comprarIMG}/>
+                <Opcao funcao={()=> redirecionar(Router, '/suporte') }>
+                    <span>Suporte da plataforma</span>
+                    <img src={suporteIMG}/>
                 </Opcao>
                 V1.0.0
             </Rodape>

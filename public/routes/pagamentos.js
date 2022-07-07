@@ -1,8 +1,9 @@
 const router = require('express').Router()
+const mercadopago = require('mercadopago')
 const Store = require('electron-store')
 const store = new Store();
 
-router.post('/pagamento', async(req, res)=>{
+router.post('/pagamentos', async(req, res)=>{
 
     const email = store.get('logado')
     const { servico } = req.body
@@ -16,7 +17,7 @@ router.post('/pagamento', async(req, res)=>{
         transaction_amount: 0.10,
         description: servico + ' - ' + '30 dias',
         payment_method_id: 'pix',
-        notification_url: "https://xctrl.com.br/api/pagamentos",
+        notification_url: 'https://www.xctrl.com.br/api/pagamentos',
         payer: {
             email: email
         }

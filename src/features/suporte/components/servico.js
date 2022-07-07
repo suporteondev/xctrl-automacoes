@@ -15,15 +15,11 @@ const Servico = styled.div`
     div{
         width: 35px;
         height: 35px;
-        background-color: ${props => props.ativo == true ? '#0A84FF' : props.theme.linhas};
+        background-color: #0A84FF;
         border-radius: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-
-        img{
-            width: 18px;
-        }
     }
 
     h1{

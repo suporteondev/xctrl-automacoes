@@ -10,7 +10,7 @@ const verInformacoesGni = async(pagina)=>{
 
         try{
             await pagina.waitForSelector('input[type="search"]', { timeout: 60000 })
-            await pagina.type('input[type="search"]', 'Reativar Conta', { timeout: 60000 })
+            await pagina.type('input[type="search"]', 'Reativar Conta')
             await pagina.waitForSelector('a[class="btn btn-danger btn-sm"]', { timeout: 60000 })
             global.removedor.push('Perfis desativados encontrados!')
         }catch(erro){

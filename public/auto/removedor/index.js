@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer-core')
 const acessarGanharNoInsta = require('./gni/acessar')
-const removerPerfis = require('./gni/removerPerfis')
+const removerPerfisGni = require('./gni/removerPerfis')
 const verInformacoesGni = require('./gni/verInformacoes')
 
 const removedor = async(
@@ -46,7 +46,12 @@ const removedor = async(
     await pagina.setUserAgent(userAgent)
 
     // ACESSANDO O GANHAR NO INSTA
-    await acessarGanharNoInsta(pagina, emailPlataforma, senhaPlataforma)
+    const resultado = await acessarGanharNoInsta(pagina, emailPlataforma, senhaPlataforma)
+    if(resultado == false){
+        await navegador.close()
+        global.removedor.push('O robô terminou, pode voltar!')
+        return true
+    }
 
     // VENDO INFORMAÇÕES
     if(tipoAcao == 'ver'){
@@ -54,7 +59,7 @@ const removedor = async(
     }
 
     if(tipoAcao == 'remover'){
-        await removerPerfis(pagina)
+        await removerPerfisGni(pagina)
     }
 
     await navegador.close()
