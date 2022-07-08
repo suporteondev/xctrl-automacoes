@@ -11,9 +11,7 @@ import dataIMG from '../../assets/svg/tempo.svg'
 import verificadorIMG from './svg/verificador.svg'    
 import removedorIMG from './svg/removedor.svg'    
 import olhoIMG from './svg/olho.svg'    
-
 import { useState, useEffect } from 'react'
-
 import { Conteudos } from './components/conteudos'
 import { Cabeca } from '../../components/cabeca'
 import { Rodape } from '../../components/rodape'
@@ -22,7 +20,6 @@ import { Opcao } from './components/opcao'
 import { Topo } from './components/topo'
 import { Tabela } from './components/tabela'
 import { usePerfis } from './hooks/perfis'
-
 import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
 import { selecionarTodos } from './functions/selecionarTodos'
 import { apagarPerfis } from './functions/apagarPerfis'
@@ -35,6 +32,7 @@ import { useNavigate } from 'react-router-dom'
 import { mostrarSenhas } from './functions/mostrarSenhas'
 import { Carregando } from '../../components/carregando'
 import { dataGerenciador } from './functions/dataGerenciador'
+import { abrirNavegador } from '../../functions/abrirNavegador'
  
 const Gerenciador = ()=>{
 
@@ -251,7 +249,7 @@ const Gerenciador = ()=>{
                     }
                     <img src={dataIMG}/>
                 </Opcao>
-                <Opcao>
+                <Opcao onClick={()=> abrirNavegador('https://www.youtube.com/watch?v=daZ8VyvDyJU')}>
                     <span>Manual de uso</span>
                     <img src={tutorialIMG}/>
                 </Opcao>

@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.js": "./static/js/main.4a01e2ca.js",
+    "static/media/comprar.svg": "./static/media/comprar.4e71c146b5fdd70457a22ba4d7c63da6.svg",
+    "static/media/tentar-novamente.svg": "./static/media/tentar-novamente.c9f0056348aab8e7d385dc98791cd142.svg",
+    "static/media/suporte.svg": "./static/media/suporte.10f7f0db82b7744ab2709e726b59cd94.svg",
+    "static/media/removedor.svg": "./static/media/removedor.c7a3213bf59eaf5c8a0a67f13b676cfc.svg",
+    "static/media/inativo.svg": "./static/media/inativo.54e083066bd3d920d6cd5d2273278bfa.svg",
+    "static/media/olho.svg": "./static/media/olho.df0ee7609e0e38b929c70d34ffb7caae.svg",
+    "static/media/salvar.svg": "./static/media/salvar.85ccfaddf2259d6b6e784a750e4e3628.svg",
+    "static/media/gerenciador.svg": "./static/media/gerenciador.4c072fd759012d8f38ebf7b4f817aefb.svg",
+    "static/media/logo.svg": "./static/media/logo.57bc57a291635f929fe48a63d2eb061f.svg",
+    "static/media/copiarperfis.svg": "./static/media/copiarperfis.244c4e1ba36de1f331a8fbb5c2a8e350.svg",
+    "static/media/tutorial.svg": "./static/media/tutorial.3de46e2ccd863846ea2667ef9fc0702e.svg",
+    "static/media/filtrar.svg": "./static/media/filtrar.ad570535510ca9681e1b6104a0ef211b.svg",
+    "index.html": "./index.html",
+    "static/media/transferir.svg": "./static/media/transferir.d24b134a72d19680cf849645ea3bbbd6.svg",
+    "static/media/pesquisar.svg": "./static/media/pesquisar.f8e4a1d03c9c479a2c1c11988369803a.svg",
+    "static/media/iniciar.svg": "./static/media/iniciar.d16cc113b3389e04f6dd9bbe8fcf1f64.svg",
+    "static/media/apagar.svg": "./static/media/apagar.1984d4a86c4e84fc23cf1935babd52cf.svg",
+    "static/media/tempo.svg": "./static/media/tempo.79a0a5a11d881a7fc38cf6c500118a61.svg",
+    "static/media/voltar.svg": "./static/media/voltar.91fe8dace6512721d79bc3af56cd8b82.svg",
+    "static/media/ativo.svg": "./static/media/ativo.c8ef2e1f65fbd79f9804b91c0d4236bf.svg",
+    "static/media/verificador.svg": "./static/media/verificador.3f7d1065b8d716387bae6c315990628a.svg",
+    "static/media/fechar.svg": "./static/media/fechar.02c08dc74833bdd93083176c43871b83.svg",
+    "static/media/minimizar.svg": "./static/media/minimizar.593eec4d14faea07ae0e35499a324e4c.svg",
+    "main.4a01e2ca.js.map": "./static/js/main.4a01e2ca.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.4a01e2ca.js"
+  ]
+}

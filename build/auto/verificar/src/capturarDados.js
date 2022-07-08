@@ -9,10 +9,10 @@ const capturarDados = async(pagina, ref, usuario, senha, contador, logs)=>{
 
         // Acessando o perfil do usuário
         logs.push(usuario + ' - Acessando o perfil.')
-        await pagina.goto(`https://www.instagram.com/${usuario}`, { timeout: 60000 })
+        await pagina.goto(`https://www.instagram.com/${usuario}`)
         
         try{
-            await pagina.waitForSelector('._ac2a._ac2b', { timeout: 10000 })
+            await pagina.waitForSelector('._ac2a._ac2b', { timeout: 5000 })
         }catch(erro){
             
         }

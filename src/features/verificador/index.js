@@ -20,6 +20,7 @@ import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
 import { dataGerenciador } from './functions/dataGerenciador'
+import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const Verificador = ()=>{
 
@@ -125,7 +126,7 @@ const Verificador = ()=>{
                             }
                             <img src={tempoIMG}/>
                         </Opcao>
-                        <Opcao>
+                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
                             <span>Manual de uso</span>
                             <img src={tutorialIMG}/>
                         </Opcao>

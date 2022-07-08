@@ -14,6 +14,7 @@ import gerenciadorIMG from './svg/gerenciador.svg'
 import removedorIMG from './svg/removedor.svg'
 import comprarIMG from './svg/comprar.svg'
 import suporteIMG from './svg/suporte.svg'
+import tutorialIMG from '../../assets/svg/tutorial.svg'
 import { useEffect, useState } from 'react'
 import { acessoGerenciador } from './functions/acessoGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
@@ -56,6 +57,10 @@ const Painel = ()=>{
                 </Servicos>
             </Conteudos>
             <Rodape>
+                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=cEaMcyr3cdI')}}>
+                    <span>Manual de uso</span>
+                    <img src={tutorialIMG}/>
+                </Opcao>
                 <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561991663171&text=Ol%C3%A1,%20tudo%20bem?') }>
                     <span>Suporte da plataforma</span>
                     <img src={suporteIMG}/>

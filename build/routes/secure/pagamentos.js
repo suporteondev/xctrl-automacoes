@@ -15,7 +15,7 @@ router.post('/pagamentos', logado, async(req, res)=>{
     })
     
     var payment_data = {
-        transaction_amount: 30,
+        transaction_amount: 0.10,
         description: servico + ' - ' + '30 dias',
         payment_method_id: 'pix',
         notification_url: 'https://www.xctrl.com.br/api/pagamentos',

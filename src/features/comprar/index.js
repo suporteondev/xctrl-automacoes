@@ -46,11 +46,7 @@ const Comprar = ()=>{
                     <Botao onClick={()=> redirecionar(Router, '/painel')}>Já paguei e quero usar</Botao>
                 </Conteudos>
             }
-            <Rodape>
-                <Opcao>
-                    <span>Manual de uso</span>
-                    <img src={tutorialIMG}/>
-                </Opcao>
+            <Rodape>V1.0.0
             </Rodape>
         </>
     )
