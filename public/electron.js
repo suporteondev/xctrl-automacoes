@@ -50,13 +50,14 @@ app.on('ready', async () => {
             modoInvisivel: 'sim',
             modoAnonimo: 'sim',
             userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
-            provedorEmail: 'cryptogmail',
+            emailTemporario: 'cryptogmail',
             quantidadePerfis: '999999',
             generoPerfis: 'feminino',
+            limparLogin: 'sim',
+            senhaPerfis: '',
             comoSalvar: 'linha',
             ondeSalvar: '',
-            senhaPerfis: '',
-            esperarSegundos: '0'
+            esperarEntre: '0'
         })
     }
 
@@ -96,9 +97,9 @@ app.on('ready', async () => {
         mainWindow.show()
     })
 
-    // globalShortcut.register('Control+Shift+I', () => {
-    //     return false
-    // })
+    globalShortcut.register('Control+Shift+I', () => {
+        return false
+    })
 
     ipcMain.on('fechar', (event)=>{
         mainWindow.close()

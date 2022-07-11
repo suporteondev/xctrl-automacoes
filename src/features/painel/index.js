@@ -54,6 +54,24 @@ const Painel = ()=>{
                             {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
+                    <Servico 
+                        ativo={meuAcessoGerenciador}
+                        onClick={()=>{ 
+                            {meuAcessoGerenciador == true ? 
+                                redirecionar(Router, '/criador')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Criador</h1>
+                        <p>
+                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
                 </Servicos>
             </Conteudos>
             <Rodape>

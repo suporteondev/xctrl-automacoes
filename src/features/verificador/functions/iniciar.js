@@ -84,6 +84,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                caminhoNavegador,
                 visivel: modoInvisivel, 
                 login: limparLogin, 
                 anonimo: modoAnonimo, 

@@ -15,23 +15,25 @@ import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
 import { useEffect, useState } from 'react'
-import { useConfiguracoesRemovedor } from '../../providers/configuracoesRemovedor'
+import { useConfiguracoesCriador } from '../../providers/configuracoesCriador'
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
 import { dataGerenciador } from './functions/dataGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 
-const Removedor = ()=>{
+const Criador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
-    const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
+    const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
-    const [ perfisDesativados, setPerfisDesativados ] = useState(0)
-    const [ saldoPerdido, setSaldoPerdido ] = useState('R$0.00')
-    const { configuracoesRemovedor, setConfiguracoesRemovedor } = useConfiguracoesRemovedor()
+
+    const [ criadasSucesso, setCriadasSucesso ] = useState(0)
+    const [ naoCriadas, setNaoCriadas ] = useState(0)
+
+    const { configuracoesCriador, setConfiguracoesCriador } = useConfiguracoesCriador()
 
     useEffect(async()=>{
         await dataGerenciador(setDataAcesso)
@@ -41,31 +43,31 @@ const Removedor = ()=>{
         <>
             {executando == false ? 
                 <>
-                    <Cabeca voltar='/gerenciador'/>
+                    <Cabeca voltar='/painel'/>
                     <Conteudos>
-                        <Titulo>Removedor de perfis</Titulo>
+                        <Titulo>Criador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
                                 <Etiqueta>Caminho do navegador</Etiqueta>
-                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesRemovedor.caminhoNavegador}/>
+                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesCriador.caminhoNavegador}/>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Modo invisível</Etiqueta>
-                                <Select name='modoInvisivel' defaultValue={configuracoesRemovedor.modoInvisivel}>
+                                <Select name='modoInvisivel' defaultValue={configuracoesCriador.modoInvisivel}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Modo anônimo</Etiqueta>
-                                <Select name='modoAnonimo' defaultValue={configuracoesRemovedor.modoAnonimo}>
+                                <Select name='modoAnonimo' defaultValue={configuracoesCriador.modoAnonimo}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>User Agent</Etiqueta>
-                                <Select name='userAgent' defaultValue={configuracoesRemovedor.userAgent}>
+                                <Select name='userAgent' defaultValue={configuracoesCriador.userAgent}>
                                     <option value='Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36'>1º User Agent</option>
                                     <option value='Mozilla/5.0 (Linux; Android 10; SM-G996U Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36'>2º User Agent</option>
                                     <option value='Mozilla/5.0 (Linux; Android 10; SM-G980F Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.96 Mobile Safari/537.36'>3º User Agent</option>
@@ -89,19 +91,49 @@ const Removedor = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Email da plataforma</Etiqueta>
-                                <Entrada name='emailPlataforma' type='text' defaultValue={configuracoesRemovedor.emailPlataforma}/>
-                            </Caixa>
-                            <Caixa>
-                                <Etiqueta>Senha da plataforma</Etiqueta>
-                                <Entrada name='senhaPlataforma' type='text' defaultValue={configuracoesRemovedor.senhaPlataforma}/>
-                            </Caixa>
-                            <Caixa>
-                                <Etiqueta>Tipo de ação</Etiqueta>
-                                <Select name='tipoAcao' defaultValue={configuracoesRemovedor.tipoAcao}>
-                                    <option value='ver'>Ver informações</option>
-                                    <option value='remover'>Remover perfis</option>
+                                <Etiqueta>Email temporário</Etiqueta>
+                                <Select name='emailTemporario' defaultValue={configuracoesCriador.emailTemporario}>
+                                    <option value='cryptogmail'>Cryptogmail</option>
+                                    <option value='mailtm'>Mail.tm</option>
+                                    <option value='fakermail'>Fakermail</option>
                                 </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Quantidade de perfis</Etiqueta>
+                                <Entrada name='quantidadePerfis' type='number' defaultValue={configuracoesCriador.quantidadePerfis}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Senha dos perfis</Etiqueta>
+                                <Entrada name='senhaPerfis' type='text' defaultValue={configuracoesCriador.senhaPerfis}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Gênero dos perfis</Etiqueta>
+                                <Select name='generoPerfis' defaultValue={configuracoesCriador.generoPerfis}>
+                                    <option value='feminino'>Feminino</option>
+                                    <option value='masculino'>Masculino</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Limpar login</Etiqueta>
+                                <Select name='limparLogin' defaultValue={configuracoesCriador.limparLogin}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Como salvar os perfis</Etiqueta>
+                                <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
+                                    <option value='linha'>Modo linha - TXT</option>
+                                    <option value='coluna'>Modo coluna - TXT</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Onde salvar os perfis</Etiqueta>
+                                <Entrada name='ondeSalvar' type='text' defaultValue={configuracoesCriador.ondeSalvar}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
+                                <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
                             {mensagem}
                         </Configuracoes>
@@ -117,15 +149,15 @@ const Removedor = ()=>{
                             }
                             <img src={tempoIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=> abrirNavegador('https://www.youtube.com/watch?v=PmHj01JQ6Qo')}>
+                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
                             <span>Manual de uso</span>
                             <img src={tutorialIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesRemovedor) }}>
+                        <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesCriador) }}>
                             <span>Salvar configurações</span>
                             <img src={salvarIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setPerfisDesativados, setSaldoPerdido, setDisplayVoltar) }}>
+                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
                             <span>Iniciar</span>
                             <img src={iniciarIMG}/>
                         </Opcao>
@@ -135,22 +167,26 @@ const Removedor = ()=>{
                 <Cabeca voltar={displayVoltar}/>
                 <Logs>
                     {meusLogs.map((logs, index)=>(
-                        logs === 'Acessando a plataforma' || 
-                        logs === 'Capturando informações' || 
-                        logs === 'Procurando perfil desativado' ||
+                        logs === 'Acessando o instagram' || 
+                        logs === 'Capturando o código' || 
+                        logs === 'Capturando o email' || 
+                        logs === 'Preenchendo dados' || 
+                        logs === 'Escolhendo a data' || 
+                        logs === 'Confirmando o código' || 
+                        logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
                         <p key={index}>{logs}</p>
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#E53535'>
-                        <span>Perfis</span>
-                        {perfisDesativados}
+                    <Opcao cor='#05A660'>
+                        <span>Criadas com sucesso</span>
+                        {criadasSucesso}
                     </Opcao>
-                    <Opcao cor='#FFA500'>
-                        <span>Saldo</span>
-                        {saldoPerdido}
+                    <Opcao cor='#E53535'>
+                        <span>Não criadas</span>
+                        {naoCriadas}
                     </Opcao>
                 </Rodape>
             </>
@@ -159,4 +195,4 @@ const Removedor = ()=>{
     )
 }
 
-export { Removedor }
+export { Criador }

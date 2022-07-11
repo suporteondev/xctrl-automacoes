@@ -21,14 +21,20 @@ const verInformacoesGni = async(pagina)=>{
         const { totalDesativados, totalSaldo } = await pagina.evaluate(()=>{
 
             const perfisDesativados = document.querySelectorAll('tbody td:nth-child(3)')
+            
             let totalSaldo = 0
             let totalPerfis = 0
-    
+
             perfisDesativados.forEach((perfil)=>{
-                totalSaldo = totalSaldo + Number(perfil.innerText.split(' ')[4].replace(',', '.'))
+                const saldo = perfil.innerText
+                if(saldo.includes('Valor a Ser Descontado: R$')){
+                    totalSaldo = totalSaldo + Number(saldo.split(' ')[6].replace(',', '.'))
+                }else{
+                    totalSaldo = totalSaldo + Number(saldo.split(' ')[4].replace(',', '.'))
+                }
                 totalPerfis = totalPerfis + 1
             })
-    
+
             return {
                 totalDesativados: totalPerfis,
                 totalSaldo: totalSaldo

@@ -19,10 +19,20 @@ const removerPerfis = async(pagina)=>{
             }
 
             const { href, usuario, valor } = await pagina.evaluate(()=>{
+
+                let saldoPerdido = ''
+                let saldo = document.querySelector('tbody td:nth-child(3)').innerText
+
+                if(saldo.includes('Valor a Ser Descontado: R$')){
+                    saldoPerdido = Number(saldo.split(' ')[6].replace(',', '.'))
+                }else{
+                    saldoPerdido = Number(saldo.split(' ')[4].replace(',', '.'))
+                }
+
                 return {
                     href: document.querySelector('[class="btn btn-danger btn-sm"]').href,
                     usuario: document.querySelector('tbody td a').innerText,
-                    valor: Number(document.querySelector('tbody td:nth-child(3)').innerText.split(' ')[4].replace(',', '.'))
+                    valor: saldoPerdido
                 }
             })
 
