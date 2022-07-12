@@ -1,4 +1,4 @@
-export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar){
+export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
@@ -81,6 +81,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 modoInvisivel,
                 modoAnonimo,
                 userAgent,
+                listaUserAgents,
                 emailTemporario,
                 quantidadePerfis,
                 senhaPerfis,

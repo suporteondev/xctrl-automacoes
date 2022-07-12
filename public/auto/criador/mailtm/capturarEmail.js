@@ -15,7 +15,7 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         // Capturando o email do cryptogmail
         logs.push(`perfil ${identificador} - ` + 'Capturando o email')
         const email = await pagina.evaluate(()=>{
-            return document.querySelector('input[id="address"]').value
+            return document.querySelector('[id="DontUseWEBuseAPI"]').value
         })
 
         logs.push(`perfil ${identificador} - ` + 'Email capturado com sucesso!')
@@ -27,6 +27,7 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         }
 
     }catch(erro){
+        console.log(erro.message)
         logs.push(`perfil ${identificador} - ` + 'Erro ao tentar capturar o email.')
         return {
             ok: false

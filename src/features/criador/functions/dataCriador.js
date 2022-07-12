@@ -1,4 +1,4 @@
-async function dataGerenciador(setDataAcesso){
+async function dataCriador(setDataAcessoCriador){
 
     const configs = {
         method: 'POST',
@@ -8,12 +8,12 @@ async function dataGerenciador(setDataAcesso){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessogerenciador`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessocriador`, configs)
     const resultado = await api.json()
 
     if(resultado.ok == true){
-        setDataAcesso(resultado.data)
+        setDataAcessoCriador(resultado.data)
     }
 }
 
-export { dataGerenciador }
+export { dataCriador }

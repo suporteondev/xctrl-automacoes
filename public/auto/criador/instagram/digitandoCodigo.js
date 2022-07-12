@@ -1,6 +1,17 @@
-const acessarInstagram = require('./acessarInstagram')
+const fs = require('fs')
+const limpandoLogin = require('./limpandoLogin')
 
-const digitandoCodigo = async(identificador, pagina, usuario, senha, codigo, logs)=>{
+const digitandoCodigo = async(
+    identificador, 
+    pagina, 
+    comoSalvar,
+    ondeSalvar,
+    usuario, 
+    senha, 
+    codigo,
+    limparLoginConfigurado, 
+    logs
+)=>{
     try{
         
         // Esperando o seletor
@@ -19,13 +30,33 @@ const digitandoCodigo = async(identificador, pagina, usuario, senha, codigo, log
 
         // Esperando a página carregar
         logs.push(`perfil ${identificador} - ` + 'Esperando a página carregar')
-        await pagina.waitForNavigation({ timeout: 60000 })
+        await pagina.waitForNavigation({ timeout: 45000 })
 
         // Esperando o direct aparecer
         logs.push(`perfil ${identificador} - ` + 'Esperando o direct aparecer')
-        await pagina.waitForSelector('[aria-label="Página inicial"]', { timeout: 60000 })
+        await pagina.waitForSelector('[aria-label="Página inicial"]')
 
         logs.push(`perfil ${identificador} - ` + 'Perfil criado com sucesso!')
+
+        if(comoSalvar == 'linha'){
+            fs.appendFile(ondeSalvar, `\n${usuario} ${senha}`, function(err){
+                if(err){
+                    console.log(err)
+                }
+                console.log('Atualizado!')
+            })
+        }else if(comoSalvar == 'coluna'){
+            fs.appendFile(ondeSalvar, `\n\n${usuario}\n${senha}`, function(err){
+                if(err){
+                    console.log(err)
+                }
+                console.log('Atualizado!')
+            })
+        }
+
+        if(limparLoginConfigurado == true){
+            await limpandoLogin(pagina, identificador, logs)
+        }
 
         return {
             ok: true
@@ -33,6 +64,7 @@ const digitandoCodigo = async(identificador, pagina, usuario, senha, codigo, log
         
     }catch(erro){
         logs.push(`perfil ${identificador} - ` + 'Erro ao tentar criar o perfil.')
+        
         return{
             ok: false
         }

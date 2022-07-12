@@ -20,13 +20,14 @@ const criador = async(
     modoAnonimoConfigurado,
     generoPerfis, 
     senhaPerfis, 
+    limparLoginConfigurado,
+    comoSalvar,
+    ondeSalvar,
     quantidadePerfis, 
     emailTemporario,
     esperarEntreConfigurado,
     logs
 )=>{
-
-    const arrayPerfis = []
 
     for(let x = 1; x < (Number(quantidadePerfis) + 1); x++){
 
@@ -54,7 +55,7 @@ const criador = async(
         }
 
         // User agents
-        const { userAgent } = new UserAgent({ deviceCategory: "desktop", platform: "Win32" })
+        const { userAgent } = new UserAgent({ deviceCategory: "desktop" })
         await paginaEmail.setUserAgent(userAgent)
 
         // Capturando email no paginaEmail
@@ -80,6 +81,8 @@ const criador = async(
         }else{
             paginaInstagram = await navegador.newPage()
         }
+
+        await paginaInstagram.setUserAgent(userAgent)
 
         // Preenchendo os dados no instagram
         const resPreencher = await preencherDados(x, paginaInstagram, email, senhaPerfis, generoPerfis, logs)
@@ -118,29 +121,34 @@ const criador = async(
         const { codigo } = resCodigo
         
         // Preenchendo o código e verificando se tomou sms ou criou com sucesso
-        const resDigitandoCodigo = await digitandoCodigo(x, paginaInstagram, usuario, senhaPerfis, codigo, logs)
+        const resDigitandoCodigo = await digitandoCodigo(
+            x, 
+            paginaInstagram, 
+            comoSalvar,
+            ondeSalvar,
+            usuario, 
+            senhaPerfis, 
+            codigo, 
+            limparLoginConfigurado,
+            logs
+        )
+
+        if(esperarEntreConfigurado != 0){
+            logs.push(`perfil ${x} - Aguardando ${esperarEntreConfigurado / 1000} segundos.`)
+            await paginaInstagram.waitForTimeout(esperarEntreConfigurado)
+        }
+
         if(resDigitandoCodigo.ok == false){
             await navegador.close()
             continue
         }
 
-        // Adicionando o usuário em um array
-        arrayPerfis.push({
-            usuario: usuario,
-            senha: senha
-        })
-
         // Fechando o navegador
         await navegador.close()
-
-        if(esperarEntreConfigurado != 0){
-            logs.push(`${x} - Aguardando ${esperarEntreConfigurado / 1000} segundos.`)
-            await pagina.waitForTimeout(esperarEntreConfigurado)
-        }
     }
 
     logs.push('O robô terminou, pode voltar!')
-    return arrayPerfis
+    return true
 }
 
 module.exports = criador

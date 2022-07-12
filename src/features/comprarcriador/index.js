@@ -16,7 +16,7 @@ import { Entrada } from './components/entrada'
 import { redirecionar } from '../../functions/redirecionar'
 import { Descricao } from './components/descricao'
 
-const Comprar = ()=>{
+const ComprarCriador = ()=>{
 
     const [ pagamentoGerado, setPagamentoGerado ] = useState(false)
     const [ pixQrCode, setPixQrCode ] = useState('')
@@ -28,7 +28,7 @@ const Comprar = ()=>{
             <Cabeca voltar='/painel'/>
             {pagamentoGerado == false ?
                 <Conteudos>
-                    <Titulo>Comprar gerenciador de perfis</Titulo>
+                    <Titulo>Comprar criador de perfis</Titulo>
                     <Descricao>Por apenas 20 reais por mês</Descricao>
                     <Botao onClick={()=> gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCopiaCola)}>Gerar pagamento</Botao>
                 </Conteudos>
@@ -52,4 +52,4 @@ const Comprar = ()=>{
     )
 }
 
-export { Comprar }
+export { ComprarCriador }

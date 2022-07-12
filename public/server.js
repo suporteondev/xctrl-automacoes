@@ -21,6 +21,7 @@ server.use('/api/', require(`./routes/secure/criador`))
 server.use('/api/', require(`./routes/secure/transferirperfis`))
 server.use('/api/', require(`./routes/secure/pagamentos`))
 server.use('/api/', require(`./routes/secure/acessogerenciador`))
+server.use('/api/', require(`./routes/secure/acessocriador`))
 server.use('/api/', require(`./routes/secure/abrirnavegador`))
 
 module.exports = server

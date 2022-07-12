@@ -13,10 +13,12 @@ import verificadorIMG from './svg/verificador.svg'
 import gerenciadorIMG from './svg/gerenciador.svg'
 import removedorIMG from './svg/removedor.svg'
 import comprarIMG from './svg/comprar.svg'
+import criadorIMG from './svg/criador.svg'
 import suporteIMG from './svg/suporte.svg'
 import tutorialIMG from '../../assets/svg/tutorial.svg'
 import { useEffect, useState } from 'react'
 import { acessoGerenciador } from './functions/acessoGerenciador'
+import { acessoCriador } from './functions/acessoCriador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const Painel = ()=>{
@@ -24,9 +26,11 @@ const Painel = ()=>{
     const { nome } = useNome()
     const Router = useNavigate()
     const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
+    const [ meuAcessoCriador, setMeuAcessoCriador ] = useState(false)
 
     useEffect(async()=>{
         await acessoGerenciador(setMeuAcessoGerenciador)
+        await acessoCriador(setMeuAcessoCriador)
     }, [])
 
     return (
@@ -55,21 +59,21 @@ const Painel = ()=>{
                         </p>
                     </Servico>
                     <Servico 
-                        ativo={meuAcessoGerenciador}
+                        ativo={meuAcessoCriador}
                         onClick={()=>{ 
-                            {meuAcessoGerenciador == true ? 
+                            {meuAcessoCriador == true ? 
                                 redirecionar(Router, '/criador')
                                 : 
-                                redirecionar(Router, '/comprar')
+                                redirecionar(Router, '/comprarcriador')
                             }
                         }}
                     >
                         <div>
-                            <img src={gerenciadorIMG}/>
+                            <img src={criadorIMG}/>
                         </div>
                         <h1>Criador</h1>
                         <p>
-                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
+                            {meuAcessoCriador == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
                 </Servicos>

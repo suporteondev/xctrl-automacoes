@@ -11,6 +11,7 @@ import Gerenciador from './pages/gerenciador'
 import Verificador from './pages/verificador'
 import Removedor from './pages/removedor'
 import Criador from './pages/criador'
+import ComprarCriador from './pages/comprarcriador'
 import Comprar from './pages/comprar'
 import Suporte from './pages/suporte'
 
@@ -27,6 +28,7 @@ export default function App() {
                                         <Route exact path='/' element={<Acessar/>} />
                                         <Route exact path='/painel' element={<Painel/>} />
                                         <Route exact path='/comprar' element={<Comprar/>} />
+                                        <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
                                         <Route exact path='/suporte' element={<Suporte/>} />
                                         <Route exact path='/gerenciador' element={<Gerenciador/>} />
                                         <Route exact path='/verificador' element={<Verificador/>} />
