@@ -15,12 +15,12 @@ import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
 import { useEffect, useState } from 'react'
-import { useConfiguracoesVerificador } from '../../providers/configuracoesVerificador'
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
-import { dataGerenciador } from './functions/dataGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { useConfiguracoesMontador } from '../../providers/configuracoesMontador'
+import { dataMontador } from './functions/dataMontador'
 
 const Montador = ()=>{
 
@@ -33,10 +33,10 @@ const Montador = ()=>{
     const [ inativos, setInativos ] = useState(0)
     const [ novamentes, setNovamentes ] = useState(0)
     const [ averificar, setAverificar ] = useState(0)
-    const { configuracoesVerificador, setConfiguracoesVerificador } = useConfiguracoesVerificador()
+    const { configuracoesMontador, setConfiguracoesMontador } = useConfiguracoesMontador()
 
     useEffect(async()=>{
-        await dataGerenciador(setDataAcesso)
+        await dataMontador(setDataAcesso)
     }, [])
 
     return (
@@ -49,25 +49,26 @@ const Montador = ()=>{
                         <Configuracoes>
                             <Caixa>
                                 <Etiqueta>Caminho do navegador</Etiqueta>
-                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesVerificador.caminhoNavegador}/>
+                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesMontador.caminhoNavegador}/>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Modo invisível</Etiqueta>
-                                <Select name='modoInvisivel' defaultValue={configuracoesVerificador.modoInvisivel}>
+                                <Select name='modoInvisivel' defaultValue={configuracoesMontador.modoInvisivel}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Modo anônimo</Etiqueta>
-                                <Select name='modoAnonimo' defaultValue={configuracoesVerificador.modoAnonimo}>
+                                <Select name='modoAnonimo' defaultValue={configuracoesMontador.modoAnonimo}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>User Agent</Etiqueta>
-                                <Select name='userAgent' defaultValue={configuracoesVerificador.userAgent}>
+                                <Select name='userAgent' defaultValue={configuracoesMontador.userAgent}>
+                                    <option value='aleatorio'>Aleatório</option>
                                     <option value='Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36'>1º User Agent</option>
                                     <option value='Mozilla/5.0 (Linux; Android 10; SM-G996U Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36'>2º User Agent</option>
                                     <option value='Mozilla/5.0 (Linux; Android 10; SM-G980F Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.96 Mobile Safari/537.36'>3º User Agent</option>
@@ -91,26 +92,55 @@ const Montador = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Limpar login</Etiqueta>
-                                <Select name='limparLogin' defaultValue={configuracoesVerificador.limparLogin}>
-                                    <option value='sim'>Sim</option>
-                                    <option value='nao'>Não</option>
+                                <Etiqueta>Gênero dos perfis</Etiqueta>
+                                <Select name='generoPerfis' defaultValue={configuracoesMontador.generoPerfis}>
+                                    <option value='feminino'>Feminino</option>
+                                    <option value='masculino'>Masculino</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Esperar entre as verificações (Segundos)</Etiqueta>
-                                <Entrada name='esperarSegundos' type='number' defaultValue={configuracoesVerificador.esperarSegundos}/>
-                            </Caixa>
-                            <Caixa>
-                                <Etiqueta>Modo de verificação</Etiqueta>
-                                <Select name='modoVerificacao' defaultValue={configuracoesVerificador.modoVerificacao}>
+                                <Etiqueta>Modo perfis</Etiqueta>
+                                <Select name='modoPerfis' defaultValue={configuracoesMontador.modoPerfis}>
                                     <option value='linha'>Modo linha</option>
                                     <option value='coluna'>Modo coluna</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Seus perfis</Etiqueta>
-                                <Textarea name='seusPerfis'></Textarea>
+                                <Textarea name='listaPerfis'></Textarea>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Pasta de fotos</Etiqueta>
+                                <Entrada name='pastaFotos' type='text' defaultValue={configuracoesMontador.pastaFotos}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Alterar foto de perfil</Etiqueta>
+                                <Select name='fotoPerfil' defaultValue={configuracoesMontador.fotoPerfil}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Alterar biografia</Etiqueta>
+                                <Select name='alterarBiografia' defaultValue={configuracoesMontador.alterarBiografia}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Quantidade de publicações</Etiqueta>
+                                <Entrada name='quantidadePublicacoes' type='number' defaultValue={configuracoesMontador.quantidadePublicacoes}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Limpar login</Etiqueta>
+                                <Select name='limparLogin' defaultValue={configuracoesMontador.limparLogin}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Esperar entre as publicações (Segundos)</Etiqueta>
+                                <Entrada name='esperarEntre' type='number' defaultValue={configuracoesMontador.esperarEntre}/>
                             </Caixa>
                             {mensagem}
                         </Configuracoes>
@@ -130,7 +160,7 @@ const Montador = ()=>{
                             <span>Manual de uso</span>
                             <img src={tutorialIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesVerificador) }}>
+                        <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesMontador) }}>
                             <span>Salvar configurações</span>
                             <img src={salvarIMG}/>
                         </Opcao>

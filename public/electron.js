@@ -49,7 +49,7 @@ app.on('ready', async () => {
             caminhoNavegador: '',
             modoInvisivel: 'sim',
             modoAnonimo: 'sim',
-            userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
+            userAgent: 'aleatorio',
             emailTemporario: 'cryptogmail',
             quantidadePerfis: '999999',
             generoPerfis: 'feminino',
@@ -57,6 +57,24 @@ app.on('ready', async () => {
             senhaPerfis: '',
             comoSalvar: 'linha',
             ondeSalvar: '',
+            esperarEntre: '0'
+        })
+    }
+
+    if(store.get('configuracoesMontador') == undefined || store.get('configuracoesMontador') == 'undefined'){
+        store.set('configuracoesMontador', {
+            caminhoNavegador: '',
+            modoInvisivel: 'sim',
+            modoAnonimo: 'sim',
+            userAgent: 'aleatorio',
+            generoPerfis: 'feminino',
+            modoPerfis: 'linha',
+            listaPerfis: '',
+            pastaFotos: '',
+            fotoPerfil: 'sim',
+            alterarBiografia: 'sim',
+            quantidadePublicacoes: '10',
+            limparLogin: 'sim',
             esperarEntre: '0'
         })
     }
@@ -149,6 +167,14 @@ app.on('ready', async () => {
         event.returnValue = store.get('configuracoesCriador')
     })
 
+    ipcMain.on('setConfiguracoesMontador', (event, args)=>{
+        event.returnValue = store.set('configuracoesMontador', args)
+    })
+
+    ipcMain.on('configuracoesMontador', (event)=>{
+        event.returnValue = store.get('configuracoesMontador')
+    })
+
     ipcMain.on('tema', (event)=>{
         event.returnValue = store.get('tema')
     })
@@ -163,6 +189,10 @@ app.on('ready', async () => {
 
     ipcMain.on('logCriador', (event)=>{
         event.returnValue = global.criador
+    })
+
+    ipcMain.on('logMontador', (event)=>{
+        event.returnValue = global.montador
     })
 
     ipcMain.on('sair', (event)=>{
