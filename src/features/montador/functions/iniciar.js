@@ -4,32 +4,49 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
     const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
+    const generoPerfis = document.querySelector('[name="generoPerfis"]').value
+    const modoPerfis = document.querySelector('[name="modoPerfis"]').value
+    const listaPerfis = document.querySelector('[name="listaPerfis"]').value
+    const pastaFotos = document.querySelector('[name="pastaFotos"]').value
+    const fotoPerfil = document.querySelector('[name="fotoPerfil"]').value
+    const alterarBiografia = document.querySelector('[name="alterarBiografia"]').value
+    const quantidadePublicacoes = document.querySelector('[name="quantidadePublicacoes"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
-    const esperarSegundos = document.querySelector('[name="esperarSegundos"]').value
-    const modoVerificacao = document.querySelector('[name="modoVerificacao"]').value
-    const seusPerfis = document.querySelector('[name="seusPerfis"]').value
+    const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
     if(caminhoNavegador === ''){
         setMensagem(<Mensagem>Configure o caminho do navegador</Mensagem>)
         logs.scrollTop = logs.scrollHeight
-    }else if(seusPerfis === ''){
+    }else if(listaPerfis === ''){
         setMensagem(<Mensagem>Preencha seus perfis antes de iniciar</Mensagem>)
+        logs.scrollTop = logs.scrollHeight
+    }else if(pastaFotos === ''){
+        setMensagem(<Mensagem>Preencha a pasta de fotos antes de iniciar</Mensagem>)
+        logs.scrollTop = logs.scrollHeight
+    }else if(pastaFotos === ''){
+        setMensagem(<Mensagem>Preencha a pasta de fotos antes de iniciar</Mensagem>)
+        logs.scrollTop = logs.scrollHeight
+    }else if(quantidadePublicacoes === ''){
+        setMensagem(<Mensagem>Preencha a quantidade de publicações antes de iniciar</Mensagem>)
+        logs.scrollTop = logs.scrollHeight
+    }else if(esperarEntre === ''){
+        setMensagem(<Mensagem>Preencha o tempo entre as publicações antes de iniciar</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }else{
 
         const arrayPerfis = []
             
-        if(modoVerificacao == 'linha'){
-            seusPerfis.split('\n').forEach((usuario)=>{
+        if(modoPerfis == 'linha'){
+            listaPerfis.split('\n').forEach((usuario)=>{
                 const arrayDados = usuario.split(' ')
                 arrayPerfis.push({ 
                     usuario: arrayDados[0], 
                     senha: arrayDados[1] 
                 })
             })
-        }else if(modoVerificacao == 'coluna'){
-            const meusPerfis = seusPerfis.split('\n\n')
+        }else if(modoPerfis == 'coluna'){
+            const meusPerfis = listaPerfis.split('\n\n')
             meusPerfis.forEach((perfil)=>{
                 arrayPerfis.push({
                     usuario: perfil.split('\n')[0],
@@ -41,40 +58,14 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
         setExecutando(true)
         window.api.ipcRenderer.sendSync('tamanho-pequeno')
 
-        var intervalo = setInterval(()=>{
-
-            var perfisAtivos = 0 
-            var perfisInativos = 0 
-            var perfisNovamente = 0 
-
-            window.api.ipcRenderer.sendSync('logVerificar').forEach((mensagem)=>{
-                if(mensagem.includes('Perfil ativo') == true){
-                    perfisAtivos += 1
-                }
-
-                if(mensagem.includes('Tente novamente') == true){
-                    perfisNovamente += 1
-                }
-
-                if(mensagem.includes('Perfil inativo') == true){
-                    perfisInativos += 1
-                }
-            })
-
-            setAtivos(perfisAtivos)
-            setInativos(perfisInativos)
-            setNovamentes(perfisNovamente)
-            setAverificar(arrayPerfis.length - (perfisAtivos + perfisInativos + perfisNovamente))
-            
-            setMeusLogs(window.api.ipcRenderer.sendSync('logVerificar'))
+        var intervalo = setInterval(()=>{ 
+            setMeusLogs(window.api.ipcRenderer.sendSync('logMontador'))
             logs.scrollTop = logs.scrollHeight
-
-            if(window.api.ipcRenderer.sendSync('logVerificar')[window.api.ipcRenderer.sendSync('logVerificar').length - 1] == 'O robô terminou, pode voltar!'){
+            if(window.api.ipcRenderer.sendSync('logMontador')[window.api.ipcRenderer.sendSync('logMontador').length - 1] == 'O robô terminou, pode voltar!'){
                 setTimeout(clearInterval(intervalo), 3000)
                 logs.scrollTop = logs.scrollHeight
                 setDisplayVoltar('/painel')
             }
-
         }, 1000)
 
         const configs = {
@@ -85,19 +76,25 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
             },
             body: JSON.stringify({ 
                 caminhoNavegador,
-                visivel: modoInvisivel, 
-                login: limparLogin, 
-                anonimo: modoAnonimo, 
-                userAgent: userAgent, 
-                tempo: esperarSegundos, 
-                perfis: arrayPerfis 
+                modoInvisivel,
+                modoAnonimo,
+                userAgent,
+                generoPerfis,
+                modoPerfis,
+                listaPerfis: arrayPerfis,
+                pastaFotos,
+                fotoPerfil,
+                alterarBiografia,
+                quantidadePublicacoes,
+                limparLogin,
+                esperarEntre
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/verificar`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/montador`, configs)
         const resultado = await api.json()
 
-        setMensagem(<Mensagem cor='sucesso'>Verificador iniciado com sucesso!</Mensagem>)
+        setMensagem(<Mensagem cor='sucesso'>Montador iniciado com sucesso!</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }
 

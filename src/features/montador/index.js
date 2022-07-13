@@ -175,7 +175,7 @@ const Montador = ()=>{
                 <Logs>
                     {meusLogs.map((logs, index)=>(
                         logs === 'Acessando o instagram' || 
-                        logs === 'Verificando o perfil' || 
+                        logs === 'Alterando a biografia' || 
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
