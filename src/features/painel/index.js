@@ -12,13 +12,14 @@ import { redirecionar } from '../../functions/redirecionar'
 import verificadorIMG from './svg/verificador.svg'
 import gerenciadorIMG from './svg/gerenciador.svg'
 import removedorIMG from './svg/removedor.svg'
-import comprarIMG from './svg/comprar.svg'
+import montadorIMG from './svg/montador.svg'
 import criadorIMG from './svg/criador.svg'
 import suporteIMG from './svg/suporte.svg'
 import tutorialIMG from '../../assets/svg/tutorial.svg'
 import { useEffect, useState } from 'react'
 import { acessoGerenciador } from './functions/acessoGerenciador'
 import { acessoCriador } from './functions/acessoCriador'
+import { acessoMontador } from './functions/acessoMontador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const Painel = ()=>{
@@ -27,10 +28,12 @@ const Painel = ()=>{
     const Router = useNavigate()
     const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
     const [ meuAcessoCriador, setMeuAcessoCriador ] = useState(false)
+    const [ meuAcessoMontador, setMeuAcessoMontador ] = useState(false)
 
     useEffect(async()=>{
-        await acessoGerenciador(setMeuAcessoGerenciador)
         await acessoCriador(setMeuAcessoCriador)
+        await acessoMontador(setMeuAcessoMontador)
+        await acessoGerenciador(setMeuAcessoGerenciador)
     }, [])
 
     return (
@@ -40,24 +43,6 @@ const Painel = ()=>{
                 <Titulo>Olá, {nome}!</Titulo>
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
-                    <Servico 
-                        ativo={meuAcessoGerenciador}
-                        onClick={()=>{ 
-                            {meuAcessoGerenciador == true ? 
-                                redirecionar(Router, '/gerenciador')
-                                : 
-                                redirecionar(Router, '/comprar')
-                            }
-                        }}
-                    >
-                        <div>
-                            <img src={gerenciadorIMG}/>
-                        </div>
-                        <h1>Gerenciador</h1>
-                        <p>
-                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
-                        </p>
-                    </Servico>
                     <Servico 
                         ativo={meuAcessoCriador}
                         onClick={()=>{ 
@@ -74,6 +59,42 @@ const Painel = ()=>{
                         <h1>Criador</h1>
                         <p>
                             {meuAcessoCriador == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
+                    <Servico 
+                        ativo={meuAcessoMontador}
+                        onClick={()=>{ 
+                            {meuAcessoMontador == true ? 
+                                redirecionar(Router, '/montador')
+                                : 
+                                redirecionar(Router, '/comprarmontador')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={montadorIMG}/>
+                        </div>
+                        <h1>Montador</h1>
+                        <p>
+                            {meuAcessoMontador == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
+                    <Servico 
+                        ativo={meuAcessoGerenciador}
+                        onClick={()=>{ 
+                            {meuAcessoGerenciador == true ? 
+                                redirecionar(Router, '/gerenciador')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Gerenciador</h1>
+                        <p>
+                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
                 </Servicos>

@@ -5,6 +5,7 @@ const server = express()
 global.verificar = []
 global.removedor = []
 global.criador = []
+global.montador = []
 
 server.use(cors())
 server.use(express.urlencoded({ extended: true }))
@@ -22,6 +23,7 @@ server.use('/api/', require(`./routes/secure/transferirperfis`))
 server.use('/api/', require(`./routes/secure/pagamentos`))
 server.use('/api/', require(`./routes/secure/acessogerenciador`))
 server.use('/api/', require(`./routes/secure/acessocriador`))
+server.use('/api/', require(`./routes/secure/acessomontador`))
 server.use('/api/', require(`./routes/secure/abrirnavegador`))
 
 module.exports = server
