@@ -1,3 +1,5 @@
+var contador = 1
+
 const acessarPerfil = async(pagina, usuario, senha, logs)=>{
     try{
 
@@ -43,8 +45,19 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
 
     }catch(erro){
         console.log(erro.message)
-        logs.push(usuario + ' - Não conseguimos acessar esse perfil!')
-        return false
+
+        if(contador == 3){
+            logs.push(usuario + ' - Erro ao tentar acessar o perfil!')
+            return false
+        }else{
+            logs.push(usuario + ' - Não conseguimos acessar o perfil, mas iremos tentar novamente.')
+            contador = contador + 1
+            const cookies = await pagina.cookies()
+            await pagina.deleteCookie(...cookies)
+            await acessarPerfil(pagina, usuario, senha, logs)
+            contador = 0
+            return true
+        }
     }
 }
 

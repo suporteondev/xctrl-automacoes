@@ -1,4 +1,13 @@
-export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar){
+export async function iniciar(
+    Mensagem, 
+    setMensagem, 
+    setExecutando, 
+    setMeusLogs,  
+    setFotosPerfisNumero, 
+    setBiografiasAlteradasNumero, 
+    setPublicacoesRealizadasNumero, 
+    setDisplayVoltar
+){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
@@ -59,6 +68,29 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
         window.api.ipcRenderer.sendSync('tamanho-pequeno')
 
         var intervalo = setInterval(()=>{ 
+
+            var fotoPerfilAlteradas = 0 
+            var biografiasAlteradas = 0 
+            var publicacoesRealizadas = 0 
+
+            window.api.ipcRenderer.sendSync('logMontador').forEach((mensagem)=>{
+                if(mensagem.includes('Foto de perfil alterada com sucesso!') == true){
+                    fotoPerfilAlteradas += 1
+                }
+
+                if(mensagem.includes('Biografia alterada com sucesso!') == true){
+                    biografiasAlteradas += 1
+                }
+
+                if(mensagem.includes('Publicação realizada com sucesso!') == true){
+                    publicacoesRealizadas += 1
+                }
+            })
+
+            setFotosPerfisNumero(fotoPerfilAlteradas)
+            setBiografiasAlteradasNumero(biografiasAlteradas)
+            setPublicacoesRealizadasNumero(publicacoesRealizadas)
+
             setMeusLogs(window.api.ipcRenderer.sendSync('logMontador'))
             logs.scrollTop = logs.scrollHeight
             if(window.api.ipcRenderer.sendSync('logMontador')[window.api.ipcRenderer.sendSync('logMontador').length - 1] == 'O robô terminou, pode voltar!'){

@@ -29,10 +29,11 @@ const Montador = ()=>{
     const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
-    const [ ativos, setAtivos ] = useState(0)
-    const [ inativos, setInativos ] = useState(0)
-    const [ novamentes, setNovamentes ] = useState(0)
-    const [ averificar, setAverificar ] = useState(0)
+
+    const [ fotosPerfisNumero, setFotosPerfisNumero ] = useState(0)
+    const [ biografiasAlteradasNumero, setBiografiasAlteradasNumero ] = useState(0)
+    const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
+
     const { configuracoesMontador, setConfiguracoesMontador } = useConfiguracoesMontador()
 
     useEffect(async()=>{
@@ -164,7 +165,7 @@ const Montador = ()=>{
                             <span>Salvar configurações</span>
                             <img src={salvarIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar) }}>
+                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setFotosPerfisNumero, setBiografiasAlteradasNumero, setPublicacoesRealizadasNumero, setDisplayVoltar) }}>
                             <span>Iniciar</span>
                             <img src={iniciarIMG}/>
                         </Opcao>
@@ -176,6 +177,8 @@ const Montador = ()=>{
                     {meusLogs.map((logs, index)=>(
                         logs === 'Acessando o instagram' || 
                         logs === 'Alterando a biografia' || 
+                        logs === 'Alterando a foto de perfil' ||
+                        logs === 'Postando fotos no Feed' ||
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
@@ -184,20 +187,16 @@ const Montador = ()=>{
                 </Logs>
                 <Rodape>
                     <Opcao cor='#0A84FF'>
-                        <span>Não verificados</span>
-                        {averificar}
+                        <span>Fotos de perfis alteradas</span>
+                        {fotosPerfisNumero}
                     </Opcao>
                     <Opcao cor='#05A660'>
-                        <span>Perfis ativos</span>
-                        {ativos}
+                        <span>Biografias alteradas</span>
+                        {biografiasAlteradasNumero}
                     </Opcao>
-                    <Opcao cor='#FFA500'>
-                        <span>Tentar novamente</span>
-                        {novamentes}
-                    </Opcao>
-                    <Opcao cor='#E53535'>
-                        <span>Inativos</span>
-                        {inativos}
+                    <Opcao cor='#8257e5'>
+                        <span>Publicações realizadas</span>
+                        {publicacoesRealizadasNumero}
                     </Opcao>
                 </Rodape>
             </>

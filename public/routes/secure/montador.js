@@ -27,7 +27,9 @@ router.post('/montador', logado, connectDB, async(req, res)=>{
     const modoAnonimoConfigurado = modoAnonimo === 'sim' ? true : false 
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false 
     const alterarBiografiaConfigurado = alterarBiografia === 'sim' ? true : false 
+    const fotoPerfilConfigurado = fotoPerfil === 'sim' ? true : false 
     const esperarEntreConfigurado = Number(esperarEntre) * 1000
+    const quantidadePublicacoesConfigurado = Number(quantidadePublicacoes)
 
     await montador(
         caminhoNavegador, 
@@ -37,9 +39,9 @@ router.post('/montador', logado, connectDB, async(req, res)=>{
         modoPerfis,
         listaPerfis,
         pastaFotos,
-        fotoPerfil,
+        fotoPerfilConfigurado,
         alterarBiografiaConfigurado,
-        quantidadePublicacoes,
+        quantidadePublicacoesConfigurado,
         limparLoginConfigurado,
         esperarEntreConfigurado,
         global.montador

@@ -178,9 +178,9 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
             logs.push(usuario + ' - Não conseguimos alterar a biografia mas iremos tentar novamente.')
             contador = contador + 1
             await alterarBiografiaPerfil(pagina, usuario, generoPerfis, logs)
+            contador = 0
+            return true
         }
-
-        return false
     }
 }
 

@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer-core')
 const UserAgent = require("user-agents")
+const fs = require('fs')
 const acessarPerfil = require('./instagram/acessarPerfil')
 const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
+const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
+const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
 
 const montador = async(
     caminhoNavegador, 
@@ -11,9 +14,9 @@ const montador = async(
     modoPerfis,
     listaPerfis,
     pastaFotos,
-    fotoPerfil,
-    alterarBiografia,
-    quantidadePublicacoes,
+    fotoPerfilConfigurado,
+    alterarBiografiaConfigurado,
+    quantidadePublicacoesConfigurado,
     limparLoginConfigurado,
     esperarEntreConfigurado,
     logs
@@ -62,14 +65,39 @@ const montador = async(
             continue
         }
 
+        // ALTERANDO A FOTO DE PERFIL
+        if(fotoPerfilConfigurado == true){
+            const resultadoAlterarFotoPerfil = await alterarFotoPerfil(pagina, usuario, pastaFotos, logs)
+            if(resultadoAlterarFotoPerfil == false){
+                await navegador.close()
+                continue
+            }
+        }
+
         // ALTERANDO A BIOGRAFIA
-        if(alterarBiografia == true){
+        if(alterarBiografiaConfigurado == true){
             const resultadoAlterarBiografia = await alterarBiografiaPerfil(pagina, usuario, generoPerfis, logs)
             if(resultadoAlterarBiografia == false){
                 await navegador.close()
                 continue
             }
         }
+
+        // REALIZANDO PUBLICAÇÕES NO FEED
+        if(quantidadePublicacoesConfigurado != 0 || quantidadePublicacoesConfigurado != '0' || quantidadePublicacoesConfigurado != ''){
+            
+            logs.push(`Postando fotos no Feed`)
+            for(let x = 0; x < quantidadePublicacoesConfigurado; x++){
+
+                // REALIZANDO A PUBLICAÇÃO
+                const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(pagina, x + 1 ,usuario, pastaFotos, logs)
+                if(resultadoRealizarPublicacoesFeed == false){
+                    await navegador.close()
+                    continue
+                }      
+            }
+        }
+
 
         await navegador.close()
     }
