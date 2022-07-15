@@ -57,6 +57,9 @@ const criador = async(
         // User agents
         const { userAgent } = new UserAgent({ deviceCategory: "desktop" })
         await paginaEmail.setUserAgent(userAgent)
+        await paginaEmail.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
 
         // Capturando email no paginaEmail
         let resEmail
@@ -83,6 +86,9 @@ const criador = async(
         }
 
         await paginaInstagram.setUserAgent(userAgent)
+        await paginaInstagram.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
 
         // Preenchendo os dados no instagram
         const resPreencher = await preencherDados(x, paginaInstagram, email, senhaPerfis, generoPerfis, logs)

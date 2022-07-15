@@ -57,6 +57,9 @@ const montador = async(
         // SELECIONANDO UM USER AGENT MOBILE
         const { userAgent } = new UserAgent({ deviceCategory: 'mobile' })
         await pagina.setUserAgent(userAgent)
+        await pagina.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
 
         // ACESSANDO O INSTAGRAM
         const resultadoAcessar = await acessarPerfil(pagina, usuario, senha, logs)

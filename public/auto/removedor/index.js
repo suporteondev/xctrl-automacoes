@@ -44,6 +44,9 @@ const removedor = async(
     // CONFIGURANDO O USER AGENT
     await pagina.setCacheEnabled(false)
     await pagina.setUserAgent(userAgent)
+    await pagina.setExtraHTTPHeaders({
+        'Accept-Language': 'pt-br'
+    })
 
     // ACESSANDO O GANHAR NO INSTA
     const resultado = await acessarGanharNoInsta(pagina, emailPlataforma, senhaPlataforma)

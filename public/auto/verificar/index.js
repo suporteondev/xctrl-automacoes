@@ -41,6 +41,9 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
 
         await pagina.setCacheEnabled(false)
         await pagina.setUserAgent(userAgent)
+        await pagina.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
         
         // Capturando o perfil
         const { usuario, senha } = perfis[x]

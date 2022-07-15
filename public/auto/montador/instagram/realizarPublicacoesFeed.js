@@ -46,14 +46,14 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
 
         // ACESSANDO O PERFIL
         await pagina.goto('https://www.instagram.com/' + usuario)
-        await pagina.waitForSelector('svg[aria-label="New publication"]')
+        await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
 
         // Selecionando a publicação
         logs.push(`${usuario} - Selecionado a ${x}ª publicação.`)
         const [ uploadPublicacoes ] = await Promise.all([
             pagina.waitForFileChooser(),
-            pagina.waitForSelector('svg[aria-label="New publication"]'),
-            pagina.click('svg[aria-label="New publication"]')
+            pagina.waitForSelector('svg[aria-label="Nova publicação"]'),
+            pagina.click('svg[aria-label="Nova publicação"]')
         ])
 
         await uploadPublicacoes.accept([ publicacao ])
@@ -68,8 +68,8 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
         await pagina.waitForSelector('textarea[aria-label="Escreva uma legenda..."]')
         await pagina.click('button._ab5p')
 
-        // Esperando aparecer o botão de New publication
-        await pagina.waitForSelector('svg[aria-label="New publication"]')
+        // Esperando aparecer o botão de Nova publicação
+        await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
         logs.push(usuario + ' - Publicação realizada com sucesso!')
 
         return true
