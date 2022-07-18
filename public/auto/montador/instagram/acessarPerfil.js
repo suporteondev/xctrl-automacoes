@@ -44,10 +44,9 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
         return true
 
     }catch(erro){
-        console.log(erro.message)
-
         if(contador == 3){
             logs.push(usuario + ' - Erro ao tentar acessar o perfil!')
+            contador = 0
             return false
         }else{
             logs.push(usuario + ' - Não conseguimos acessar o perfil, mas iremos tentar novamente.')
@@ -56,7 +55,7 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
             await pagina.deleteCookie(...cookies)
             await acessarPerfil(pagina, usuario, senha, logs)
             contador = 0
-            return true
+            return false
         }
     }
 }

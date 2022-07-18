@@ -5,6 +5,7 @@ const acessarPerfil = require('./instagram/acessarPerfil')
 const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
 const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
 const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
+var pastaEscolhida = []
 
 const montador = async(
     caminhoNavegador, 
@@ -88,19 +89,34 @@ const montador = async(
 
         // REALIZANDO PUBLICAÇÕES NO FEED
         if(quantidadePublicacoesConfigurado != 0 || quantidadePublicacoesConfigurado != '0' || quantidadePublicacoesConfigurado != ''){
+
+            // REALIZANDO A PUBLICAÇÃO
+            const pastas = fs.readdirSync(pastaFotos)
+            let caminhoPasta = ''
+
+            async function selecionarCaminho(){
+                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
+                caminhoPasta = `${pastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+
+                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
+                    selecionarCaminho()
+                }
+
+                pastaEscolhida.push(caminhoPasta)
+            }
+
+            await selecionarCaminho()
             
             logs.push(`Postando fotos no Feed`)
             for(let x = 0; x < quantidadePublicacoesConfigurado; x++){
 
-                // REALIZANDO A PUBLICAÇÃO
-                const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(pagina, x + 1 ,usuario, pastaFotos, logs)
+                const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(pagina, x + 1 ,usuario, caminhoPasta, logs)
                 if(resultadoRealizarPublicacoesFeed == false){
                     await navegador.close()
                     continue
                 }      
             }
         }
-
 
         await navegador.close()
     }

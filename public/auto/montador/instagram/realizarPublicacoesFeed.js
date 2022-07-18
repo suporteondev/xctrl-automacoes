@@ -1,48 +1,26 @@
 const fs = require('fs')
 var contador = 1
-
-// let spam1 = await pagina.evaluate(()=>{
-
-//     let refsH2 = document.querySelectorAll('h2')
-
-//     for(let x = 0; x < refsH2.length; x++){
-
-//         // Capturando o H2
-//         const elemento = refsH2[x]
-
-//         // Verificando se ocorreu algum SPAM
-//         if(elemento.innerText == 'Sua publicação vai contra nossas Diretrizes da Comunidade'){
-//             return true
-//         }else{
-//             return false
-//         }
-//     }
-// })
-
-// if(spam1 == true){
-
-//     // Clicando no botão do spam
-//     await pagina.evaluate(()=>{
-//         document.querySelectorAll('button').forEach((e)=>{
-//             if(e.innerText == 'OK'){
-//                 e.click()
-//             }
-//         })
-//     })
-
-//     // Spam
-//     logs.push(usuario + ' - A publicação sofreu spam.')
-//     await pagina.waitForSelector('a[href="/accounts/edit/"]')
-
-//     throw new Error('Spam')
-// }
+var publicacoesEscolhidas = []
 
 const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
     try{
-
+        
         // CAPTURANDO A PUBLICAÇÃO
         const publicacoes = fs.readdirSync(pastaFotos)
-        const publicacao = `${pastaFotos}\\${publicacoes[Math.floor(Math.random() * publicacoes.length)]}`
+        let publicacao = ''
+
+        async function selecionarPublicacao(){
+            publicacoesEscolhidas.length == publicacoes.length ? publicacoesEscolhidas = [] : ''
+            publicacao = `${pastaFotos}\\${publicacoes[Math.floor(Math.random() * publicacoes.length)]}`
+
+            if(publicacoesEscolhidas.indexOf(publicacao) >=0){
+                selecionarPublicacao()
+            }
+
+            publicacoesEscolhidas.push(publicacao)
+        }
+
+        await selecionarPublicacao()
 
         // ACESSANDO O PERFIL
         await pagina.goto('https://www.instagram.com/' + usuario)
@@ -74,17 +52,16 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
 
         return true
     }catch(erro){
-        console.log(erro.message)
-
         if(contador == 3){
             logs.push(usuario + ` - Erro ao tentar publicar a ${x} publicação!`)
+            contador = 0
             return false
         }else{
             logs.push(usuario + ` - Não conseguimos realizar a ${x} publicação, mas iremos tentar novamente.`)
             contador = contador + 1
             await realizarPublicacoesFeed(pagina, x, usuario, pastaFotos, logs)
             contador = 0
-            return true
+            return false
         }
     }
 }

@@ -56,18 +56,16 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
  
         return true 
     }catch(erro){
-
-        console.log(erro.message)
-
         if(contador == 3){
             logs.push(usuario + ' - Erro ao tentar alterar a foto de perfil!')
+            contador = 0
             return false
         }else{
             logs.push(usuario + ' - Não conseguimos alterar a foto de perfil, mas iremos tentar novamente.')
             contador = contador + 1
             await alterarFotoPerfil(pagina, usuario, pastaFotos, logs)
             contador = 0
-            return true
+            return false
         }
     }
 }
