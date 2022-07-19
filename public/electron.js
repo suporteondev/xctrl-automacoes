@@ -75,7 +75,8 @@ app.on('ready', async () => {
             alterarBiografia: 'sim',
             quantidadePublicacoes: '10',
             limparLogin: 'sim',
-            esperarEntre: '0'
+            esperarEntre: '0',
+            montarPerfis: 'sim'
         })
     }
 

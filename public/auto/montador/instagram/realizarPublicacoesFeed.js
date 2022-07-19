@@ -14,10 +14,10 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
             publicacao = `${pastaFotos}\\${publicacoes[Math.floor(Math.random() * publicacoes.length)]}`
 
             if(publicacoesEscolhidas.indexOf(publicacao) >=0){
-                selecionarPublicacao()
+                return selecionarPublicacao()
             }
 
-            publicacoesEscolhidas.push(publicacao)
+            return publicacoesEscolhidas.push(publicacao)
         }
 
         await selecionarPublicacao()

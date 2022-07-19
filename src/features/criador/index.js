@@ -22,12 +22,18 @@ import { Logs } from './components/logs'
 import { dataCriador } from './functions/dataCriador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { userAgents } from '../../userAgents'
+import { acessoGerenciador } from './functions/acessoGerenciador'
+import { acessoMontador } from './functions/acessoMontador'
 
 const Criador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
     const [ dataAcessoCriador, setDataAcessoCriador ] = useState('Sem acesso')
+
+    const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
+    const [ meuAcessoMontador, setMeuAcessoMontador ] = useState(false)
+
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ criadasSucesso, setCriadasSucesso ] = useState(0)
@@ -36,6 +42,8 @@ const Criador = ()=>{
 
     useEffect(async()=>{
         await dataCriador(setDataAcessoCriador)
+        await acessoMontador(setMeuAcessoMontador)
+        await acessoGerenciador(setMeuAcessoGerenciador)
     }, [])
 
     return (
@@ -103,13 +111,25 @@ const Criador = ()=>{
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
-                            <Caixa>
-                                <Etiqueta>Como salvar os perfis</Etiqueta>
-                                <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
-                                    <option value='linha'>Modo linha - TXT</option>
-                                    <option value='coluna'>Modo coluna - TXT</option>
-                                </Select>
-                            </Caixa>
+
+                            {meuAcessoMontador == true ? 
+                                <Caixa>
+                                    <Etiqueta>Como salvar os perfis</Etiqueta>
+                                    <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
+                                        <option value='linha'>Modo linha - TXT</option>
+                                        <option value='coluna'>Modo coluna - TXT</option>
+                                        <option value='gerenciador'>Salvar no gerenciador</option>
+                                    </Select>
+                                </Caixa>
+                                : 
+                                <Caixa>
+                                    <Etiqueta>Como salvar os perfis</Etiqueta>
+                                    <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
+                                        <option value='linha'>Modo linha - TXT</option>
+                                        <option value='coluna'>Modo coluna - TXT</option>
+                                    </Select>
+                                </Caixa>
+                            }
                             <Caixa>
                                 <Etiqueta>Onde salvar os perfis</Etiqueta>
                                 <Entrada name='ondeSalvar' type='text' defaultValue={configuracoesCriador.ondeSalvar}/>
@@ -118,6 +138,17 @@ const Criador = ()=>{
                                 <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
+                            {meuAcessoMontador == true ? 
+                            <Caixa>
+                                <Etiqueta>Montar perfis criados</Etiqueta>
+                                <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            : 
+                            ''
+                            }
                             {mensagem}
                         </Configuracoes>
                     </Conteudos>

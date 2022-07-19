@@ -69,9 +69,26 @@ const montador = async(
             continue
         }
 
+        // REALIZANDO A PUBLICAÇÃO
+        const pastas = fs.readdirSync(pastaFotos)
+        let caminhoPasta = ''
+
+        async function selecionarCaminho(){
+            pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
+            caminhoPasta = `${pastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+
+            if(pastaEscolhida.indexOf(caminhoPasta) >=0){
+                return selecionarCaminho()
+            }
+
+            return pastaEscolhida.push(caminhoPasta)
+        }
+
+        await selecionarCaminho()
+
         // ALTERANDO A FOTO DE PERFIL
         if(fotoPerfilConfigurado == true){
-            const resultadoAlterarFotoPerfil = await alterarFotoPerfil(pagina, usuario, pastaFotos, logs)
+            const resultadoAlterarFotoPerfil = await alterarFotoPerfil(pagina, usuario, caminhoPasta, logs)
             if(resultadoAlterarFotoPerfil == false){
                 await navegador.close()
                 continue
@@ -89,24 +106,6 @@ const montador = async(
 
         // REALIZANDO PUBLICAÇÕES NO FEED
         if(quantidadePublicacoesConfigurado != 0 || quantidadePublicacoesConfigurado != '0' || quantidadePublicacoesConfigurado != ''){
-
-            // REALIZANDO A PUBLICAÇÃO
-            const pastas = fs.readdirSync(pastaFotos)
-            let caminhoPasta = ''
-
-            async function selecionarCaminho(){
-                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
-                caminhoPasta = `${pastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
-
-                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
-                    selecionarCaminho()
-                }
-
-                pastaEscolhida.push(caminhoPasta)
-            }
-
-            await selecionarCaminho()
-            
             logs.push(`Postando fotos no Feed`)
             for(let x = 0; x < quantidadePublicacoesConfigurado; x++){
 

@@ -12,6 +12,7 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesCriador){
     const comoSalvar = document.querySelector('[name="comoSalvar"]').value
     const ondeSalvar = document.querySelector('[name="ondeSalvar"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
+    const montarPerfis = document.querySelector('[name="montarPerfis"]').value
     const logs = document.querySelector('#logs')
 
     const configuracoes = {
@@ -26,7 +27,8 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesCriador){
         limparLogin,
         comoSalvar,
         ondeSalvar,
-        esperarEntre
+        esperarEntre,
+        montarPerfis
     }
     
     window.api.ipcRenderer.sendSync('setConfiguracoesCriador', configuracoes)

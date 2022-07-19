@@ -1,5 +1,8 @@
 const fs = require('fs')
 const limpandoLogin = require('./limpandoLogin')
+const Perfil = require('../../../models/perfil')
+const Store = require('electron-store')
+const store = new Store()
 
 const digitandoCodigo = async(
     identificador, 
@@ -51,6 +54,16 @@ const digitandoCodigo = async(
                     console.log(err)
                 }
                 console.log('Atualizado!')
+            })
+        }else if(comoSalvar == 'gerenciador'){
+            await Perfil.create({
+                ref: store.get('logado'),
+                usuario: usuario,
+                senha: senha,
+                publicacoes: '0',
+                seguidores: '0',
+                seguindo: '0',
+                status: 'ativo'
             })
         }
 
