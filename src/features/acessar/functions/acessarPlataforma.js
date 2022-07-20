@@ -1,3 +1,5 @@
+import { verificarAcessos } from './verificarAcessos'
+
 async function acessarPlataforma(
     e, 
     Router, 
@@ -5,7 +7,10 @@ async function acessarPlataforma(
     senha, 
     Mensagem, 
     setMensagem,
-    setUsuarioLogado
+    setUsuarioLogado,
+    setAcessoGerenciador,
+    setAcessoCriador,
+    setAcessoMontador
 ){
 
     e.preventDefault()  
@@ -38,13 +43,21 @@ async function acessarPlataforma(
         setUsuarioLogado(usuarioLogado)
         window.api.ipcRenderer.sendSync('setUsuarioLogado', usuarioLogado)
 
-        setTimeout(()=>{
-            setMensagem(<Mensagem color='#05A660'>Estamos verificando seus acessos...</Mensagem>)
-        }, 2000)
+        setTimeout(async()=>{
 
-        setTimeout(()=>{
-            Router('/painel')
-        }, 4000)
+            setMensagem(<Mensagem color='#05A660'>Estamos verificando seus acessos...</Mensagem>)
+            
+            await verificarAcessos(
+                setAcessoCriador,
+                setAcessoMontador,
+                setAcessoGerenciador
+            )
+
+            setTimeout(()=>{
+                Router('/painel')
+            }, 2000)
+
+        }, 2000)
     }
 }
 

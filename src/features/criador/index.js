@@ -14,36 +14,30 @@ import iniciarIMG from '../../assets/svg/iniciar.svg'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useConfiguracoesCriador } from '../../providers/configuracoesCriador'
 import { salvar } from './functions/salvar'
 import { Logs } from './components/logs'
-import { dataCriador } from './functions/dataCriador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { userAgents } from '../../userAgents'
-import { acessoGerenciador } from './functions/acessoGerenciador'
-import { acessoMontador } from './functions/acessoMontador'
+import { useAcessoCriador } from '../../providers/acessoCriador'
+import { useAcessoMontador } from '../../providers/acessoMontador'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 
 const Criador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
-    const [ dataAcessoCriador, setDataAcessoCriador ] = useState('Sem acesso')
 
-    const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
-    const [ meuAcessoMontador, setMeuAcessoMontador ] = useState(false)
+    const { acessoCriador } = useAcessoCriador()
+    const { acessoMontador } = useAcessoMontador()
+    const { acessoGerenciador } = useAcessoGerenciador()
 
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ criadasSucesso, setCriadasSucesso ] = useState(0)
     const [ naoCriadas, setNaoCriadas ] = useState(0)
     const { configuracoesCriador, setConfiguracoesCriador } = useConfiguracoesCriador()
-
-    useEffect(async()=>{
-        await dataCriador(setDataAcessoCriador)
-        await acessoMontador(setMeuAcessoMontador)
-        await acessoGerenciador(setMeuAcessoGerenciador)
-    }, [])
 
     return (
         <>
@@ -111,7 +105,7 @@ const Criador = ()=>{
                                 </Select>
                             </Caixa>
 
-                            {meuAcessoMontador == true ? 
+                            {acessoGerenciador.status == true ? 
                                 <Caixa>
                                     <Etiqueta>Como salvar os perfis</Etiqueta>
                                     <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
@@ -137,7 +131,7 @@ const Criador = ()=>{
                                 <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
-                            {meuAcessoMontador == true ? 
+                            {acessoMontador.status == true ? 
                             <Caixa>
                                 <Etiqueta>Montar perfis criados</Etiqueta>
                                 <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
@@ -153,11 +147,11 @@ const Criador = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            {dataAcessoCriador == 'Sem acesso' ? 
+                            {acessoCriador.data == 'Sem acesso' ? 
                                 ''
                                 :
                                 <span>
-                                    {dataAcessoCriador == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcessoCriador}
+                                    {acessoCriador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoCriador.data}
                                 </span>
                             }
                             <img src={tempoIMG}/>

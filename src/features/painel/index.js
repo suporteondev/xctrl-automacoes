@@ -13,26 +13,20 @@ import montadorIMG from './svg/montador.svg'
 import criadorIMG from './svg/criador.svg'
 import suporteIMG from './svg/suporte.svg'
 import tutorialIMG from '../../assets/svg/tutorial.svg'
-import { useEffect, useState } from 'react'
-import { acessoGerenciador } from './functions/acessoGerenciador'
-import { acessoCriador } from './functions/acessoCriador'
-import { acessoMontador } from './functions/acessoMontador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useUsuarioLogado } from '../../providers/usuarioLogado'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
+import { useAcessoCriador } from '../../providers/acessoCriador'
+import { useAcessoMontador } from '../../providers/acessoMontador'
 
 const Painel = ()=>{
 
     const { usuarioLogado } = useUsuarioLogado()
     const Router = useNavigate()
-    const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
-    const [ meuAcessoCriador, setMeuAcessoCriador ] = useState(false)
-    const [ meuAcessoMontador, setMeuAcessoMontador ] = useState(false)
 
-    useEffect(async()=>{
-        await acessoCriador(setMeuAcessoCriador)
-        await acessoMontador(setMeuAcessoMontador)
-        await acessoGerenciador(setMeuAcessoGerenciador)
-    }, [])
+    const { acessoGerenciador } = useAcessoGerenciador()
+    const { acessoCriador } = useAcessoCriador()
+    const { acessoMontador } = useAcessoMontador()
 
     return (
         <>
@@ -42,9 +36,9 @@ const Painel = ()=>{
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
                     <Servico 
-                        ativo={meuAcessoCriador}
+                        ativo={acessoCriador.status}
                         onClick={()=>{ 
-                            {meuAcessoCriador == true ? 
+                            {acessoCriador.status == true ? 
                                 redirecionar(Router, '/criador')
                                 : 
                                 redirecionar(Router, '/comprarcriador')
@@ -56,13 +50,13 @@ const Painel = ()=>{
                         </div>
                         <h1>Criador</h1>
                         <p>
-                            {meuAcessoCriador == true ? 'Ativo': 'Inativo'}
+                            {acessoCriador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
                     <Servico 
-                        ativo={meuAcessoMontador}
+                        ativo={acessoMontador.status}
                         onClick={()=>{ 
-                            {meuAcessoMontador == true ? 
+                            {acessoMontador.status == true ? 
                                 redirecionar(Router, '/montador')
                                 : 
                                 redirecionar(Router, '/comprarmontador')
@@ -74,13 +68,13 @@ const Painel = ()=>{
                         </div>
                         <h1>Montador</h1>
                         <p>
-                            {meuAcessoMontador == true ? 'Ativo': 'Inativo'}
+                            {acessoMontador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
                     <Servico 
-                        ativo={meuAcessoGerenciador}
+                        ativo={acessoGerenciador.status}
                         onClick={()=>{ 
-                            {meuAcessoGerenciador == true ? 
+                            {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/gerenciador')
                                 : 
                                 redirecionar(Router, '/comprar')
@@ -92,7 +86,7 @@ const Painel = ()=>{
                         </div>
                         <h1>Gerenciador</h1>
                         <p>
-                            {meuAcessoGerenciador == true ? 'Ativo': 'Inativo'}
+                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
                 </Servicos>

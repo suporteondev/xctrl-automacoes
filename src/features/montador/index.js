@@ -14,31 +14,25 @@ import iniciarIMG from '../../assets/svg/iniciar.svg'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useConfiguracoesMontador } from '../../providers/configuracoesMontador'
-import { dataMontador } from './functions/dataMontador'
+import { useAcessoMontador } from '../../providers/acessoMontador'
 
 const Montador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
-    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
+    const { acessoMontador } = useAcessoMontador()
     const [ meusLogs, setMeusLogs ] = useState([])
-
     const [ fotosPerfisNumero, setFotosPerfisNumero ] = useState(0)
     const [ biografiasAlteradasNumero, setBiografiasAlteradasNumero ] = useState(0)
     const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
-
     const { configuracoesMontador, setConfiguracoesMontador } = useConfiguracoesMontador()
-
-    useEffect(async()=>{
-        await dataMontador(setDataAcesso)
-    }, [])
 
     return (
         <>
@@ -148,11 +142,11 @@ const Montador = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            {dataAcesso == 'Sem acesso' ? 
+                            {acessoMontador.data == 'Sem acesso' ? 
                                 ''
                                 :
                                 <span>
-                                    {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                                    {acessoMontador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoMontador.data}
                                 </span>
                             }
                             <img src={tempoIMG}/>

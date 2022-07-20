@@ -12,10 +12,16 @@ import { Cabeca } from '../../components/cabeca/index'
 import { Rodape } from '../../components/rodape/index'
 import { Titulo } from './components/titulo'
 import { useUsuarioLogado } from '../../providers/usuarioLogado'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
+import { useAcessoCriador } from '../../providers/acessoCriador'
+import { useAcessoMontador } from '../../providers/acessoMontador'
 
 const Acessar = ()=>{
 
     const { usuarioLogado, setUsuarioLogado } = useUsuarioLogado()
+    const { setAcessoGerenciador } = useAcessoGerenciador()
+    const { setAcessoCriador } = useAcessoCriador()
+    const { setAcessoMontador } = useAcessoMontador()
     const [ mensagem, setMensagem ] = useState(<Mensagem color='#fff'></Mensagem>)
     const Router = useNavigate()
 
@@ -30,7 +36,10 @@ const Acessar = ()=>{
                     document.querySelector('[name="senha"]').value, 
                     Mensagem,
                     setMensagem, 
-                    setUsuarioLogado
+                    setUsuarioLogado,
+                    setAcessoGerenciador,
+                    setAcessoCriador,
+                    setAcessoMontador
                 )}
             >
                 <Titulo>Acessar plataforma</Titulo>

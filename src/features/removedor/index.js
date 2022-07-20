@@ -14,27 +14,23 @@ import iniciarIMG from '../../assets/svg/iniciar.svg'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useConfiguracoesRemovedor } from '../../providers/configuracoesRemovedor'
 import { salvar } from './functions/salvar'
 import { Logs } from './components/logs'
-import { dataGerenciador } from './functions/dataGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 
 const Removedor = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
-    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
+    const { acessoGerenciador } = useAcessoGerenciador()
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ perfisDesativados, setPerfisDesativados ] = useState(0)
     const [ saldoPerdido, setSaldoPerdido ] = useState('R$0.00')
     const { configuracoesRemovedor, setConfiguracoesRemovedor } = useConfiguracoesRemovedor()
-
-    useEffect(async()=>{
-        await dataGerenciador(setDataAcesso)
-    }, [])
 
     return (
         <>
@@ -107,11 +103,11 @@ const Removedor = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            {dataAcesso == 'Sem acesso' ? 
+                            {acessoGerenciador.data == 'Sem acesso' ? 
                                 ''
                                 :
                                 <span>
-                                    {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                                    {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
                                 </span>
                             }
                             <img src={tempoIMG}/>

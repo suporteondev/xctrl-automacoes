@@ -31,14 +31,16 @@ import { redirecionar } from '../../functions/redirecionar'
 import { useNavigate } from 'react-router-dom'
 import { mostrarSenhas } from './functions/mostrarSenhas'
 import { Carregando } from '../../components/carregando'
-import { dataGerenciador } from './functions/dataGerenciador'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
  
 const Gerenciador = ()=>{
 
     const { perfis, setPerfis } = usePerfis()
     const [ blur, setBlur ] = useState(false)
-    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
+
+    const { acessoGerenciador } = useAcessoGerenciador()
+
     const [ displayFiltrarCarregando, setDisplayFiltrarCarregando ] = useState('none')
     const [ displayTransferirCarregando, setDisplayTransferirCarregando ] = useState('none')
     const [ displayApagarCarregando, setDisplayApagarCarregando ] = useState('none')
@@ -48,10 +50,6 @@ const Gerenciador = ()=>{
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
-
-    useEffect(async()=>{
-        await dataGerenciador(setDataAcesso)
-    }, [])
 
     return (
         <div>
@@ -240,11 +238,11 @@ const Gerenciador = ()=>{
 
             <Rodape blur={blur}>
                 <Opcao>
-                    {dataAcesso == 'Sem acesso' ? 
+                    {acessoGerenciador.data == 'Sem acesso' ? 
                         ''
                         :
                         <span>
-                            {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                            {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
                         </span>
                     }
                     <img src={dataIMG}/>

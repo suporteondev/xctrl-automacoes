@@ -14,19 +14,19 @@ import iniciarIMG from '../../assets/svg/iniciar.svg'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useConfiguracoesVerificador } from '../../providers/configuracoesVerificador'
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
-import { dataGerenciador } from './functions/dataGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 
 const Verificador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
-    const [ dataAcesso, setDataAcesso ] = useState('Sem acesso')
+    const { acessoGerenciador } = useAcessoGerenciador()
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ ativos, setAtivos ] = useState(0)
@@ -34,10 +34,6 @@ const Verificador = ()=>{
     const [ novamentes, setNovamentes ] = useState(0)
     const [ averificar, setAverificar ] = useState(0)
     const { configuracoesVerificador, setConfiguracoesVerificador } = useConfiguracoesVerificador()
-
-    useEffect(async()=>{
-        await dataGerenciador(setDataAcesso)
-    }, [])
 
     return (
         <>
@@ -117,11 +113,11 @@ const Verificador = ()=>{
                     </Conteudos>
                     <Rodape>
                         <Opcao>
-                            {dataAcesso == 'Sem acesso' ? 
+                            {acessoGerenciador.data == 'Sem acesso' ? 
                                 ''
                                 :
                                 <span>
-                                    {dataAcesso == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + dataAcesso}
+                                    {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
                                 </span>
                             }
                             <img src={tempoIMG}/>

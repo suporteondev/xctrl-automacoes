@@ -16,35 +16,44 @@ import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
 import Suporte from './pages/suporte'
 import { UsuarioLogadoProvider } from './providers/usuarioLogado'
+import { AcessoCriadorProvider } from './providers/acessoCriador'
+import { AcessoMontadorProvider } from './providers/acessoMontador'
+import { AcessoGerenciadorProvider } from './providers/acessoGerenciador'
 
 export default function App() {
     return (
-        <ConfiguracoesMontadorProvider>
-            <ConfiguracoesCriadorProvider>
-                <ConfiguracoesRemovedorProvider>
-                    <ConfiguracoesVerificadorProvider>
-                        <UsuarioLogadoProvider>
-                            <TemaProvider>
-                                <HashRouter>
-                                    <Routes>
-                                        <Route exact path='/' element={<Acessar/>} />
-                                        <Route exact path='/painel' element={<Painel/>} />
-                                        <Route exact path='/comprar' element={<Comprar/>} />
-                                        <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
-                                        <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
-                                        <Route exact path='/suporte' element={<Suporte/>} />
-                                        <Route exact path='/gerenciador' element={<Gerenciador/>} />
-                                        <Route exact path='/verificador' element={<Verificador/>} />
-                                        <Route exact path='/criador' element={<Criador/>} />
-                                        <Route exact path='/montador' element={<Montador/>} />
-                                        <Route exact path='/removedor' element={<Removedor/>} />
-                                    </Routes>
-                                </HashRouter>
-                            </TemaProvider>
-                        </UsuarioLogadoProvider>
-                    </ConfiguracoesVerificadorProvider>
-                </ConfiguracoesRemovedorProvider>
-            </ConfiguracoesCriadorProvider>
-        </ConfiguracoesMontadorProvider>
+        <AcessoCriadorProvider>
+            <AcessoMontadorProvider>
+                <AcessoGerenciadorProvider>
+                    <ConfiguracoesMontadorProvider>
+                        <ConfiguracoesCriadorProvider>
+                            <ConfiguracoesRemovedorProvider>
+                                <ConfiguracoesVerificadorProvider>
+                                    <UsuarioLogadoProvider>
+                                        <TemaProvider>
+                                            <HashRouter>
+                                                <Routes>
+                                                    <Route exact path='/' element={<Acessar/>} />
+                                                    <Route exact path='/painel' element={<Painel/>} />
+                                                    <Route exact path='/comprar' element={<Comprar/>} />
+                                                    <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
+                                                    <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
+                                                    <Route exact path='/suporte' element={<Suporte/>} />
+                                                    <Route exact path='/gerenciador' element={<Gerenciador/>} />
+                                                    <Route exact path='/verificador' element={<Verificador/>} />
+                                                    <Route exact path='/criador' element={<Criador/>} />
+                                                    <Route exact path='/montador' element={<Montador/>} />
+                                                    <Route exact path='/removedor' element={<Removedor/>} />
+                                                </Routes>
+                                            </HashRouter>
+                                        </TemaProvider>
+                                    </UsuarioLogadoProvider>
+                                </ConfiguracoesVerificadorProvider>
+                            </ConfiguracoesRemovedorProvider>
+                        </ConfiguracoesCriadorProvider>
+                    </ConfiguracoesMontadorProvider>
+                </AcessoGerenciadorProvider>
+            </AcessoMontadorProvider>
+        </AcessoCriadorProvider>
     )
 }
