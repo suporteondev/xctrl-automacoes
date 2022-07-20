@@ -6,7 +6,7 @@ const store = new Store();
 
 router.post('/pagamentos', logado, async(req, res)=>{
 
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
     const { servico } = req.body
 
     // Configurando as credenciais

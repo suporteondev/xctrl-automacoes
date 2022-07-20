@@ -7,7 +7,7 @@ const store = new Store()
 
 router.post('/acessomontador', logado, connectDB, async(req, res)=>{
     
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
     const acessoMontador = await Montador.findOne({ ref: email })
     let meuAcesso = acessoMontador
 

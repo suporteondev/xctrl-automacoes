@@ -9,7 +9,7 @@ const store = new Store()
 router.post('/transferirperfis', logado, connectDB, async(req, res)=>{
 
     const { ref, perfis } = req.body
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
 
     const existe = await User.findOne({ email: ref })
 

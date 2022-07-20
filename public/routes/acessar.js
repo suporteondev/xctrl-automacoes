@@ -33,7 +33,7 @@ router.post('/acessar', connectDB, async(req, res)=>{
     }catch(erro){
         return res.json({ 
             ok: false, 
-            mensagem: 'Não conseguimos conectar ao banco. Verifique sua rede e tente novamente.',
+            mensagem: 'Verifique sua internet e tente novamente!',
         })
     }
 

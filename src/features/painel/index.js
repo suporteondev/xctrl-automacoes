@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { useNome } from '../../providers/nome'
 import { Conteudos } from './components/conteudos'
 import { Cabeca } from '../../components/cabeca'
 import { Rodape } from '../../components/rodape'
@@ -9,9 +8,7 @@ import { Descricao } from './components/descricao'
 import { Servicos } from './components/servicos'
 import { Servico } from './components/servico'
 import { redirecionar } from '../../functions/redirecionar'
-import verificadorIMG from './svg/verificador.svg'
 import gerenciadorIMG from './svg/gerenciador.svg'
-import removedorIMG from './svg/removedor.svg'
 import montadorIMG from './svg/montador.svg'
 import criadorIMG from './svg/criador.svg'
 import suporteIMG from './svg/suporte.svg'
@@ -21,10 +18,11 @@ import { acessoGerenciador } from './functions/acessoGerenciador'
 import { acessoCriador } from './functions/acessoCriador'
 import { acessoMontador } from './functions/acessoMontador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { useUsuarioLogado } from '../../providers/usuarioLogado'
 
 const Painel = ()=>{
 
-    const { nome } = useNome()
+    const { usuarioLogado } = useUsuarioLogado()
     const Router = useNavigate()
     const [ meuAcessoGerenciador, setMeuAcessoGerenciador ] = useState(false)
     const [ meuAcessoCriador, setMeuAcessoCriador ] = useState(false)
@@ -40,7 +38,7 @@ const Painel = ()=>{
         <>
             <Cabeca/>
             <Conteudos>
-                <Titulo>Olá, {nome}!</Titulo>
+                <Titulo>Olá, {usuarioLogado.nome}!</Titulo>
                 <Descricao>Todos os nossos serviços estão aqui.</Descricao>
                 <Servicos>
                     <Servico 

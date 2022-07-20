@@ -9,7 +9,7 @@ router.post('/filtrar', logado, connectDB, async(req, res)=>{
 
     // Recuperando dados da requisição
     const { filtro } = req.body
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
     let perfis = null
 
     // Buscando a lista de perfis no banco de dados

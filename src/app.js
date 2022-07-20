@@ -4,8 +4,6 @@ import { ConfiguracoesRemovedorProvider } from './providers/configuracoesRemoved
 import { ConfiguracoesCriadorProvider } from './providers/configuracoesCriador'
 import { ConfiguracoesMontadorProvider } from './providers/configuracoesMontador'
 import { TemaProvider } from './providers/tema'
-import { EmailProvider } from './providers/email'
-import { NomeProvider } from './providers/nome'
 import Acessar from './pages/acessar'
 import Painel from './pages/painel'
 import Gerenciador from './pages/gerenciador'
@@ -17,6 +15,7 @@ import ComprarCriador from './pages/comprarcriador'
 import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
 import Suporte from './pages/suporte'
+import { UsuarioLogadoProvider } from './providers/usuarioLogado'
 
 export default function App() {
     return (
@@ -24,27 +23,25 @@ export default function App() {
             <ConfiguracoesCriadorProvider>
                 <ConfiguracoesRemovedorProvider>
                     <ConfiguracoesVerificadorProvider>
-                        <EmailProvider>
-                            <NomeProvider>
-                                <TemaProvider>
-                                    <HashRouter>
-                                        <Routes>
-                                            <Route exact path='/' element={<Acessar/>} />
-                                            <Route exact path='/painel' element={<Painel/>} />
-                                            <Route exact path='/comprar' element={<Comprar/>} />
-                                            <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
-                                            <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
-                                            <Route exact path='/suporte' element={<Suporte/>} />
-                                            <Route exact path='/gerenciador' element={<Gerenciador/>} />
-                                            <Route exact path='/verificador' element={<Verificador/>} />
-                                            <Route exact path='/criador' element={<Criador/>} />
-                                            <Route exact path='/montador' element={<Montador/>} />
-                                            <Route exact path='/removedor' element={<Removedor/>} />
-                                        </Routes>
-                                    </HashRouter>
-                                </TemaProvider>
-                            </NomeProvider>
-                        </EmailProvider>
+                        <UsuarioLogadoProvider>
+                            <TemaProvider>
+                                <HashRouter>
+                                    <Routes>
+                                        <Route exact path='/' element={<Acessar/>} />
+                                        <Route exact path='/painel' element={<Painel/>} />
+                                        <Route exact path='/comprar' element={<Comprar/>} />
+                                        <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
+                                        <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
+                                        <Route exact path='/suporte' element={<Suporte/>} />
+                                        <Route exact path='/gerenciador' element={<Gerenciador/>} />
+                                        <Route exact path='/verificador' element={<Verificador/>} />
+                                        <Route exact path='/criador' element={<Criador/>} />
+                                        <Route exact path='/montador' element={<Montador/>} />
+                                        <Route exact path='/removedor' element={<Removedor/>} />
+                                    </Routes>
+                                </HashRouter>
+                            </TemaProvider>
+                        </UsuarioLogadoProvider>
                     </ConfiguracoesVerificadorProvider>
                 </ConfiguracoesRemovedorProvider>
             </ConfiguracoesCriadorProvider>

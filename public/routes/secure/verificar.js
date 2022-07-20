@@ -8,7 +8,7 @@ const logado = require('../../middlewares/logado')
 router.post('/verificar', logado, connectDB, async(req, res)=>{
 
     const { caminhoNavegador, visivel, login, anonimo, userAgent, tempo, perfis } = req.body
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
 
     let visivelConfigurado = visivel === 'sim' ? true : false 
     let loginConfigurado = login === 'sim' ? true : false 

@@ -8,7 +8,7 @@ const store = new Store()
 router.post('/filtrarporusuario', logado, connectDB, async(req, res)=>{
 
     const { filtro } = req.body
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
 
     const perfis = await Perfil.find({ 
         ref: email, 

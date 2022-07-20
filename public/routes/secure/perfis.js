@@ -7,7 +7,7 @@ const store = new Store()
 
 router.post('/perfis', logado, connectDB, async(req, res)=>{
 
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
     const perfis = await Perfil.find({ ref: email })
 
     return res.json({

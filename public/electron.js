@@ -8,12 +8,9 @@ const store = new Store()
 
 app.on('ready', async () => {
 
-    if(store.get('logado') == undefined || store.get('logado') == 'undefined'){
-        store.set('logado', false)
-    }
-
-    if(store.get('nome') == undefined || store.get('nome') == 'undefined'){
-        store.set('nome', false)
+    // USUÁRIO LOGADO
+    if(store.get('usuarioLogado') == undefined || store.get('usuarioLogado') == 'undefined'){
+        store.set('usuarioLogado', false)
     }
 
     if(store.get('tema') == undefined || store.get('tema') == 'undefined'){
@@ -116,9 +113,9 @@ app.on('ready', async () => {
         mainWindow.show()
     })
 
-    globalShortcut.register('Control+Shift+I', () => {
-        return false
-    })
+    // globalShortcut.register('Control+Shift+I', () => {
+    //     return false
+    // })
 
     ipcMain.on('fechar', (event)=>{
         mainWindow.close()
@@ -130,14 +127,6 @@ app.on('ready', async () => {
 
     ipcMain.on('porta', (event)=>{
         event.returnValue = global.porta
-    })
-    
-    ipcMain.on('logado', (event)=>{
-        event.returnValue = store.get('logado')
-    })
-
-    ipcMain.on('nome', (event)=>{
-        event.returnValue = store.get('nome')
     })
 
     ipcMain.on('setTema', (event)=>{
@@ -176,6 +165,14 @@ app.on('ready', async () => {
         event.returnValue = store.get('configuracoesMontador')
     })
 
+    ipcMain.on('setUsuarioLogado', (event, args)=>{
+        event.returnValue = store.set('usuarioLogado', args)
+    })
+
+    ipcMain.on('usuarioLogado', (event)=>{
+        event.returnValue = store.get('usuarioLogado')
+    })
+
     ipcMain.on('tema', (event)=>{
         event.returnValue = store.get('tema')
     })
@@ -197,7 +194,7 @@ app.on('ready', async () => {
     })
 
     ipcMain.on('sair', (event)=>{
-        event.returnValue = store.delete('logado')
+        event.returnValue = store.delete('usuarioLogado')
     })
 
     ipcMain.on('tamanho-pequeno', (event)=>{

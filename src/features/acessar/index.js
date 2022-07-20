@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useEmail } from '../../providers/email'
-import { useNome } from '../../providers/nome'
 import { Conteudos } from './components/conteudos'
 import { Formulario } from './components/formulario'
 import { Caixa } from './components/caixa'
@@ -13,14 +11,12 @@ import { acessarPlataforma } from './functions/acessarPlataforma'
 import { Cabeca } from '../../components/cabeca/index'
 import { Rodape } from '../../components/rodape/index'
 import { Titulo } from './components/titulo'
+import { useUsuarioLogado } from '../../providers/usuarioLogado'
 
 const Acessar = ()=>{
 
+    const { usuarioLogado, setUsuarioLogado } = useUsuarioLogado()
     const [ mensagem, setMensagem ] = useState(<Mensagem color='#fff'></Mensagem>)
-    const [ emailDigitado, setEmailDigitado ] = useState('')
-    const [ senhaDigitada, setSenhaDigitada ] = useState('')
-    const { setNome } = useNome()
-    const { setEmail } = useEmail()
     const Router = useNavigate()
 
     return (
@@ -29,34 +25,31 @@ const Acessar = ()=>{
             <Formulario 
                 onSubmit={e => acessarPlataforma(
                     e, 
-                    emailDigitado, 
-                    senhaDigitada, 
+                    Router,
+                    document.querySelector('[name="email"]').value, 
+                    document.querySelector('[name="senha"]').value, 
+                    Mensagem,
                     setMensagem, 
-                    setNome, 
-                    Router, 
-                    setEmail, 
-                    Mensagem
+                    setUsuarioLogado
                 )}
             >
                 <Titulo>Acessar plataforma</Titulo>
                 <Caixa>
                     <Etiqueta>Email</Etiqueta>
                     <Entrada 
-                        onChange={(e)=> setEmailDigitado(e.target.value)} 
                         name='email' 
                         type='text' 
-                        placeholder='Digite seu email...' 
-                        value={emailDigitado}
+                        placeholder='Digite seu email...'
+                        defaultValue={usuarioLogado.email}
                     />
                 </Caixa>
                 <Caixa>
                     <Etiqueta>Senha</Etiqueta>
                     <Entrada 
-                        onChange={(e)=> setSenhaDigitada(e.target.value)} 
                         name='senha' 
                         type='password' 
-                        placeholder='Digite sua senha...' 
-                        value={senhaDigitada}
+                        placeholder='Digite sua senha...'
+                        defaultValue={usuarioLogado.senha}
                     />
                 </Caixa>
                 {mensagem}

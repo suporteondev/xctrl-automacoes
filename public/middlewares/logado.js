@@ -2,7 +2,7 @@ const Store = require('electron-store')
 const store = new Store()
 
 module.exports = async function logado(req, res, next){
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
 
     if(email == false){
         return res.json({

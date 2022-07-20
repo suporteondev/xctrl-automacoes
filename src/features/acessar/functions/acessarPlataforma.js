@@ -1,4 +1,12 @@
-async function acessarPlataforma(e, email, senha, setMensagem, setNome, Router, setEmail, Mensagem){
+async function acessarPlataforma(
+    e, 
+    Router, 
+    email, 
+    senha, 
+    Mensagem, 
+    setMensagem,
+    setUsuarioLogado
+){
 
     e.preventDefault()  
 
@@ -20,15 +28,23 @@ async function acessarPlataforma(e, email, senha, setMensagem, setNome, Router, 
         setMensagem(<Mensagem color='orange'>{resultado.mensagem}</Mensagem>)
     }else if(resultado.ok === true){
         setMensagem(<Mensagem color='#05A660'>{resultado.mensagem}</Mensagem>)
-        setEmail(resultado.email)
-        setNome(resultado.nome)
+        
+        const usuarioLogado = {
+            nome: resultado.nome,
+            email: resultado.email,
+            senha: senha
+        }
 
-        localStorage.setItem('nome', resultado.nome)
-        localStorage.setItem('email', resultado.email)
+        setUsuarioLogado(usuarioLogado)
+        window.api.ipcRenderer.sendSync('setUsuarioLogado', usuarioLogado)
+
+        setTimeout(()=>{
+            setMensagem(<Mensagem color='#05A660'>Estamos verificando seus acessos...</Mensagem>)
+        }, 2000)
 
         setTimeout(()=>{
             Router('/painel')
-        }, 2000)
+        }, 4000)
     }
 }
 

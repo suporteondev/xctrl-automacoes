@@ -9,7 +9,7 @@ router.post('/deletarperfis', logado, connectDB, async(req, res)=>{
 
     // Capturando os dados da requisição
     const { perfis } = req.body
-    const email = store.get('logado')
+    const { email } = store.get('usuarioLogado')
 
     let meusPerfis = []
 
