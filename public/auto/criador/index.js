@@ -1,6 +1,10 @@
 // Imports do sistema
 const puppeteer = require('puppeteer-core')
 const UserAgent = require("user-agents")
+const Store = require('electron-store')
+const store = new Store()
+const fs = require('fs')
+var pastaEscolhida = []
 
 // Ações
 const capturarEmail = require('./cryptogmail/capturarEmail')
@@ -12,6 +16,9 @@ const capturarCodigo = require('./cryptogmail/capturarCodigo')
 const capturarCodigoTM = require('./mailtm/capturarCodigo')
 const capturarCodigoFakermail = require('./fakermail/capturarCodigo')
 const digitandoCodigo = require('./instagram/digitandoCodigo')
+const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
+const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
+const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
 
 // Iniciando a criação
 const criador = async(
@@ -26,6 +33,7 @@ const criador = async(
     quantidadePerfis, 
     emailTemporario,
     esperarEntreConfigurado,
+    montarPerfisConfigurado,
     logs
 )=>{
 
@@ -139,14 +147,85 @@ const criador = async(
             logs
         )
 
-        if(esperarEntreConfigurado != 0){
-            logs.push(`perfil ${x} - Aguardando ${esperarEntreConfigurado / 1000} segundos.`)
-            await paginaInstagram.waitForTimeout(esperarEntreConfigurado)
-        }
-
         if(resDigitandoCodigo.ok == false){
             await navegador.close()
             continue
+        }
+
+        if(montarPerfisConfigurado == true){
+
+            await paginaInstagram.setViewport({
+                width: 320,
+                height: 580,
+                deviceScaleFactor: 1
+            })
+
+            const listaDeUserAgentsMobile = new UserAgent({ deviceCategory: "mobile" })
+            await paginaInstagram.setUserAgent(listaDeUserAgentsMobile.userAgent)
+
+            const { 
+                fotoPerfil, 
+                pastaFotos,
+                alterarBiografia,
+                quantidadePublicacoes
+            } = store.get('configuracoesMontador')
+
+            // REALIZANDO A PUBLICAÇÃO
+            const pastas = fs.readdirSync(pastaFotos)
+            let caminhoPasta = ''
+
+            async function selecionarCaminho(){
+                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
+                caminhoPasta = `${pastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+
+                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
+                    return selecionarCaminho()
+                }
+
+                return pastaEscolhida.push(caminhoPasta)
+            }
+
+            await selecionarCaminho()
+            
+            // ALTERANDO A FOTO DE PERFIL
+            if(fotoPerfil == 'sim'){
+                const resultadoAlterarFotoPerfil = await alterarFotoPerfil(paginaInstagram, usuario, caminhoPasta, logs)
+                if(resultadoAlterarFotoPerfil == false){
+                    await navegador.close()
+                    continue
+                }
+            }
+
+            // ALTERANDO A BIOGRAFIA
+            if(alterarBiografia == 'sim'){
+                const resultadoAlterarBiografia = await alterarBiografiaPerfil(paginaInstagram, usuario, generoPerfis, logs)
+                if(resultadoAlterarBiografia == false){
+                    await navegador.close()
+                    continue
+                }
+            }
+
+            // REALIZANDO PUBLICAÇÕES NO FEED
+            if(
+                Number(quantidadePublicacoes) != 0 || 
+                Number(quantidadePublicacoes) != '0' || 
+                Number(quantidadePublicacoes) != ''
+            ){
+                logs.push(`Postando fotos no Feed`)
+                for(let x = 0; x < Number(quantidadePublicacoes); x++){
+
+                    const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(paginaInstagram, x + 1 ,usuario, caminhoPasta, logs)
+                    if(resultadoRealizarPublicacoesFeed == false){
+                        await navegador.close()
+                        continue
+                    }      
+                }
+            }
+        }
+
+        if(esperarEntreConfigurado != 0){
+            logs.push(`perfil ${x} - Aguardando ${esperarEntreConfigurado / 1000} segundos.`)
+            await paginaInstagram.waitForTimeout(esperarEntreConfigurado)
         }
 
         // Fechando o navegador

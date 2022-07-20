@@ -12,6 +12,7 @@ export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecuta
     const comoSalvar = document.querySelector('[name="comoSalvar"]').value
     const ondeSalvar = document.querySelector('[name="ondeSalvar"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
+    const montarPerfis = document.querySelector('[name="montarPerfis"]').value
     const logs = document.querySelector('#logs')
 
     if(caminhoNavegador === ''){
@@ -89,7 +90,8 @@ export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecuta
                 limparLogin,
                 comoSalvar,
                 ondeSalvar,
-                esperarEntre
+                esperarEntre,
+                montarPerfis
             })
         }
     

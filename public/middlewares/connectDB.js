@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 module.exports = async function connectDB(req, res, next){
     try{
         mongoose.connect('mongodb+srv://xctrlusuario:5NatRy8cvzBUSdNH@xctrl.tm1lh.mongodb.net/xctrl?retryWrites=true&w=majority', {
+            connectTimeoutMS: 120000,
+            socketTimeoutMS: 120000,
             useNewUrlParser: true,
             useUnifiedTopology: true
         })

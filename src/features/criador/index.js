@@ -133,7 +133,7 @@ const Criador = ()=>{
                             </Caixa>
                             {acessoMontador.status == true ? 
                             <Caixa>
-                                <Etiqueta>Montar perfis criados</Etiqueta>
+                                <Etiqueta>Usar o montador nos perfis criados</Etiqueta>
                                 <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
@@ -180,6 +180,9 @@ const Criador = ()=>{
                         logs === 'Preenchendo dados' || 
                         logs === 'Escolhendo a data' || 
                         logs === 'Confirmando o código' || 
+                        logs === 'Alterando a foto de perfil' ||
+                        logs === 'Alterando a biografia' ||
+                        logs === 'Postando fotos no Feed' ||
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 

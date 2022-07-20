@@ -1,9 +1,4 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import { ConfiguracoesVerificadorProvider } from './providers/configuracoesVerificador'
-import { ConfiguracoesRemovedorProvider } from './providers/configuracoesRemovedor'
-import { ConfiguracoesCriadorProvider } from './providers/configuracoesCriador'
-import { ConfiguracoesMontadorProvider } from './providers/configuracoesMontador'
-import { TemaProvider } from './providers/tema'
 import Acessar from './pages/acessar'
 import Painel from './pages/painel'
 import Gerenciador from './pages/gerenciador'
@@ -14,11 +9,15 @@ import Montador from './pages/montador'
 import ComprarCriador from './pages/comprarcriador'
 import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
-import Suporte from './pages/suporte'
+import { TemaProvider } from './providers/tema'
 import { UsuarioLogadoProvider } from './providers/usuarioLogado'
 import { AcessoCriadorProvider } from './providers/acessoCriador'
 import { AcessoMontadorProvider } from './providers/acessoMontador'
 import { AcessoGerenciadorProvider } from './providers/acessoGerenciador'
+import { ConfiguracoesVerificadorProvider } from './providers/configuracoesVerificador'
+import { ConfiguracoesRemovedorProvider } from './providers/configuracoesRemovedor'
+import { ConfiguracoesCriadorProvider } from './providers/configuracoesCriador'
+import { ConfiguracoesMontadorProvider } from './providers/configuracoesMontador'
 
 export default function App() {
     return (
@@ -38,7 +37,6 @@ export default function App() {
                                                     <Route exact path='/comprar' element={<Comprar/>} />
                                                     <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
                                                     <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
-                                                    <Route exact path='/suporte' element={<Suporte/>} />
                                                     <Route exact path='/gerenciador' element={<Gerenciador/>} />
                                                     <Route exact path='/verificador' element={<Verificador/>} />
                                                     <Route exact path='/criador' element={<Criador/>} />

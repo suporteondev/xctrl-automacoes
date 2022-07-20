@@ -20,12 +20,14 @@ router.post('/criador', logado, connectDB, async(req, res)=>{
         limparLogin,
         comoSalvar,
         ondeSalvar,
-        esperarEntre
+        esperarEntre,
+        montarPerfis
     } = req.body
 
     const modoInvisivelConfigurado = modoInvisivel === 'sim' ? true : false 
     const modoAnonimoConfigurado = modoAnonimo === 'sim' ? true : false 
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false 
+    const montarPerfisConfigurado = montarPerfis === 'sim' ? true : false 
     const esperarEntreConfigurado = Number(esperarEntre) * 1000
 
     await criador(
@@ -40,6 +42,7 @@ router.post('/criador', logado, connectDB, async(req, res)=>{
         quantidadePerfis, 
         emailTemporario, 
         esperarEntreConfigurado,
+        montarPerfisConfigurado,
         global.criador
     )
 

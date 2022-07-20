@@ -67,9 +67,9 @@ const digitandoCodigo = async(
             })
         }
 
-        if(limparLoginConfigurado == true){
-            await limpandoLogin(pagina, identificador, logs)
-        }
+        // if(limparLoginConfigurado == true){
+        //     await limpandoLogin(pagina, identificador, logs)
+        // }
 
         return {
             ok: true
