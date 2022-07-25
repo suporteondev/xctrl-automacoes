@@ -24,6 +24,15 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
 
         // ACESSANDO O PERFIL
         await pagina.goto('https://www.instagram.com/' + usuario)
+
+        try{
+            logs.push(`${usuario} - ` + 'Aceitando os cookies')
+            await pagina.waitForSelector('.aOOlW.bIiDR', { timeout: 5000 })
+            await pagina.click('.aOOlW.bIiDR')
+        }catch(erro){
+            
+        }
+        
         await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
 
         // Selecionando a publicação
@@ -50,18 +59,17 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
         await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
         logs.push(usuario + ' - Publicação realizada com sucesso!')
 
+        contador = 1
         return true
     }catch(erro){
         if(contador == 3){
             logs.push(usuario + ` - Erro ao tentar publicar a ${x} publicação!`)
-            contador = 0
+            contador = 1
             return false
         }else{
             logs.push(usuario + ` - Não conseguimos realizar a ${x} publicação, mas iremos tentar novamente.`)
             contador = contador + 1
             await realizarPublicacoesFeed(pagina, x, usuario, pastaFotos, logs)
-            contador = 0
-            return false
         }
     }
 }

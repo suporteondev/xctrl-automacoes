@@ -19,7 +19,6 @@ import { useConfiguracoesCriador } from '../../providers/configuracoesCriador'
 import { salvar } from './functions/salvar'
 import { Logs } from './components/logs'
 import { abrirNavegador } from '../../functions/abrirNavegador'
-import { userAgents } from '../../userAgents'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
@@ -69,9 +68,6 @@ const Criador = ()=>{
                                 <Etiqueta>User Agent</Etiqueta>
                                 <Select name='userAgent' defaultValue={configuracoesCriador.userAgent}>
                                     <option value='aleatorio'>Aleatório</option>
-                                    {userAgents.map((userAgent, x)=>(
-                                        <option value={userAgent}>{x + 1}º User Agent</option>
-                                    ))}
                                 </Select>
                             </Caixa>
                             <Caixa>
@@ -131,7 +127,7 @@ const Criador = ()=>{
                                 <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
-                            {acessoMontador.status == true ? 
+                            {/* {acessoMontador.status == true ? 
                             <Caixa>
                                 <Etiqueta>Usar o montador nos perfis criados</Etiqueta>
                                 <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
@@ -141,7 +137,7 @@ const Criador = ()=>{
                             </Caixa>
                             : 
                             ''
-                            }
+                            } */}
                             {mensagem}
                         </Configuracoes>
                     </Conteudos>
@@ -164,7 +160,7 @@ const Criador = ()=>{
                             <span>Salvar configurações</span>
                             <img src={salvarIMG}/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar(userAgents, Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
+                        <Opcao funcao={()=>{ iniciar('userAgents', Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
                             <span>Iniciar</span>
                             <img src={iniciarIMG}/>
                         </Opcao>

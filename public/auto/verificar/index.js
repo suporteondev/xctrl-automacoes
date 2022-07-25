@@ -3,6 +3,7 @@ const acessarPerfil = require('./src/acessarPerfil')
 const capturarDados = require('./src/capturarDados')
 const Perfil = require('../../models/perfil')
 const path = require('path')
+const limparAtividadeLogin = require('./src/limparAtividadeLogin')
 var contador = 0
 
 // Iniciando o gerênciamento
@@ -105,49 +106,8 @@ const gerenciamento = async(visivelConfigurado, loginConfigurado, anonimoConfigu
         }
 
         if(loginConfigurado == true){
-            try{
-                // Limpando atividade de login
-                logs.push('Limpando atividade de login')
-                logs.push(`${logado} - Acessando configurações`)
-                await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
-                logs.push(`${logado} - Esperando carregar`)
-                await pagina.waitForSelector('._abl-', { timeout: 60000 })
-                logs.push(`${logado} - Apagando o login`)
-                await pagina.click('._abl-')
-                await pagina.waitForTimeout(2000)
-                await pagina.evaluate(()=>{
-                    const botoes = document.querySelectorAll('button')
-                    botoes.forEach((botao)=>{
-                        if(botao.innerText == 'Sair'){
-                            botao.click()
-                        }
-                    })
-                })
-                logs.push(`${logado} - Login limpo com sucesso!`)
-            }catch(erro){
-                logs.push(`${logado} - Erro ao tentar limpar o login`)
-                logs.push(`${logado} - Vamos tentar novamente!`)
-                // Limpando atividade de login
-                logs.push('Limpando atividade de login')
-                logs.push(`${logado} - Acessando configurações`)
-                await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
-                logs.push(`${logado} - Esperando carregar`)
-                await pagina.waitForSelector('._abl-', { timeout: 60000 })
-                logs.push(`${logado} - Apagando o login`)
-                await pagina.click('._abl-')
-                await pagina.waitForTimeout(2000)
-                await pagina.evaluate(()=>{
-                    const botoes = document.querySelectorAll('button')
-                    botoes.forEach((botao)=>{
-                        if(botao.innerText == 'Sair'){
-                            botao.click()
-                        }
-                    })
-                })
-                logs.push(`${logado} - Login limpo com sucesso!`)
-            }
+            await limparAtividadeLogin(pagina, logado, logs)
         }
-
     }
 
     // Fechando o navegador

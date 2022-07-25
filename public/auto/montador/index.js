@@ -1,38 +1,46 @@
 const puppeteer = require('puppeteer-core')
-const UserAgent = require("user-agents")
 const fs = require('fs')
 const acessarPerfil = require('./instagram/acessarPerfil')
 const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
-const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
+const alterarFotoPerfilFuncao = require('./instagram/alterarFotoPerfil')
 const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
+const limparAtividadeLogin = require('./instagram/limparAtividadeLogin')
+const listaDeUserAgentsMobile = require('../../userAgentsMobile')
+const alterarGeneroPerfil = require('./instagram/alterarGeneroPerfil')
+const realizarPublicacoesStory = require('./instagram/realizarPublicacoesStory')
 var pastaEscolhida = []
+var userAgentsEscolhidos = []
 
 const montador = async(
     caminhoNavegador, 
-    modoInvisivelConfigurado,
-    modoAnonimoConfigurado,
+    verAcontecendo,
+    modoAnonimo,
+    userAgent,
+    seusPerfis,
+    caminhoPastaFotos,
     generoPerfis,
-    modoPerfis,
-    listaPerfis,
-    pastaFotos,
-    fotoPerfilConfigurado,
-    alterarBiografiaConfigurado,
-    quantidadePublicacoesConfigurado,
-    limparLoginConfigurado,
-    esperarEntreConfigurado,
+    alterarFotoPerfil,
+    alterarBiografia,
+    quantidadePublicacoesFeed,
+    quantidadePublicacoesStory,
+    seguirPerfis,
+    limparLogin,
+    esperarEntre,
     logs
 )=>{
 
-    for(let x = 0; x < listaPerfis.length; x++){
+    const listaUserAgents = [...new Set(listaDeUserAgentsMobile)]
 
-        const { usuario, senha } = listaPerfis[x]
+    for(let x = 0; x < seusPerfis.length; x++){
+
+        const { usuario, senha } = seusPerfis[x]
 
         let context, pagina
 
         // ABRINDO O NAVEGADOR
         const navegador = await puppeteer.launch({
             ignoreHTTPSErrors: true,
-            headless: modoInvisivelConfigurado,
+            headless: verAcontecendo,
             executablePath: caminhoNavegador,
             args: [
                 '--no-sandbox',
@@ -45,7 +53,7 @@ const montador = async(
         })
 
         // CONFIGURANDO O MODO ANÔNIMO
-        if(modoAnonimoConfigurado == true){
+        if(modoAnonimo == true){
             context = await navegador.createIncognitoBrowserContext()
             pagina = await context.newPage()
             const paginas = await navegador.pages()
@@ -56,8 +64,29 @@ const montador = async(
         }
 
         // SELECIONANDO UM USER AGENT MOBILE
-        const { userAgent } = new UserAgent({ deviceCategory: 'mobile' })
-        await pagina.setUserAgent(userAgent)
+        if(userAgent == 'aleatorio'){
+
+            let userAgentEscolhido = ''
+            
+            async function selecionarUserAgent(){
+                userAgentsEscolhidos.length == listaUserAgents.length ? userAgentsEscolhidos = [] : ''
+                userAgentEscolhido = listaUserAgents[Math.floor(Math.random() * listaUserAgents.length)]
+
+                if(userAgentsEscolhidos.indexOf(userAgentEscolhido) >=0){
+                    return selecionarUserAgent()
+                }
+
+                return userAgentsEscolhidos.push(userAgentEscolhido)
+            }
+
+            await selecionarUserAgent()
+            await pagina.setUserAgent(userAgentEscolhido)
+            console.log(userAgentEscolhido)
+        }else{
+            await pagina.setUserAgent(userAgent)
+        }
+
+        // ALTERANDO A LINGUAGEM DO NAVEGADOR
         await pagina.setExtraHTTPHeaders({
             'Accept-Language': 'pt-br'
         })
@@ -67,53 +96,85 @@ const montador = async(
         if(resultadoAcessar == false){
             await navegador.close()
             continue
-        }
+        }else{
 
-        // REALIZANDO A PUBLICAÇÃO
-        const pastas = fs.readdirSync(pastaFotos)
-        let caminhoPasta = ''
+            // ALTERANDO O GÊNERO DOS PERFIS
+            await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
 
-        async function selecionarCaminho(){
-            pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
-            caminhoPasta = `${pastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
-
-            if(pastaEscolhida.indexOf(caminhoPasta) >=0){
-                return selecionarCaminho()
+            // SELECIONANDO UMA PASTA ALEATÓRIA
+            const pastas = fs.readdirSync(caminhoPastaFotos)
+            let caminhoPasta = ''
+            async function selecionarCaminho(){
+                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
+                caminhoPasta = `${caminhoPastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
+                    return selecionarCaminho()
+                }
+                return pastaEscolhida.push(caminhoPasta)
             }
+            await selecionarCaminho()
 
-            return pastaEscolhida.push(caminhoPasta)
-        }
-
-        await selecionarCaminho()
-
-        // ALTERANDO A FOTO DE PERFIL
-        if(fotoPerfilConfigurado == true){
-            const resultadoAlterarFotoPerfil = await alterarFotoPerfil(pagina, usuario, caminhoPasta, logs)
-            if(resultadoAlterarFotoPerfil == false){
-                await navegador.close()
-                continue
-            }
-        }
-
-        // ALTERANDO A BIOGRAFIA
-        if(alterarBiografiaConfigurado == true){
-            const resultadoAlterarBiografia = await alterarBiografiaPerfil(pagina, usuario, generoPerfis, logs)
-            if(resultadoAlterarBiografia == false){
-                await navegador.close()
-                continue
-            }
-        }
-
-        // REALIZANDO PUBLICAÇÕES NO FEED
-        if(quantidadePublicacoesConfigurado != 0 || quantidadePublicacoesConfigurado != '0' || quantidadePublicacoesConfigurado != ''){
-            logs.push(`Postando fotos no Feed`)
-            for(let x = 0; x < quantidadePublicacoesConfigurado; x++){
-
-                const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(pagina, x + 1 ,usuario, caminhoPasta, logs)
-                if(resultadoRealizarPublicacoesFeed == false){
+            // ALTERANDO A FOTO DE PERFIL
+            if(alterarFotoPerfil == true){
+                const resultadoAlterarFotoPerfil = await alterarFotoPerfilFuncao(pagina, usuario, caminhoPasta, logs)
+                if(resultadoAlterarFotoPerfil == false){
                     await navegador.close()
                     continue
-                }      
+                }
+            }
+
+            // ALTERANDO A BIOGRAFIA
+            if(alterarBiografia == true){
+                const resultadoAlterarBiografia = await alterarBiografiaPerfil(pagina, usuario, generoPerfis, logs)
+                if(resultadoAlterarBiografia == false){
+                    await navegador.close()
+                    continue
+                }
+            }
+
+            // REALIZANDO PUBLICAÇÕES NO FEED
+            if(quantidadePublicacoesFeed != 0 || quantidadePublicacoesFeed != '0' || quantidadePublicacoesFeed != ''){
+                logs.push(`Postando fotos no Feed`)
+                for(let x = 0; x < quantidadePublicacoesFeed; x++){
+
+                    const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(
+                        pagina, 
+                        x + 1 ,
+                        usuario, 
+                        caminhoPasta, 
+                        logs
+                    )
+                    
+                    if(resultadoRealizarPublicacoesFeed == false){
+                        await navegador.close()
+                        continue
+                    }      
+                }
+            }
+
+            // REALIZANDO PUBLICAÇÕES NO STORY
+            if(quantidadePublicacoesStory != 0 || quantidadePublicacoesStory != '0' || quantidadePublicacoesStory != ''){
+                logs.push(`Postando fotos no story`)
+                for(let x = 0; x < quantidadePublicacoesStory; x++){
+
+                    const resultadoRealizarPublicacoesStory = await realizarPublicacoesStory(
+                        pagina, 
+                        x + 1 ,
+                        usuario, 
+                        caminhoPasta, 
+                        logs
+                    )
+                    
+                    if(resultadoRealizarPublicacoesStory == false){
+                        await navegador.close()
+                        continue
+                    }      
+                }
+            }
+
+            // LIMPANDO A ATIVIDADE DE LOGIN
+            if(limparLogin == true){
+                await limparAtividadeLogin(pagina, usuario, logs)
             }
         }
 

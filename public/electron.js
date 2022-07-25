@@ -61,19 +61,19 @@ app.on('ready', async () => {
     if(store.get('configuracoesMontador') == undefined || store.get('configuracoesMontador') == 'undefined'){
         store.set('configuracoesMontador', {
             caminhoNavegador: '',
-            modoInvisivel: 'sim',
-            modoAnonimo: 'sim',
+            verAcontecendo: false,
+            modoAnonimo: true,
             userAgent: 'aleatorio',
-            generoPerfis: 'feminino',
             modoPerfis: 'linha',
-            listaPerfis: '',
-            pastaFotos: '',
-            fotoPerfil: 'sim',
-            alterarBiografia: 'sim',
-            quantidadePublicacoes: '10',
-            limparLogin: 'sim',
-            esperarEntre: '0',
-            montarPerfis: 'sim'
+            caminhoPastaFotos: '',
+            generoPerfis: 'feminino',
+            alterarFotoPerfil: true,
+            alterarBiografia: true,
+            quantidadePublicacoesFeed: 10,
+            quantidadePublicacoesStory: 3,
+            seguirPerfis: 5,
+            limparLogin: true,
+            esperarEntre: 0
         })
     }
 

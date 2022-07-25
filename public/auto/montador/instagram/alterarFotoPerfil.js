@@ -15,6 +15,14 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
         logs.push(usuario + ' - Redirecionando para o perfil.')
         await pagina.goto('https://www.instagram.com/accounts/edit/')
 
+        try{
+            logs.push(`${usuario} - ` + 'Aceitando os cookies')
+            await pagina.waitForSelector('.aOOlW.bIiDR', { timeout: 5000 })
+            await pagina.click('.aOOlW.bIiDR')
+        }catch(erro){
+            
+        }
+
         logs.push(usuario + ' - Esperando os dados aparecerem.')
         await pagina.waitForSelector('._acan._acao._acas')
 
@@ -54,18 +62,17 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
         await pagina.waitForTimeout(5000)
         logs.push(usuario + ' - Foto de perfil alterada com sucesso!')
  
+        contador = 1
         return true 
     }catch(erro){
         if(contador == 3){
             logs.push(usuario + ' - Erro ao tentar alterar a foto de perfil!')
-            contador = 0
+            contador = 1
             return false
         }else{
             logs.push(usuario + ' - Não conseguimos alterar a foto de perfil, mas iremos tentar novamente.')
             contador = contador + 1
             await alterarFotoPerfil(pagina, usuario, pastaFotos, logs)
-            contador = 0
-            return false
         }
     }
 }

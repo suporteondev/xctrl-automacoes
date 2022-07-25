@@ -129,6 +129,14 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
 
         logs.push(usuario + ' - Redirecionando para o perfil.')
         await pagina.goto('https://www.instagram.com/' + usuario)
+        
+        try{
+            logs.push(`${usuario} - ` + 'Aceitando os cookies')
+            await pagina.waitForSelector('.aOOlW.bIiDR', { timeout: 5000 })
+            await pagina.click('.aOOlW.bIiDR')
+        }catch(erro){
+            
+        }
             
         logs.push(usuario + ' - Apertando em editar conta.')
         await pagina.waitForSelector('a[href="/accounts/edit/"]')
@@ -168,18 +176,17 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
 
         logs.push(usuario + ' - Biografia alterada com sucesso!')
  
+        contador = 1
         return true 
     }catch(erro){
         if(contador == 3){
             logs.push(usuario + ' - Erro ao tentar alterar a biografia!')
-            contador = 0
+            contador = 1
             return false
         }else{
             logs.push(usuario + ' - Não conseguimos alterar a biografia mas iremos tentar novamente.')
             contador = contador + 1
             await alterarBiografiaPerfil(pagina, usuario, generoPerfis, logs)
-            contador = 0
-            return false
         }
     }
 }

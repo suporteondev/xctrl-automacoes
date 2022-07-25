@@ -129,6 +129,39 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
 
         logs.push(usuario + ' - Redirecionando para o perfil.')
         await pagina.goto('https://www.instagram.com/' + usuario)
+
+        await pagina.waitForTimeout(2000)
+        const aceitarCookie = await pagina.evaluate(()=>{
+
+            let botoes = document.querySelectorAll('button')
+
+            for(let x = 0; x < botoes.length; x++){
+
+                // Capturando o H2
+                const botao = botoes[x]
+
+                // Verificando se ocorreu algum SPAM
+                if(botao.innerText == 'Permitir todos os cookies'){
+                    return true
+                }else{
+                    return false
+                }
+            }
+        })
+
+        if(aceitarCookie == true){
+            // Verificando se existe algum spam
+            logs.push(usuario + ' - Aceitando os cookies.')
+
+            await pagina.evaluate(()=>{
+                document.querySelectorAll('button').forEach((e)=>{
+                    if(e.innerText == 'Permitir todos os cookies'){
+                        e.click()
+                    }
+                })
+            })
+            await pagina.waitForTimeout(5000)
+        }
             
         logs.push(usuario + ' - Apertando em editar conta.')
         await pagina.waitForSelector('a[href="/accounts/edit/"]')

@@ -19,6 +19,7 @@ const digitandoCodigo = require('./instagram/digitandoCodigo')
 const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
 const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
 const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
+const limparAtividadeLogin = require('./instagram/limparAtividadeLogin')
 
 // Iniciando a criação
 const criador = async(
@@ -152,6 +153,12 @@ const criador = async(
             continue
         }
 
+        if(montarPerfisConfigurado == false){
+            if(limparLoginConfigurado == true){
+                await limparAtividadeLogin(paginaInstagram, usuario, logs)
+            }
+        }
+
         if(montarPerfisConfigurado == true){
 
             await paginaInstagram.setViewport({
@@ -189,20 +196,12 @@ const criador = async(
             
             // ALTERANDO A FOTO DE PERFIL
             if(fotoPerfil == 'sim'){
-                const resultadoAlterarFotoPerfil = await alterarFotoPerfil(paginaInstagram, usuario, caminhoPasta, logs)
-                if(resultadoAlterarFotoPerfil == false){
-                    await navegador.close()
-                    continue
-                }
+                await alterarFotoPerfil(paginaInstagram, usuario, caminhoPasta, logs)
             }
 
             // ALTERANDO A BIOGRAFIA
             if(alterarBiografia == 'sim'){
-                const resultadoAlterarBiografia = await alterarBiografiaPerfil(paginaInstagram, usuario, generoPerfis, logs)
-                if(resultadoAlterarBiografia == false){
-                    await navegador.close()
-                    continue
-                }
+                await alterarBiografiaPerfil(paginaInstagram, usuario, generoPerfis, logs)
             }
 
             // REALIZANDO PUBLICAÇÕES NO FEED
@@ -212,14 +211,45 @@ const criador = async(
                 Number(quantidadePublicacoes) != ''
             ){
                 logs.push(`Postando fotos no Feed`)
-                for(let x = 0; x < Number(quantidadePublicacoes); x++){
+                await paginaInstagram.waitForTimeout(2000)
+                const aceitarCookie = await paginaInstagram.evaluate(()=>{
 
-                    const resultadoRealizarPublicacoesFeed = await realizarPublicacoesFeed(paginaInstagram, x + 1 ,usuario, caminhoPasta, logs)
-                    if(resultadoRealizarPublicacoesFeed == false){
-                        await navegador.close()
-                        continue
-                    }      
+                    let botoes = document.querySelectorAll('button')
+
+                    for(let x = 0; x < botoes.length; x++){
+
+                        // Capturando o H2
+                        const botao = botoes[x]
+
+                        // Verificando se ocorreu algum SPAM
+                        if(botao.innerText == 'Permitir todos os cookies'){
+                            return true
+                        }else{
+                            return false
+                        }
+                    }
+                })
+
+                if(aceitarCookie == true){
+                    // Verificando se existe algum spam
+                    logs.push(usuario + ' - Aceitando os cookies.')
+
+                    await paginaInstagram.evaluate(()=>{
+                        document.querySelectorAll('button').forEach((e)=>{
+                            if(e.innerText == 'Permitir todos os cookies'){
+                                e.click()
+                            }
+                        })
+                    })
+                    await paginaInstagram.waitForTimeout(5000)
                 }
+                for(let x = 0; x < Number(quantidadePublicacoes); x++){
+                    await realizarPublicacoesFeed(paginaInstagram, x + 1 ,usuario, caminhoPasta, logs)
+                }
+            }
+
+            if(limparLoginConfigurado == true){
+                await limparAtividadeLogin(paginaInstagram, usuario, logs)
             }
         }
 
