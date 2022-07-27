@@ -6,7 +6,7 @@ const alterarGeneroPerfil = async(pagina, usuario, generoPerfis, logs)=>{
         logs.push('Alterando o gênero do perfil')
 
         logs.push(usuario + ' - Redirecionando para o perfil.')
-        await pagina.goto('https://www.instagram.com/accounts/edit/')
+        await pagina.goto('https://www.instagram.com/accounts/edit/', { timeout: 60000 })
         
         logs.push(usuario + ' - Clicando nos gêneros.')
         await pagina.waitForSelector('input[id="pepGender"]')

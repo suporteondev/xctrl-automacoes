@@ -8,9 +8,15 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
         logs.push('Acessando o instagram')
         await pagina.goto('https://www.instagram.com/accounts/login/', { timeout: 60000 })
 
-        logs.push(usuario + ' - Limpando os cookies.')
-        const cookies = await pagina.cookies()
-        await pagina.deleteCookie(...cookies)
+        //aceitando os cookies
+        try{
+            await pagina.waitForSelector('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K', { timeout: 10000 })
+            logs.push(usuario + ' - Aceitando os cookies.')
+            await pagina.click('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K')
+            await pagina.waitForTimeout(5000)
+        }catch(erro){
+            
+        }
 
         // Digitando o usuário
         logs.push(usuario + ' - Digitando usuário.')
