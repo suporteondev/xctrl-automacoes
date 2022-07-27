@@ -18,6 +18,7 @@ import { useUsuarioLogado } from '../../providers/usuarioLogado'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
+import { FaWhatsapp, FaYoutube } from 'react-icons/fa'
 
 const Painel = ()=>{
 
@@ -94,11 +95,11 @@ const Painel = ()=>{
             <Rodape>
                 <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=cEaMcyr3cdI')}}>
                     <span>Manual de uso</span>
-                    <img src={tutorialIMG}/>
+                    <FaYoutube/>
                 </Opcao>
                 <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561991663171&text=Ol%C3%A1,%20tudo%20bem?') }>
                     <span>Suporte da plataforma</span>
-                    <img src={suporteIMG}/>
+                    <FaWhatsapp/>
                 </Opcao>
                 V1.0.0
             </Rodape>

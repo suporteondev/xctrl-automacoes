@@ -16,7 +16,7 @@ import { Conteudos } from './components/conteudos'
 import { Cabeca } from '../../components/cabeca'
 import { Rodape } from '../../components/rodape'
 import { Filtrar } from './components/filtrar'
-import { Opcao } from './components/opcao'
+import { Opcao } from '../../components/opcao'
 import { Topo } from './components/topo'
 import { Tabela } from './components/tabela'
 import { usePerfis } from './hooks/perfis'
@@ -33,7 +33,12 @@ import { mostrarSenhas } from './functions/mostrarSenhas'
 import { Carregando } from '../../components/carregando'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { abrirNavegador } from '../../functions/abrirNavegador'
- 
+import { FaYoutube, FaCheck, FaUserSlash, FaSearch } from 'react-icons/fa'
+import { IoTime, IoCopy } from 'react-icons/io5'
+import { HiFilter } from 'react-icons/hi'
+import { RiSendPlaneFill } from 'react-icons/ri'
+import { AiFillDelete } from 'react-icons/ai'
+
 const Gerenciador = ()=>{
 
     const { perfis, setPerfis } = usePerfis()
@@ -156,7 +161,7 @@ const Gerenciador = ()=>{
                     <div className='caixaPesquisa'>
                         <input id='usuario' type='text' placeholder='Digite um usuário...'/>
                         <div onClick={()=> { filtrarPorUsuario(setPerfis) }}>
-                            <img src={pesquisarIMG}/>
+                            <FaSearch/>
                         </div>
                     </div>
                 </Topo>
@@ -183,9 +188,9 @@ const Gerenciador = ()=>{
                                         onClick={()=> mostrarSenhas(senhaVisivel, setSenhaVisivel)}
                                     />
                                 </td>
-                                <td>S</td>
-                                <td>S</td>
-                                <td>P</td>
+                                <td>Seguidores</td>
+                                <td>Seguindo</td>
+                                <td>Publicações</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -245,52 +250,52 @@ const Gerenciador = ()=>{
                             {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
                         </span>
                     }
-                    <img src={dataIMG}/>
+                    <IoTime/>
                 </Opcao>
-                <Opcao onClick={()=> abrirNavegador('https://www.youtube.com/watch?v=daZ8VyvDyJU')}>
+                <Opcao funcao={()=> abrirNavegador('https://www.youtube.com/watch?v=daZ8VyvDyJU')}>
                     <span>Manual de uso</span>
-                    <img src={tutorialIMG}/>
+                    <FaYoutube/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     redirecionar(Router, '/verificador')
                 }}>
                     <span>Verificar perfis</span>
-                    <img src={verificadorIMG}/>
+                    <FaCheck/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     setDisplayFiltrar(true)
                     setBlur(true)
                 }}>
                     <span>Filtrar perfis</span>
-                    <img src={filtrarIMG}/>
+                    <HiFilter/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     setDisplayCopiar(true)
                     setBlur(true)
                     listarPerfis()
                 }}>
                     <span>Copiar perfis</span>
-                    <img src={copiarperfisIMG}/>
+                    <IoCopy/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     setDisplayTransferir(true)
                     setBlur(true)
                 }}>
                     <span>Transferir perfis</span>
-                    <img src={transferirIMG}/>
+                    <RiSendPlaneFill/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     setDisplayApagar(true)
                     setBlur(true)
                 }}>
                     <span>Apagar perfis</span>
-                    <img src={apagarIMG}/>
+                    <AiFillDelete/>
                 </Opcao>
-                <Opcao onClick={()=>{
+                <Opcao funcao={()=>{
                     redirecionar(Router, '/removedor')
                 }}>
                     <span>Remover perfis desativados GNI</span>
-                    <img src={removedorIMG}/>
+                    <FaUserSlash/>
                 </Opcao>
             </Rodape>
         </div>

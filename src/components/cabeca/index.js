@@ -13,6 +13,9 @@ import minimizarIMG from './svg/minimizar.svg'
 import voltarIMG from './svg/voltar.svg'
 import fecharIMG from './svg/fechar.svg'
 import { redirecionar } from '../../functions/redirecionar'
+import { FaMinus, FaTimes, FaReply } from "react-icons/fa";
+import { MdUndo } from "react-icons/md";
+
 
 const Cabeca = ({ voltar, blur })=>{
 
@@ -29,14 +32,14 @@ const Cabeca = ({ voltar, blur })=>{
                     <Circulo onClick={() => {
                         voltar === undefined ? sair(Router) : redirecionar(Router, voltar)
                     }}>
-                        <img src={voltarIMG}/>
+                        <MdUndo/>
                     </Circulo>
                 }
                 <Circulo onClick={minimizar}>
-                    <img src={minimizarIMG}/>
+                    <FaMinus onClick={minimizar}/>
                 </Circulo>
-                <Circulo onClick={fechar} >
-                    <img src={fecharIMG}/>
+                <Circulo onClick={fechar}>
+                    <FaTimes/>
                 </Circulo>
             </Direita>
         </CaixaCabeca>

@@ -22,6 +22,9 @@ import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useConfiguracoesMontador } from '../../providers/configuracoesMontador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
 import { userAgentsMobile } from '../../userAgentsMobile'
+import { FaYoutube } from 'react-icons/fa'
+import { IoIosSave } from 'react-icons/io'
+import { IoPlay, IoTime } from 'react-icons/io5'
 
 const Montador = ()=>{
 
@@ -33,6 +36,8 @@ const Montador = ()=>{
     const [ fotosPerfisNumero, setFotosPerfisNumero ] = useState(0)
     const [ biografiasAlteradasNumero, setBiografiasAlteradasNumero ] = useState(0)
     const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
+    const [ publicacoesStoryNumero, setPublicacoesStoryNumero ] = useState(0)
+    const [ perfisSeguidosNumero, setPerfisSeguidosNumero ] = useState(0)
     const { configuracoesMontador, setConfiguracoesMontador } = useConfiguracoesMontador()
     const listaDeUserAgentsMobile = [...new Set(userAgentsMobile)]
 
@@ -142,19 +147,19 @@ const Montador = ()=>{
                                     {acessoMontador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoMontador.data}
                                 </span>
                             }
-                            <img src={tempoIMG}/>
+                            <IoTime/>
                         </Opcao>
                         <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
                             <span>Manual de uso</span>
-                            <img src={tutorialIMG}/>
+                            <FaYoutube/>
                         </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesMontador) }}>
                             <span>Salvar configurações</span>
-                            <img src={salvarIMG}/>
+                            <IoIosSave/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar(listaDeUserAgentsMobile, Mensagem, setMensagem, setExecutando, setMeusLogs, setFotosPerfisNumero, setBiografiasAlteradasNumero, setPublicacoesRealizadasNumero, setDisplayVoltar) }}>
+                        <Opcao funcao={()=>{ iniciar(listaDeUserAgentsMobile, Mensagem, setMensagem, setExecutando, setMeusLogs, setFotosPerfisNumero, setBiografiasAlteradasNumero, setPublicacoesRealizadasNumero, setPublicacoesStoryNumero, setPerfisSeguidosNumero, setDisplayVoltar) }}>
                             <span>Iniciar</span>
-                            <img src={iniciarIMG}/>
+                            <IoPlay/>
                         </Opcao>
                     </Rodape>
                 </>
@@ -177,16 +182,24 @@ const Montador = ()=>{
                 </Logs>
                 <Rodape>
                     <Opcao cor='#0A84FF'>
-                        <span>Fotos de perfis alteradas</span>
+                        <span>Foto de perfil</span>
                         {fotosPerfisNumero}
                     </Opcao>
-                    <Opcao cor='#05A660'>
-                        <span>Biografias alteradas</span>
+                    <Opcao cor='#0A84FF'>
+                        <span>Biografia</span>
                         {biografiasAlteradasNumero}
                     </Opcao>
-                    <Opcao cor='#8257e5'>
-                        <span>Publicações realizadas</span>
+                    <Opcao cor='#0A84FF'>
+                        <span>Feed</span>
                         {publicacoesRealizadasNumero}
+                    </Opcao>
+                    <Opcao cor='#0A84FF'>
+                        <span>Story</span>
+                        {publicacoesStoryNumero}
+                    </Opcao>
+                    <Opcao cor='#0A84FF'>
+                        <span>Seguidos</span>
+                        {perfisSeguidosNumero}
                     </Opcao>
                 </Rodape>
             </>

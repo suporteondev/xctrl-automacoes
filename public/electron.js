@@ -204,6 +204,13 @@ app.on('ready', async () => {
         event.returnValue = true
     })
 
+    ipcMain.on('tamanho-pequeno-2x', (event)=>{
+        mainWindow.setResizable(true)
+        mainWindow.setSize(350, 300)
+        mainWindow.setResizable(false)
+        event.returnValue = true
+    })
+
     ipcMain.on('tamanho-medio', (event)=>{
         mainWindow.setResizable(true)
         mainWindow.setSize(350, 500)
@@ -213,7 +220,7 @@ app.on('ready', async () => {
 
     ipcMain.on('tamanho-gerenciador', (event)=>{
         mainWindow.setResizable(true)
-        mainWindow.setSize(700, 500)
+        mainWindow.setSize(800, 500)
         mainWindow.setResizable(false)
         event.returnValue = true
     })

@@ -32,7 +32,7 @@ async function acessarPlataforma(
     if(resultado.ok === false){
         setMensagem(<Mensagem color='orange'>{resultado.mensagem}</Mensagem>)
     }else if(resultado.ok === true){
-        setMensagem(<Mensagem color='#05A660'>{resultado.mensagem}</Mensagem>)
+        setMensagem(<Mensagem color='#236EFF'>{resultado.mensagem}</Mensagem>)
         
         const usuarioLogado = {
             nome: resultado.nome,
@@ -45,7 +45,7 @@ async function acessarPlataforma(
 
         setTimeout(async()=>{
 
-            setMensagem(<Mensagem color='#05A660'>Estamos verificando seus acessos...</Mensagem>)
+            setMensagem(<Mensagem color='#236EFF'>Estamos verificando seus acessos...</Mensagem>)
             
             await verificarAcessos(
                 setAcessoCriador,

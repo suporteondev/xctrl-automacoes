@@ -22,6 +22,9 @@ import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
+import { FaYoutube } from 'react-icons/fa'
+import { IoIosSave } from 'react-icons/io'
+import { IoPlay, IoTime } from 'react-icons/io5'
 
 const Criador = ()=>{
 
@@ -127,7 +130,7 @@ const Criador = ()=>{
                                 <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
-                            {/* {acessoMontador.status == true ? 
+                            {acessoMontador.status == true ? 
                             <Caixa>
                                 <Etiqueta>Usar o montador nos perfis criados</Etiqueta>
                                 <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
@@ -137,7 +140,7 @@ const Criador = ()=>{
                             </Caixa>
                             : 
                             ''
-                            } */}
+                            }
                             {mensagem}
                         </Configuracoes>
                     </Conteudos>
@@ -150,19 +153,19 @@ const Criador = ()=>{
                                     {acessoCriador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoCriador.data}
                                 </span>
                             }
-                            <img src={tempoIMG}/>
+                            <IoTime/>
                         </Opcao>
                         <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
                             <span>Manual de uso</span>
-                            <img src={tutorialIMG}/>
+                            <FaYoutube/>
                         </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesCriador) }}>
                             <span>Salvar configurações</span>
-                            <img src={salvarIMG}/>
+                            <IoIosSave/>
                         </Opcao>
                         <Opcao funcao={()=>{ iniciar('userAgents', Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
                             <span>Iniciar</span>
-                            <img src={iniciarIMG}/>
+                            <IoPlay/>
                         </Opcao>
                     </Rodape>
                 </>

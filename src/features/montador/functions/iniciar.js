@@ -7,6 +7,8 @@ export async function iniciar(
     setFotosPerfisNumero, 
     setBiografiasAlteradasNumero, 
     setPublicacoesRealizadasNumero, 
+    setPublicacoesStoryNumero,
+    setPerfisSeguidosNumero,
     setDisplayVoltar
 ){
 
@@ -92,13 +94,15 @@ export async function iniciar(
         }
 
         setExecutando(true)
-        window.api.ipcRenderer.sendSync('tamanho-pequeno')
+        window.api.ipcRenderer.sendSync('tamanho-pequeno-2x')
 
         var intervalo = setInterval(()=>{ 
 
             var fotoPerfilAlteradas = 0 
             var biografiasAlteradas = 0 
             var publicacoesRealizadas = 0 
+            var publicacoesRealizadasStory = 0 
+            var perfisSeguidos = 0 
 
             window.api.ipcRenderer.sendSync('logMontador').forEach((mensagem)=>{
                 if(mensagem.includes('Foto de perfil alterada com sucesso!') == true){
@@ -112,11 +116,21 @@ export async function iniciar(
                 if(mensagem.includes('Publicação realizada com sucesso!') == true){
                     publicacoesRealizadas += 1
                 }
+
+                if(mensagem.includes('Story publicado com sucesso!') == true){
+                    publicacoesRealizadasStory += 1
+                }
+
+                if(mensagem.includes('Perfil seguido com sucesso!') == true){
+                    perfisSeguidos += 1
+                }
             })
 
             setFotosPerfisNumero(fotoPerfilAlteradas)
             setBiografiasAlteradasNumero(biografiasAlteradas)
             setPublicacoesRealizadasNumero(publicacoesRealizadas)
+            setPublicacoesStoryNumero(publicacoesRealizadasStory)
+            setPerfisSeguidosNumero(perfisSeguidos)
 
             setMeusLogs(window.api.ipcRenderer.sendSync('logMontador'))
             logs.scrollTop = logs.scrollHeight

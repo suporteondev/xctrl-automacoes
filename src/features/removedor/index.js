@@ -20,6 +20,9 @@ import { salvar } from './functions/salvar'
 import { Logs } from './components/logs'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
+import { FaYoutube } from 'react-icons/fa'
+import { IoIosSave } from 'react-icons/io'
+import { IoPlay, IoTime } from 'react-icons/io5'
 
 const Removedor = ()=>{
 
@@ -110,19 +113,19 @@ const Removedor = ()=>{
                                     {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
                                 </span>
                             }
-                            <img src={tempoIMG}/>
+                            <IoTime/>
                         </Opcao>
                         <Opcao funcao={()=> abrirNavegador('https://www.youtube.com/watch?v=PmHj01JQ6Qo')}>
                             <span>Manual de uso</span>
-                            <img src={tutorialIMG}/>
+                            <FaYoutube/>
                         </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesRemovedor) }}>
                             <span>Salvar configurações</span>
-                            <img src={salvarIMG}/>
+                            <IoIosSave/>
                         </Opcao>
                         <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setPerfisDesativados, setSaldoPerdido, setDisplayVoltar) }}>
                             <span>Iniciar</span>
-                            <img src={iniciarIMG}/>
+                            <IoPlay/>
                         </Opcao>
                     </Rodape>
                 </>
