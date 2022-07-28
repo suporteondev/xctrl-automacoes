@@ -4,8 +4,10 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         logs.push('Capturando o email')
         await pagina.bringToFront()
         logs.push(`perfil ${identificador} - ` + 'Acessando o cryptogmail')
+        const cookies = await pagina.cookies()
+        await pagina.deleteCookie(...cookies)
         await pagina.goto('https://cryptogmail.com/')
-
+        
         // Esperando o botão de remover aparecer e clicando
         logs.push(`perfil ${identificador} - ` + 'Atualizando o email')
         await pagina.waitForSelector('a[onclick="_temp_mail.removeEmailBox()"]')

@@ -7,10 +7,6 @@ import { Caixa } from './components/caixa'
 import { Etiqueta } from './components/etiqueta'
 import { Entrada } from './components/entrada'
 import { Opcao } from '../../components/opcao'
-import tempoIMG from '../../assets/svg/tempo.svg'
-import tutorialIMG from '../../assets/svg/tutorial.svg'
-import salvarIMG from '../../assets/svg/salvar.svg'
-import iniciarIMG from '../../assets/svg/iniciar.svg'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
@@ -21,25 +17,23 @@ import { Logs } from './components/logs'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
-import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { FaYoutube } from 'react-icons/fa'
 import { IoIosSave } from 'react-icons/io'
 import { IoPlay, IoTime } from 'react-icons/io5'
+import { userAgentsDesktop } from '../../userAgentsDesktop'
 
 const Criador = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const [ executando, setExecutando ] = useState(false)
-
     const { acessoCriador } = useAcessoCriador()
     const { acessoMontador } = useAcessoMontador()
-    const { acessoGerenciador } = useAcessoGerenciador()
-
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ criadasSucesso, setCriadasSucesso ] = useState(0)
     const [ naoCriadas, setNaoCriadas ] = useState(0)
     const { configuracoesCriador, setConfiguracoesCriador } = useConfiguracoesCriador()
+    const listaDeUserAgentsDesktop = [...new Set(userAgentsDesktop)]
 
     return (
         <>
@@ -50,19 +44,19 @@ const Criador = ()=>{
                         <Titulo>Criador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
-                                <Etiqueta>Caminho do navegador</Etiqueta>
+                                <Etiqueta>Caminho do seu navegador</Etiqueta>
                                 <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesCriador.caminhoNavegador}/>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Modo invisível</Etiqueta>
-                                <Select name='modoInvisivel' defaultValue={configuracoesCriador.modoInvisivel}>
+                                <Etiqueta>Ver acontecendo</Etiqueta>
+                                <Select name='verAcontecendo' defaultValue={configuracoesCriador.verAcontecendo}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Modo anônimo</Etiqueta>
-                                <Select name='modoAnonimo' defaultValue={configuracoesCriador.modoAnonimo}>
+                                <Etiqueta>Navegador em modo anônimo</Etiqueta>
+                                <Select name='navegadorAnonimo' defaultValue={configuracoesCriador.navegadorAnonimo}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>
                                 </Select>
@@ -71,13 +65,16 @@ const Criador = ()=>{
                                 <Etiqueta>User Agent</Etiqueta>
                                 <Select name='userAgent' defaultValue={configuracoesCriador.userAgent}>
                                     <option value='aleatorio'>Aleatório</option>
+                                    {listaDeUserAgentsDesktop.map((userAgent, index)=> (
+                                        <option key={index} value={userAgent}>User Agent - {index + 1}</option>
+                                    ))}
                                 </Select>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Email temporário</Etiqueta>
                                 <Select name='emailTemporario' defaultValue={configuracoesCriador.emailTemporario}>
-                                    <option value='cryptogmail'>Cryptogmail</option>
                                     <option value='mailtm'>Mail.tm</option>
+                                    <option value='cryptogmail'>Cryptogmail</option>
                                     <option value='fakermail'>Fakermail</option>
                                 </Select>
                             </Caixa>
@@ -103,43 +100,36 @@ const Criador = ()=>{
                                     <option value='nao'>Não</option>
                                 </Select>
                             </Caixa>
-
-                            {acessoGerenciador.status == true ? 
-                                <Caixa>
-                                    <Etiqueta>Como salvar os perfis</Etiqueta>
-                                    <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
-                                        <option value='linha'>Modo linha - TXT</option>
-                                        <option value='coluna'>Modo coluna - TXT</option>
-                                        <option value='gerenciador'>Salvar no gerenciador</option>
-                                    </Select>
-                                </Caixa>
-                                : 
-                                <Caixa>
-                                    <Etiqueta>Como salvar os perfis</Etiqueta>
-                                    <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
-                                        <option value='linha'>Modo linha - TXT</option>
-                                        <option value='coluna'>Modo coluna - TXT</option>
-                                    </Select>
-                                </Caixa>
-                            }
+                            <Caixa>
+                                <Etiqueta>Como salvar os perfis</Etiqueta>
+                                <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
+                                    <option value='linha'>Modo linha - TXT</option>
+                                    <option value='coluna'>Modo coluna - TXT</option>
+                                </Select>
+                            </Caixa>
                             <Caixa>
                                 <Etiqueta>Onde salvar os perfis</Etiqueta>
                                 <Entrada name='ondeSalvar' type='text' defaultValue={configuracoesCriador.ondeSalvar}/>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Esperar entre as criações (Segundos)</Etiqueta>
+                                <Etiqueta>Esperar entre as ações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
                             </Caixa>
                             {acessoMontador.status == true ? 
-                            <Caixa>
-                                <Etiqueta>Usar o montador nos perfis criados</Etiqueta>
-                                <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
-                                    <option value='sim'>Sim</option>
-                                    <option value='nao'>Não</option>
-                                </Select>
-                            </Caixa>
-                            : 
-                            ''
+                                <Caixa>
+                                    <Etiqueta>Montar perfis criados</Etiqueta>
+                                    <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
+                                        <option value='sim'>Sim</option>
+                                        <option value='nao'>Não</option>
+                                    </Select>
+                                </Caixa>
+                                : 
+                                <Caixa>
+                                    <Etiqueta>Montar perfis criados</Etiqueta>
+                                    <Select name='montarPerfis' defaultValue={configuracoesCriador.montarPerfis}>
+                                        <option value='nao'>Sem acesso</option>
+                                    </Select>
+                                </Caixa>
                             }
                             {mensagem}
                         </Configuracoes>
@@ -163,7 +153,7 @@ const Criador = ()=>{
                             <span>Salvar configurações</span>
                             <IoIosSave/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar('userAgents', Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
+                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
                             <span>Iniciar</span>
                             <IoPlay/>
                         </Opcao>
@@ -179,9 +169,12 @@ const Criador = ()=>{
                         logs === 'Preenchendo dados' || 
                         logs === 'Escolhendo a data' || 
                         logs === 'Confirmando o código' || 
+                        logs === 'Alterando o gênero do perfil' ||
+                        logs === 'Alterando a biografia' || 
                         logs === 'Alterando a foto de perfil' ||
-                        logs === 'Alterando a biografia' ||
+                        logs === 'Postando fotos no story' ||
                         logs === 'Postando fotos no Feed' ||
+                        logs === 'Seguindo perfis' ||
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 

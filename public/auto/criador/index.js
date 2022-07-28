@@ -1,12 +1,4 @@
-// Imports do sistema
 const puppeteer = require('puppeteer-core')
-const UserAgent = require("user-agents")
-const Store = require('electron-store')
-const store = new Store()
-const fs = require('fs')
-var pastaEscolhida = []
-
-// Ações
 const capturarEmail = require('./cryptogmail/capturarEmail')
 const capturarEmailTM = require('./mailtm/capturarEmail')
 const capturarEmailFakermail = require('./fakermail/capturarEmail')
@@ -16,61 +8,81 @@ const capturarCodigo = require('./cryptogmail/capturarCodigo')
 const capturarCodigoTM = require('./mailtm/capturarCodigo')
 const capturarCodigoFakermail = require('./fakermail/capturarCodigo')
 const digitandoCodigo = require('./instagram/digitandoCodigo')
-const alterarFotoPerfil = require('./instagram/alterarFotoPerfil')
-const alterarBiografiaPerfil = require('./instagram/alterarBiografiaPerfil')
-const realizarPublicacoesFeed = require('./instagram/realizarPublicacoesFeed')
-const limparAtividadeLogin = require('./instagram/limparAtividadeLogin')
+const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
+const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
+const alterarGeneroPerfil = require('../instagram/alterarGeneroPerfil')
+const postarFotoPerfil = require('../instagram/postarFotoPerfil')
+const alterarBiografiaPerfil = require('../instagram/alterarBiografiaPerfil')
+const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
+const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
+const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
+const fs = require('fs')
+var pastaEscolhida = []
 
-// Iniciando a criação
 const criador = async(
     caminhoNavegador, 
-    modoInvisivelConfigurado,
-    modoAnonimoConfigurado,
+    verAcontecendoConfigurado,
+    navegadorAnonimoConfigurado,
+    userAgent,
     generoPerfis, 
     senhaPerfis, 
     limparLoginConfigurado,
     comoSalvar,
     ondeSalvar,
     quantidadePerfis, 
-    emailTemporario,
-    esperarEntreConfigurado,
+    emailTemporario, 
+    esperarEntre,
     montarPerfisConfigurado,
+    caminhoPastaFotos,
+    alterarFotoPerfil,
+    alterarBiografia,
+    quantidadePublicacoesFeed,
+    quantidadePublicacoesStory,
+    seguirPerfis,
     logs
 )=>{
 
-    for(let x = 1; x < (Number(quantidadePerfis) + 1); x++){
+    // DECLARANDO AS VARIAVEIS REUTILIZAVEIS
+    let navegador, paginaEmail, paginaInstagram, context
 
-        let context, paginaEmail, paginaInstagram
+    // ABRINDO O NAVEGADOR
+    navegador = await puppeteer.launch({
+        ignoreHTTPSErrors: true,
+        headless: verAcontecendoConfigurado,
+        executablePath: caminhoNavegador,
+        args: [
+            '--no-sandbox',
+            '--disabled-setuid-sandbox'
+        ]
+    })
 
-        // Criando o navegador
-        const navegador = await puppeteer.launch({
-            ignoreHTTPSErrors: true,
-            headless: modoInvisivelConfigurado,
-            executablePath: caminhoNavegador,
-            args: [
-                '--no-sandbox',
-                '--disabled-setuid-sandbox',
-            ]
-        })
+    // ABRINDO A NOVA PÁGINA DO EMAIL
+    if(navegadorAnonimoConfigurado == true){
+        context = await navegador.createIncognitoBrowserContext()
+        paginaEmail = await context.newPage()
+        const paginas = await navegador.pages()
+        await paginas[0].close()
+    }else{
+        const paginas = await navegador.pages()
+        paginaEmail = paginas[0]
+    }
 
-        if(modoAnonimoConfigurado == true){
-            context = await navegador.createIncognitoBrowserContext()
-            paginaEmail = await context.newPage()
-            const paginas = await navegador.pages()
-            await paginas[0].close()
-        }else{
-            const paginas = await navegador.pages()
-            paginaEmail = paginas[0]
-        }
+    // ABRINDO A NOVA PÁGINA DO INSTAGRAM
+    if(navegadorAnonimoConfigurado == true){
+        paginaInstagram = await context.newPage()
+    }else{
+        paginaInstagram = await navegador.newPage()
+    }
 
-        // User agents
-        const { userAgent } = new UserAgent({ deviceCategory: "desktop" })
+    // COMEÇANDO A CRIAÇÃO DOS PERFIS
+    for(let x = 1; x < Number(quantidadePerfis) + 1; x++){
+
+        // SELECIONANDO UM USER AGENT ALEATÓRIO DESKTOP PARA A PÁGINA DO EMAIL
+        userAgent == 'aleatorio' ? 
+        await selecionarUserAgentAleatorio(paginaEmail, 'desktop') : 
         await paginaEmail.setUserAgent(userAgent)
-        await paginaEmail.setExtraHTTPHeaders({
-            'Accept-Language': 'pt-br'
-        })
-
-        // Capturando email no paginaEmail
+        
+        // CAPTURANDO O EMAIL TEMPORÁRIO
         let resEmail
         if(emailTemporario == 'cryptogmail'){
             resEmail = await capturarEmail(x, paginaEmail, logs)
@@ -79,46 +91,48 @@ const criador = async(
         }else if(emailTemporario == 'fakermail'){
             resEmail = await capturarEmailFakermail(x, paginaEmail, logs)
         }
-
         if(resEmail.ok == false){
-            await navegador.close()
+            const cookies = await paginaEmail.cookies()
+            const cookies2 = await paginaInstagram.cookies()
+            await paginaEmail.deleteCookie(...cookies)
+            await paginaInstagram.deleteCookie(...cookies2)
             continue
         }
-
-        // Email capturado com sucesso
         const { email } = resEmail
 
-        if(modoAnonimoConfigurado == true){
-            paginaInstagram = await context.newPage()
-        }else{
-            paginaInstagram = await navegador.newPage()
-        }
-
+        // SELECIONANDO UM USER AGENT ALEATÓRIO DESKTOP PARA A PÁGINA DO INSTAGRAM
+        userAgent == 'aleatorio' ? 
+        await selecionarUserAgentAleatorio(paginaInstagram, 'desktop') : 
         await paginaInstagram.setUserAgent(userAgent)
-        await paginaInstagram.setExtraHTTPHeaders({
-            'Accept-Language': 'pt-br'
-        })
 
-        // Preenchendo os dados no instagram
+        // PREENCHENDO OS DADOS DO INSTAGRAM
+        await paginaInstagram.setViewport({
+            width: 700,
+            height: 700,
+            deviceScaleFactor: 1
+        })
         const resPreencher = await preencherDados(x, paginaInstagram, email, senhaPerfis, generoPerfis, logs)
         if(resPreencher.ok == false){
-            await navegador.close()
+            const cookies = await paginaEmail.cookies()
+            const cookies2 = await paginaInstagram.cookies()
+            await paginaEmail.deleteCookie(...cookies)
+            await paginaInstagram.deleteCookie(...cookies2)
             continue
         }
-
-        // Usuário capturado com sucesso
         const { usuario } = resPreencher
 
-        // Selecionando a data do perfil
+        // SELECIONANDO A DATA DO PERFIL
         const resData = await selecionarData(x, paginaInstagram, logs)
         if(resData.ok == false){
-            await navegador.close()
+            const cookies = await paginaEmail.cookies()
+            const cookies2 = await paginaInstagram.cookies()
+            await paginaEmail.deleteCookie(...cookies)
+            await paginaInstagram.deleteCookie(...cookies2)
             continue
         }
 
-        // Capturando código
+        // CAPTURANDO O CÓDIGO NO EMAIL TEMPORÁRIO
         let resCodigo
-
         if(emailTemporario == 'cryptogmail'){
             resCodigo = await capturarCodigo(x, paginaEmail, logs)
         }else if(emailTemporario == 'mailtm'){
@@ -126,50 +140,126 @@ const criador = async(
         }else if(emailTemporario == 'fakermail'){
             resCodigo = await capturarCodigoFakermail(x, paginaEmail, logs)
         }
-
         if(resCodigo.ok == false){
-            await navegador.close()
+            const cookies = await paginaEmail.cookies()
+            const cookies2 = await paginaInstagram.cookies()
+            await paginaEmail.deleteCookie(...cookies)
+            await paginaInstagram.deleteCookie(...cookies2)
             continue
         }
-
-        // Usuário capturado com sucesso
         const { codigo } = resCodigo
-        
-        // Preenchendo o código e verificando se tomou sms ou criou com sucesso
-        const resDigitandoCodigo = await digitandoCodigo(
-            x, 
-            paginaInstagram, 
-            comoSalvar,
-            ondeSalvar,
-            usuario, 
-            senhaPerfis, 
-            codigo, 
-            limparLoginConfigurado,
-            logs
-        )
 
+        // FINALIZANDO A CRIAÇÃO DO PERFIL
+        const resDigitandoCodigo = await digitandoCodigo(x, paginaInstagram, comoSalvar, ondeSalvar, usuario, senhaPerfis, codigo, logs)
         if(resDigitandoCodigo.ok == false){
-            await navegador.close()
+            const cookies = await paginaEmail.cookies()
+            const cookies2 = await paginaInstagram.cookies()
+            await paginaEmail.deleteCookie(...cookies)
+            await paginaInstagram.deleteCookie(...cookies2)
             continue
         }
 
-        if(montarPerfisConfigurado == false){
-            if(limparLoginConfigurado == true){
-                await limparAtividadeLogin(paginaInstagram, usuario, logs)
+        // ALTERANDO O TAMANHO DA PÁGINA DO INSTAGRAM
+        await paginaInstagram.setViewport({
+            width: 320,
+            height: 580,
+            deviceScaleFactor: 1
+        })
+
+        // ALTERANDO O USER AGENT PARA MOBILE
+        await selecionarUserAgentAleatorio(paginaInstagram, 'mobile')
+
+        if(montarPerfisConfigurado == true){
+
+            // ALTERANDO O GÊNERO DOS PERFIS
+            await alterarGeneroPerfil(paginaInstagram, usuario, generoPerfis, logs)
+            if(esperarEntre != 0){
+                logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                await paginaInstagram.waitForTimeout(esperarEntre)
+            }
+
+            // CAPTURANDO A PASTA DE PUBLICAÇÕES
+            const pastas = fs.readdirSync(caminhoPastaFotos)
+            let caminhoPasta = ''
+            async function selecionarCaminho(){
+                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
+                caminhoPasta = `${caminhoPastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
+                    return selecionarCaminho()
+                }
+                return pastaEscolhida.push(caminhoPasta)
+            }
+            await selecionarCaminho()
+
+            // POSTANDO A FOTO DE PERFIL
+            if(alterarFotoPerfil == true){
+                await postarFotoPerfil(paginaInstagram, usuario, caminhoPasta, logs)
+                if(esperarEntre != 0){
+                    logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                    await paginaInstagram.waitForTimeout(esperarEntre)
+                }
+            }
+
+            // ALTERANDO A BIOGRAFIA DO PERFIL
+            if(alterarBiografia == true){
+                await alterarBiografiaPerfil(paginaInstagram, usuario, logs)
+                if(esperarEntre != 0){
+                    logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                    await paginaInstagram.waitForTimeout(esperarEntre)
+                }
+            }
+
+            // POSTANDO FOTOS NO FEED
+            if(quantidadePublicacoesFeed != 0 || quantidadePublicacoesFeed != '0' || quantidadePublicacoesFeed != ''){
+                logs.push(`Postando fotos no Feed`)
+                for(let x = 0; x < quantidadePublicacoesFeed; x++){
+                    await realizarPublicacoesFeed(paginaInstagram, x + 1, usuario, caminhoPasta, logs)
+                    if(esperarEntre != 0){
+                        logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                        await paginaInstagram.waitForTimeout(esperarEntre)
+                    }
+                }
+            }
+
+            // POSTANDO FOTOS NO STORY
+            if(quantidadePublicacoesStory != 0 || quantidadePublicacoesStory != '0' || quantidadePublicacoesStory != ''){
+                logs.push(`Postando fotos no story`)
+                for(let x = 0; x < quantidadePublicacoesStory; x++){
+                    await realizarPublicacoesStory(paginaInstagram, x + 1 , usuario, caminhoPasta, logs)
+                    if(esperarEntre != 0){
+                        logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                        await paginaInstagram.waitForTimeout(esperarEntre)
+                    }
+                }
+            }
+
+            // SEGUINDO PERFIS FAMOSOS
+            if(seguirPerfis != 0 || seguirPerfis != '0' || seguirPerfis != ''){
+                await seguirPerfisFamosos(paginaInstagram, usuario, seguirPerfis, esperarEntre, logs)
             }
         }
 
-        if(esperarEntreConfigurado != 0){
-            logs.push(`perfil ${x} - Aguardando ${esperarEntreConfigurado / 1000} segundos.`)
-            await paginaInstagram.waitForTimeout(esperarEntreConfigurado)
+        // LIMPANDO A ATIVIDADE DE LOGIN
+        if(limparLoginConfigurado == true){
+            await limparAtividadeLogin(paginaInstagram, usuario, logs)
         }
 
-        // Fechando o navegador
-        await navegador.close()
+        // ESPERANDO OS SEGUNDOS CONFIGURADOS ANTES DE CRIAR O PRÓXIMO PERFIL
+        if(esperarEntre != 0){
+            logs.push(`perfil ${x} - Aguardando ${esperarEntre / 1000} segundos.`)
+            await paginaInstagram.waitForTimeout(esperarEntre)
+        }
+
+        // LIMPANDO OS COOKIES PARA RECOMEÇAR
+        const cookies = await paginaEmail.cookies()
+        const cookies2 = await paginaInstagram.cookies()
+        await paginaEmail.deleteCookie(...cookies)
+        await paginaInstagram.deleteCookie(...cookies2)
     }
 
+    // FECHANDO O NAVEGADOR
     logs.push('O robô terminou, pode voltar!')
-    return true
+    await navegador.close()
 }
 
 module.exports = criador

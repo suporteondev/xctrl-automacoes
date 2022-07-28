@@ -1,18 +1,18 @@
 const router = require('express').Router()
-const connectDB = require('../../middlewares/connectDB')
 const logado = require('../../middlewares/logado')
+const Store = require('electron-store')
+const store = new Store()
 const criador = require('../../auto/criador/index')
 
-router.post('/criador', logado, connectDB, async(req, res)=>{
+router.post('/criador', logado, async(req, res)=>{
 
     global.criador = []
 
     const { 
         caminhoNavegador,
-        modoInvisivel,
-        modoAnonimo,
+        verAcontecendo,
+        navegadorAnonimo,
         userAgent,
-        listaUserAgents,
         emailTemporario,
         quantidadePerfis,
         senhaPerfis,
@@ -24,16 +24,37 @@ router.post('/criador', logado, connectDB, async(req, res)=>{
         montarPerfis
     } = req.body
 
-    const modoInvisivelConfigurado = modoInvisivel === 'sim' ? true : false 
-    const modoAnonimoConfigurado = modoAnonimo === 'sim' ? true : false 
-    const limparLoginConfigurado = limparLogin === 'sim' ? true : false 
-    const montarPerfisConfigurado = montarPerfis === 'sim' ? true : false 
-    const esperarEntreConfigurado = Number(esperarEntre) * 1000
+    const verAcontecendoConfigurado = verAcontecendo == 'sim' ? false : true
+    const navegadorAnonimoConfigurado = navegadorAnonimo == 'sim' ? true : false
+    const limparLoginConfigurado = limparLogin == 'sim' ? true : false
+    const montarPerfisConfigurado = montarPerfis == 'sim' ? true : false
+
+    const { 
+        caminhoPastaFotos,
+        alterarFotoPerfil,
+        alterarBiografia,
+        quantidadePublicacoesFeed,
+        quantidadePublicacoesStory,
+        seguirPerfis
+    } = store.get('configuracoesMontador')
+
+    const alterarFotoPerfilConfigurado = alterarFotoPerfil == 'sim' ? true : false
+    const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
+
+    if(montarPerfisConfigurado == true){
+        if(caminhoPastaFotos == ''){
+            return res.json({
+                ok: false,
+                mensagem: 'Configure o caminho da pasta de fotos no montador antes de iniciar!'
+            })
+        }
+    }
 
     await criador(
         caminhoNavegador, 
-        modoInvisivelConfigurado,
-        modoAnonimoConfigurado,
+        verAcontecendoConfigurado,
+        navegadorAnonimoConfigurado,
+        userAgent,
         generoPerfis, 
         senhaPerfis, 
         limparLoginConfigurado,
@@ -41,8 +62,14 @@ router.post('/criador', logado, connectDB, async(req, res)=>{
         ondeSalvar,
         quantidadePerfis, 
         emailTemporario, 
-        esperarEntreConfigurado,
+        esperarEntre,
         montarPerfisConfigurado,
+        caminhoPastaFotos,
+        alterarFotoPerfilConfigurado,
+        alterarBiografiaConfigurado,
+        quantidadePublicacoesFeed,
+        quantidadePublicacoesStory,
+        seguirPerfis,
         global.criador
     )
 

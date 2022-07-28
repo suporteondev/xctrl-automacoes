@@ -1,9 +1,8 @@
 const router = require('express').Router()
-const connectDB = require('../../middlewares/connectDB')
 const logado = require('../../middlewares/logado')
 const montador = require('../../auto/montador/index')
 
-router.post('/montador', logado, connectDB, async(req, res)=>{
+router.post('/montador', logado, async(req, res)=>{
 
     global.montador = []
 

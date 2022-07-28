@@ -1,8 +1,8 @@
 export function salvar(Mensagem, setMensagem, setConfiguracoesCriador){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
-    const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
-    const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
+    const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
+    const navegadorAnonimo = document.querySelector('[name="navegadorAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const emailTemporario = document.querySelector('[name="emailTemporario"]').value
     const quantidadePerfis = document.querySelector('[name="quantidadePerfis"]').value
@@ -17,8 +17,8 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesCriador){
 
     const configuracoes = {
         caminhoNavegador,
-        modoInvisivel,
-        modoAnonimo,
+        verAcontecendo,
+        navegadorAnonimo,
         userAgent,
         emailTemporario,
         quantidadePerfis,

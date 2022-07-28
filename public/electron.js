@@ -44,17 +44,18 @@ app.on('ready', async () => {
     if(store.get('configuracoesCriador') == undefined || store.get('configuracoesCriador') == 'undefined'){
         store.set('configuracoesCriador', {
             caminhoNavegador: '',
-            modoInvisivel: 'sim',
-            modoAnonimo: 'sim',
+            verAcontecendo: 'sim',
+            navegadorAnonimo: 'sim',
             userAgent: 'aleatorio',
-            emailTemporario: 'cryptogmail',
+            emailTemporario: 'mailtm',
             quantidadePerfis: '999999',
+            senhaPerfis: '',
             generoPerfis: 'feminino',
             limparLogin: 'sim',
-            senhaPerfis: '',
             comoSalvar: 'linha',
             ondeSalvar: '',
-            esperarEntre: '0'
+            esperarEntre: 0,
+            montarPerfis: 'sim'
         })
     }
 

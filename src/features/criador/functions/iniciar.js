@@ -1,8 +1,8 @@
-export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar){
+export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
-    const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
-    const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
+    const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
+    const navegadorAnonimo = document.querySelector('[name="navegadorAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const emailTemporario = document.querySelector('[name="emailTemporario"]').value
     const quantidadePerfis = document.querySelector('[name="quantidadePerfis"]').value
@@ -79,18 +79,17 @@ export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecuta
             },
             body: JSON.stringify({ 
                 caminhoNavegador,
-                modoInvisivel,
-                modoAnonimo,
+                verAcontecendo,
+                navegadorAnonimo,
                 userAgent,
-                listaUserAgents,
                 emailTemporario,
-                quantidadePerfis,
+                quantidadePerfis: Number(quantidadePerfis),
                 senhaPerfis,
                 generoPerfis,
                 limparLogin,
                 comoSalvar,
                 ondeSalvar,
-                esperarEntre,
+                esperarEntre: Number(esperarEntre) * 1000,
                 montarPerfis
             })
         }
@@ -98,8 +97,10 @@ export async function iniciar(listaUserAgents, Mensagem, setMensagem, setExecuta
         const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/criador`, configs)
         const resultado = await api.json()
 
-        // setMensagem(<Mensagem cor='sucesso'>Verificador iniciado com sucesso!</Mensagem>)
-        // logs.scrollTop = logs.scrollHeight
+        if(resultado.ok == false){
+            setMensagem(<Mensagem>{resultado.mensagem}</Mensagem>)
+            logs.scrollTop = logs.scrollHeight
+        }
     }
 
 }

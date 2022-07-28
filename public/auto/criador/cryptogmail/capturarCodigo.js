@@ -5,12 +5,12 @@ const capturarCodigo = async(identificador, pagina, logs)=>{
         await pagina.bringToFront()
 
         logs.push(`perfil ${identificador} - ` + 'Aguardando o código chegar.')
-        await pagina.waitForSelector('.subject--text.subject-text-js', { timeout: 120000 })
+        await pagina.waitForSelector('#_tm_openedList .subject--text.subject-text-js', { timeout: 60000 })
 
         // Capturando o código
         logs.push(`perfil ${identificador} - ` + 'Capturando o código')
         const codigo = await pagina.evaluate(()=>{
-            return document.querySelector('.subject--text.subject-text-js').innerText.substring(0, 6)
+            return document.querySelector('#_tm_openedList .subject--text.subject-text-js').innerText.substring(0, 6)
         })
 
         // Retornando o código

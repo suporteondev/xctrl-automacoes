@@ -8,8 +8,6 @@ async function selecionarUserAgentAleatorio(pagina, userAgent){
 
         // ESCOLHENDO UM USER AGENT ALEATÓRIO
         const userAgentsMobileEscolhido = userAgentsMobile[Math.floor(Math.random() * userAgentsMobile.length)]
-        
-        console.log(userAgentsMobileEscolhido)
 
         // CONFIGURANDO O USER AGENT
         return await pagina.setUserAgent(userAgentsMobileEscolhido)
@@ -20,8 +18,6 @@ async function selecionarUserAgentAleatorio(pagina, userAgent){
 
         // ESCOLHENDO UM USER AGENT ALEATÓRIO
         const userAgentsDesktopEscolhido = userAgentsDesktop[Math.floor(Math.random() * userAgentsDesktop.length)]
-        
-        console.log(userAgentsDesktopEscolhido)
 
         // CONFIGURANDO O USER AGENT
         return await pagina.setUserAgent(userAgentsDesktopEscolhido)

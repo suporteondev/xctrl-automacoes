@@ -5,7 +5,7 @@ const capturarCodigo = async(identificador, pagina, logs)=>{
         await pagina.bringToFront()
 
         logs.push(`perfil ${identificador} - ` + 'Aguardando o código chegar.')
-        await pagina.waitForSelector('ul li a', { timeout: 120000 })
+        await pagina.waitForSelector('ul li a', { timeout: 60000 })
 
         // Capturando o código
         logs.push(`perfil ${identificador} - ` + 'Capturando o código')
