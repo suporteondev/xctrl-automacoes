@@ -15,7 +15,7 @@ const digitandoCodigo = async(
         // Esperando o seletor
         logs.push('Confirmando o código')
         await pagina.bringToFront()
-        await pagina.waitForSelector('input[aria-label="Código de confirmação"]')
+        await pagina.waitForSelector('input[aria-label="Código de confirmação"]', { timeout: 60000 })
 
         // Digitando o código
         logs.push(`perfil ${identificador} - ` + 'Digitando o código')
@@ -23,16 +23,16 @@ const digitandoCodigo = async(
 
         // Confirmando o código
         logs.push(`perfil ${identificador} - ` + 'Confirmando o código')
-        await pagina.waitForSelector('button[type="submit"]')
+        await pagina.waitForSelector('button[type="submit"]', { timeout: 60000 })
         await pagina.click('button[type="submit"]')
 
         // Esperando a página carregar
         logs.push(`perfil ${identificador} - ` + 'Esperando a página carregar')
-        await pagina.waitForNavigation({ timeout: 45000 })
+        await pagina.waitForNavigation({ timeout: 60000 })
 
         // Esperando o direct aparecer
         logs.push(`perfil ${identificador} - ` + 'Esperando o direct aparecer')
-        await pagina.waitForSelector('[aria-label="Página inicial"]')
+        await pagina.waitForSelector('[aria-label="Página inicial"]', { timeout: 60000 })
 
         logs.push(`perfil ${identificador} - ` + 'Perfil criado com sucesso!')
         if(comoSalvar == 'linha'){

@@ -7,7 +7,7 @@ const preencherDados = async(identificador, pagina, email, senha, genero, logs)=
         // Acessar instagram
         logs.push('Preenchendo dados')
         await pagina.bringToFront()
-        await pagina.goto('https://www.instagram.com/accounts/emailsignup/')
+        await pagina.goto('https://www.instagram.com/accounts/emailsignup/', { timeout: 60000 })
 
         const erroInicial = await pagina.evaluate(()=>{
             const titulos = document.querySelectorAll('h2')
@@ -25,7 +25,7 @@ const preencherDados = async(identificador, pagina, email, senha, genero, logs)=
         if(erroInicial == true){
             const cookies = await pagina.cookies()
             await pagina.deleteCookie(...cookies)
-            await pagina.goto('https://www.instagram.com/accounts/emailsignup/')
+            await pagina.goto('https://www.instagram.com/accounts/emailsignup/', { timeout: 60000 })
         }
         
         try{
@@ -90,7 +90,7 @@ const preencherDados = async(identificador, pagina, email, senha, genero, logs)=
         await atalhos.clicar(pagina, 'button[type="submit"]')
 
         // Esperando avançar
-        await pagina.waitForSelector('[title="Mês:"]')
+        await pagina.waitForSelector('[title="Mês:"]', { timeout: 60000 })
         logs.push(`perfil ${identificador} - ` + 'Dados preenchidos com sucesso!')
 
         return {
@@ -100,7 +100,6 @@ const preencherDados = async(identificador, pagina, email, senha, genero, logs)=
 
     }catch(erro){
         logs.push(`perfil ${identificador} - ` + 'Erro ao tentar preencher os dados.')
-
         return {
             ok: false
         }

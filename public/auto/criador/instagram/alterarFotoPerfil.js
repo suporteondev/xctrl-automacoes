@@ -13,8 +13,7 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
         logs.push('Alterando a foto de perfil')
 
         logs.push(usuario + ' - Redirecionando para o perfil.')
-        await pagina.goto('https://www.instagram.com/accounts/edit/')
-
+        await pagina.goto('https://www.instagram.com/accounts/edit/', { timeout: 60000 })
         await pagina.waitForTimeout(2000)
         const aceitarCookie = await pagina.evaluate(()=>{
 
@@ -49,7 +48,7 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
         }
 
         logs.push(usuario + ' - Esperando os dados aparecerem.')
-        await pagina.waitForSelector('._acan._acao._acas')
+        await pagina.waitForSelector('._acan._acao._acas', { timeout: 60000 })
 
         const resultado = await pagina.evaluate(()=>{
             if(document.querySelector('img[alt="Alterar foto do perfil"]') || document.querySelector('img[alt="Change profile photo"]')){
@@ -63,26 +62,26 @@ const alterarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
         if(resultado == 'adicionar'){
             const [ instaUploadProfile ] = await Promise.all([
                 pagina.waitForFileChooser(),
-                await pagina.waitForSelector('button._acan._acao._acas'),
+                await pagina.waitForSelector('button._acan._acao._acas', { timeout: 60000 }),
                 await pagina.click('button._acan._acao._acas')
             ])
             
             await instaUploadProfile.accept([ fotoPerfil ])
         }else if('alterar'){
 
-            await pagina.waitForSelector('button._acan._acao._acas')
+            await pagina.waitForSelector('button._acan._acao._acas', { timeout: 60000 })
             await pagina.click('button._acan._acao._acas')
 
             const [ instaUploadProfile ] = await Promise.all([
                 pagina.waitForFileChooser(),
-                await pagina.waitForSelector('button._a9--._a9_0'),
+                await pagina.waitForSelector('button._a9--._a9_0', { timeout: 60000 }),
                 await pagina.click('button._a9--._a9_0')
             ])
             
             await instaUploadProfile.accept([ fotoPerfil ])
         }
         await pagina.waitForTimeout(3000)
-        await pagina.waitForSelector('._ab5p')
+        await pagina.waitForSelector('._ab5p', { timeout: 60000 })
         await pagina.click('._ab5p')
         await pagina.waitForTimeout(5000)
         logs.push(usuario + ' - Foto de perfil alterada com sucesso!')

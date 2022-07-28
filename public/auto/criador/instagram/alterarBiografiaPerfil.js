@@ -128,8 +128,7 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
         logs.push('Alterando a biografia')
 
         logs.push(usuario + ' - Redirecionando para o perfil.')
-        await pagina.goto('https://www.instagram.com/' + usuario)
-
+        await pagina.goto('https://www.instagram.com/' + usuario, { timeout: 60000 })
         await pagina.waitForTimeout(2000)
         const aceitarCookie = await pagina.evaluate(()=>{
 
@@ -164,11 +163,11 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
         }
             
         logs.push(usuario + ' - Apertando em editar conta.')
-        await pagina.waitForSelector('a[href="/accounts/edit/"]')
+        await pagina.waitForSelector('a[href="/accounts/edit/"]', { timeout: 60000 })
         await pagina.click('a[href="/accounts/edit/"]')
 
         logs.push(usuario + ' - Clicando na biografia.')
-        await pagina.waitForSelector('#pepBio')
+        await pagina.waitForSelector('#pepBio', { timeout: 60000 })
         await pagina.click('#pepBio')
 
         logs.push(usuario + ' - Selecionando a biografia.')
@@ -182,7 +181,7 @@ const alterarBiografiaPerfil = async(pagina, usuario, generoPerfis, logs)=>{
         const hobby = Math.floor(Math.random() * hobbys.length)
 
         logs.push(usuario + ' - Digitando a nova biografia.')
-        await pagina.waitForSelector('#pepBio')
+        await pagina.waitForSelector('#pepBio', { timeout: 60000 })
         await pagina.type('#pepBio', `
             🎉 | ${idades[idade]} anos
             📍 | ${localizacoes[localizacao]}

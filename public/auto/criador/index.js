@@ -81,6 +81,11 @@ const criador = async(
         userAgent == 'aleatorio' ? 
         await selecionarUserAgentAleatorio(paginaEmail, 'desktop') : 
         await paginaEmail.setUserAgent(userAgent)
+
+        // ALTERANDO A LINGUAGEM DO NAVEGADOR
+        await paginaEmail.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
         
         // CAPTURANDO O EMAIL TEMPORÁRIO
         let resEmail
@@ -104,6 +109,11 @@ const criador = async(
         userAgent == 'aleatorio' ? 
         await selecionarUserAgentAleatorio(paginaInstagram, 'desktop') : 
         await paginaInstagram.setUserAgent(userAgent)
+
+        // ALTERANDO A LINGUAGEM DO NAVEGADOR
+        await paginaInstagram.setExtraHTTPHeaders({
+            'Accept-Language': 'pt-br'
+        })
 
         // PREENCHENDO OS DADOS DO INSTAGRAM
         await paginaInstagram.setViewport({

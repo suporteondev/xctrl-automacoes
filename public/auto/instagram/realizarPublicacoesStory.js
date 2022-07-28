@@ -18,8 +18,8 @@ const realizarPublicacoesStory = async(pagina, x, usuario, pastaFotos, logs)=>{
         await selecionarPublicacao()
 
         // ACESSANDO O PERFIL
-        await pagina.goto('https://www.instagram.com/')
-        await pagina.waitForSelector('svg[aria-label="Novo story"]')
+        await pagina.goto('https://www.instagram.com/', { timeout: 60000 })
+        await pagina.waitForSelector('svg[aria-label="Novo story"]', { timeout: 60000 })
 
         // Selecionando a publicação
         logs.push(`${usuario} - Selecionado o ${x}ª story.`)
@@ -32,9 +32,9 @@ const realizarPublicacoesStory = async(pagina, x, usuario, pastaFotos, logs)=>{
         await uploadPublicacoes.accept([ publicacao ])
 
         logs.push(`${usuario} - Publicando no story.`)
-        await pagina.waitForSelector('[aria-label="Adicionar ao seu story"]')
+        await pagina.waitForSelector('[aria-label="Adicionar ao seu story"]', { timeout: 60000 })
         await pagina.click('[aria-label="Adicionar ao seu story"]')
-        await pagina.waitForSelector('svg[aria-label="Novo story"]')
+        await pagina.waitForSelector('svg[aria-label="Novo story"]', { timeout: 60000 })
         logs.push(`${usuario} - Story publicado com sucesso!`)
 
         return true
@@ -57,8 +57,8 @@ const realizarPublicacoesStory = async(pagina, x, usuario, pastaFotos, logs)=>{
             await selecionarPublicacao()
 
             // ACESSANDO O PERFIL
-            await pagina.goto('https://www.instagram.com/')
-            await pagina.waitForSelector('svg[aria-label="Novo story"]')
+            await pagina.goto('https://www.instagram.com/', { timeout: 60000 })
+            await pagina.waitForSelector('svg[aria-label="Novo story"]', { timeout: 60000 })
 
             // Selecionando a publicação
             logs.push(`${usuario} - Selecionado o ${x}ª story.`)
@@ -71,9 +71,9 @@ const realizarPublicacoesStory = async(pagina, x, usuario, pastaFotos, logs)=>{
             await uploadPublicacoes.accept([ publicacao ])
 
             logs.push(`${usuario} - Publicando no story.`)
-            await pagina.waitForSelector('[aria-label="Adicionar ao seu story"]')
+            await pagina.waitForSelector('[aria-label="Adicionar ao seu story"]', { timeout: 60000 })
             await pagina.click('[aria-label="Adicionar ao seu story"]')
-            await pagina.waitForSelector('svg[aria-label="Novo story"]')
+            await pagina.waitForSelector('svg[aria-label="Novo story"]', { timeout: 60000 })
             logs.push(`${usuario} - Story publicado com sucesso!`)
 
             return true

@@ -4,13 +4,13 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         logs.push('Capturando o email')
         await pagina.bringToFront()
         logs.push(`perfil ${identificador} - ` + 'Acessando o mail.tm')
-        await pagina.goto('https://mail.tm/pt/')
+        await pagina.goto('https://mail.tm/pt/', { timeout: 60000 })
 
         // Esperando o botão de remover aparecer e clicando
         logs.push(`perfil ${identificador} - ` + 'Atualizando o email')
-        await pagina.waitForSelector('button[id="logout"]')
+        await pagina.waitForSelector('button[id="logout"]', { timeout: 60000 })
         await pagina.click('button[id="logout"]')
-        await pagina.waitForTimeout(3000)
+        await pagina.waitForTimeout(5000)
 
         // Capturando o email do cryptogmail
         logs.push(`perfil ${identificador} - ` + 'Capturando o email')

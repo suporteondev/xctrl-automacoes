@@ -6,11 +6,11 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         logs.push(`perfil ${identificador} - ` + 'Acessando o cryptogmail')
         const cookies = await pagina.cookies()
         await pagina.deleteCookie(...cookies)
-        await pagina.goto('https://cryptogmail.com/')
+        await pagina.goto('https://cryptogmail.com/', { timeout: 60000 })
         
         // Esperando o botão de remover aparecer e clicando
         logs.push(`perfil ${identificador} - ` + 'Atualizando o email')
-        await pagina.waitForSelector('a[onclick="_temp_mail.removeEmailBox()"]')
+        await pagina.waitForSelector('a[onclick="_temp_mail.removeEmailBox()"]', { timeout: 60000 })
         await pagina.click('a[onclick="_temp_mail.removeEmailBox()"]')
         await pagina.waitForTimeout(2000)
 

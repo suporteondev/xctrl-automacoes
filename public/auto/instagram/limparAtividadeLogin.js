@@ -36,7 +36,7 @@ const limparAtividadeLogin = async(pagina, usuario, logs)=>{
                 })
             })
             
-            await pagina.waitForSelector('button._a9--._a9_1')
+            await pagina.waitForSelector('button._a9--._a9_1', { timeout: 60000 })
             await pagina.click('button._a9--._a9_1')
             logs.push(`${usuario} - Atividade de login limpa com sucesso!`)
             await pagina.waitForTimeout(5000)
@@ -82,7 +82,7 @@ const limparAtividadeLogin = async(pagina, usuario, logs)=>{
                     })
                 })
                 
-                await pagina.waitForSelector('button._a9--._a9_1')
+                await pagina.waitForSelector('button._a9--._a9_1', { timeout: 60000 })
                 await pagina.click('button._a9--._a9_1')
                 logs.push(`${usuario} - Atividade de login limpa com sucesso!`)
                 await pagina.waitForTimeout(5000)

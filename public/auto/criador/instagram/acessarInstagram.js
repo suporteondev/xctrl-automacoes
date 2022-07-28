@@ -5,7 +5,7 @@ const acessarInstagram = async(pagina, usuario, senha, logs, identificador)=>{
         // Acessar o instagram
         logs.push('')
         logs.push('Acessando o instagram')
-        await pagina.goto('https://www.instagram.com/accounts/login/')
+        await pagina.goto('https://www.instagram.com/accounts/login/', { timeout: 60000 })
 
         logs.push(`perfil ${identificador}` + ' - Deletando os cookies.')
         const cookies = await pagina.cookies()
@@ -13,22 +13,22 @@ const acessarInstagram = async(pagina, usuario, senha, logs, identificador)=>{
 
         // Digitando o usuário
         logs.push(`perfil ${identificador}` + ' - Digitando usuário.')
-        await pagina.waitForSelector('input[name="username"]')
+        await pagina.waitForSelector('input[name="username"]', { timeout: 60000 })
         await pagina.type('input[name="username"]', usuario)
 
         // Digitando a senha
         logs.push(`perfil ${identificador}` + ' - Digitando senha.')
-        await pagina.waitForSelector('input[name="password"]')
+        await pagina.waitForSelector('input[name="password"]', { timeout: 60000 })
         await pagina.type('input[name="password"]', senha)
 
         // Fazendo login
         logs.push(`perfil ${identificador}` + ' - Acessando o instagram.')
-        await pagina.waitForSelector('button[type="submit"]')
+        await pagina.waitForSelector('button[type="submit"]', { timeout: 60000 })
         await pagina.click('button[type="submit"]')
         
         // Esperando a página carregar
         logs.push(`perfil ${identificador}` + ' - Esperando carregar.')
-        await pagina.waitForNavigation()
+        await pagina.waitForNavigation({ timeout: 60000 })
 
         // Verificando se existe algum spam
         let spam = await pagina.evaluate(()=>{
@@ -63,11 +63,11 @@ const acessarInstagram = async(pagina, usuario, senha, logs, identificador)=>{
         }
 
         // Apertando em agora não
-        await pagina.waitForSelector('.cmbtv > button')
+        await pagina.waitForSelector('.cmbtv > button', { timeout: 60000 })
         await pagina.click('.cmbtv > button')
 
         // Esperando o direct aparecer
-        await pagina.waitForSelector('[aria-label="Direct"]')
+        await pagina.waitForSelector('[aria-label="Direct"]', { timeout: 60000 })
 
         // Retornando o sucesso
         logs.push(`perfil ${identificador} - Perfil acessado com sucesso!`)

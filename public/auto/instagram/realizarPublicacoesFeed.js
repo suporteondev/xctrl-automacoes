@@ -18,8 +18,8 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
         await selecionarPublicacao()
 
         // ACESSANDO O PERFIL
-        await pagina.goto('https://www.instagram.com/' + usuario)
-        await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
+        await pagina.goto('https://www.instagram.com/' + usuario, { timeout: 60000 })
+        await pagina.waitForSelector('svg[aria-label="Nova publicação"]', { timeout: 60000 })
 
         // Selecionando a publicação
         logs.push(`${usuario} - Selecionado a ${x}ª publicação.`)
@@ -33,16 +33,16 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
 
         //Avançar
         logs.push(usuario + ' - Avançando.')
-        await pagina.waitForSelector('button._ab5p')
+        await pagina.waitForSelector('button._ab5p', { timeout: 60000 })
         await pagina.click('button._ab5p')
 
         // Compartilhar
         logs.push(usuario + ' - Compartilhando.')
-        await pagina.waitForSelector('textarea[aria-label="Escreva uma legenda..."]')
+        await pagina.waitForSelector('textarea[aria-label="Escreva uma legenda..."]', { timeout: 60000 })
         await pagina.click('button._ab5p')
 
         // Esperando aparecer o botão de Nova publicação
-        await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
+        await pagina.waitForSelector('svg[aria-label="Nova publicação"]', { timeout: 60000 })
         logs.push(usuario + ' - Publicação realizada com sucesso!')
 
         return true
@@ -64,8 +64,8 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
             await selecionarPublicacao()
 
             // ACESSANDO O PERFIL
-            await pagina.goto('https://www.instagram.com/' + usuario)
-            await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
+            await pagina.goto('https://www.instagram.com/' + usuario, { timeout: 60000 })
+            await pagina.waitForSelector('svg[aria-label="Nova publicação"]', { timeout: 60000 })
 
             // Selecionando a publicação
             logs.push(`${usuario} - Selecionado a ${x}ª publicação.`)
@@ -79,16 +79,16 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
 
             //Avançar
             logs.push(usuario + ' - Avançando.')
-            await pagina.waitForSelector('button._ab5p')
+            await pagina.waitForSelector('button._ab5p', { timeout: 60000 })
             await pagina.click('button._ab5p')
 
             // Compartilhar
             logs.push(usuario + ' - Compartilhando.')
-            await pagina.waitForSelector('textarea[aria-label="Escreva uma legenda..."]')
+            await pagina.waitForSelector('textarea[aria-label="Escreva uma legenda..."]', { timeout: 60000 })
             await pagina.click('button._ab5p')
 
             // Esperando aparecer o botão de Nova publicação
-            await pagina.waitForSelector('svg[aria-label="Nova publicação"]')
+            await pagina.waitForSelector('svg[aria-label="Nova publicação"]', { timeout: 60000 })
             logs.push(usuario + ' - Publicação realizada com sucesso!')
 
             return true 
