@@ -8,6 +8,7 @@ import { AiFillDislike, AiFillLike } from 'react-icons/ai'
 import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { usePerfisGerenciador } from '../../providers/perfisGerenciador'
+import { listarPerfis } from './functions/listarPerfis'
 import { FaYoutube} from 'react-icons/fa'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
@@ -16,17 +17,23 @@ import { selecionarTodos } from './functions/selecionarTodos'
 import { useEffect, useState } from 'react'
 import { Filtrar } from './components/filtrar'
 import { apagarPerfis } from './functions/apagarPerfis'
+import { copiarPerfis } from './functions/copiarPerfis'
+import { filtrarPerfis } from './functions/filtrarPerfis'
 
 const Gerenciador = ()=>{
 
     const { acessoGerenciador } = useAcessoGerenciador()
-    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
-    
+    const perfisGerenciador2 = window.api.ipcRenderer.sendSync('perfisGerenciador')
+    const [ perfisGerenciador, setPerfisGerenciador ] = useState(perfisGerenciador2)
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
+    const [ displayCopiar, setDisplayCopiar ] = useState(false)
+    const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
 
     // useEffect(()=>{
-    //     window.api.ipcRenderer.sendSync('setPerfisGerenciador', [])
+        
+    //     // setPerfisGerenciador([])
+    //     // window.api.ipcRenderer.sendSync('setPerfisGerenciador', [])
     // }, [])
  
     return (
@@ -43,10 +50,56 @@ const Gerenciador = ()=>{
                             }}>Voltar</button>
                             <button onClick={()=>{
                                 apagarPerfis(
+                                    setPerfisGerenciador,
                                     setDisplayApagar,
                                     setBlur
                                 )
                             }}>Apagar</button> 
+                        </div>
+                    </div>
+                </Filtrar>
+                <Filtrar display={displayCopiar}>
+                    <div className='form'>
+                        <label>Opções</label>
+                        <select id='copiar' onChange={()=>{ listarPerfis() }}>
+                            <option value='usuarios'>Listar somente os usuários</option>
+                            <option value='linha'>Listar usuários e senhas em modo linha</option>
+                            <option value='coluna'>Listar usuários e senhas em modo coluna</option>
+                        </select>
+                        <label>Perfis listados</label>
+                        <textarea id='textarea-perfis'></textarea>
+                        <div>
+                            <button onClick={()=>{ 
+                                setDisplayCopiar(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                copiarPerfis()
+                            }}>Copiar</button> 
+                        </div>
+                    </div>
+                </Filtrar>
+                <Filtrar display={displayFiltrar}>
+                    <div className='form'>
+                        <label>Filtros</label>
+                        <select id='filtro'>
+                            <option value='todos'>Todos os perfis</option>
+                            <option value='ativos'>Perfis ativos</option>
+                            <option value='inativos'>Perfis inativos</option>
+                            <option value='novamente'>Perfis para tentar novamente</option>
+                        </select>
+                        <div>
+                            <button onClick={()=>{ 
+                                setDisplayFiltrar(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                filtrarPerfis(
+                                    setPerfisGerenciador, 
+                                    setDisplayFiltrar, 
+                                    setBlur
+                                )
+                            }}>Filtrar</button> 
                         </div>
                     </div>
                 </Filtrar>
@@ -114,7 +167,7 @@ const Gerenciador = ()=>{
                                         : ''}
                                     </td>
                                     <td className='usuario'>{perfil.usuario}</td>
-                                    <td>{perfil.senha}</td>
+                                    <td className='senha'>{perfil.senha}</td>
                                     <td>{perfil.publicacoes}</td>
                                     <td>{perfil.seguidores}</td>
                                     <td>{perfil.seguindo}</td>
@@ -148,11 +201,22 @@ const Gerenciador = ()=>{
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>
-                <Opcao>
+                <Opcao 
+                    funcao={()=>{
+                        setDisplayFiltrar(true)
+                        setBlur(true)
+                    }}
+                >
                     <span>Filtrar perfis</span>
                     <HiFilter/>
                 </Opcao>
-                <Opcao>
+                <Opcao 
+                    funcao={()=>{
+                        setDisplayCopiar(true) 
+                        setBlur(true)
+                        listarPerfis()
+                    }}
+                >
                     <span>Copiar perfis</span>
                     <IoCopy/>
                 </Opcao>

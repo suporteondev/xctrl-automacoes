@@ -31,34 +31,34 @@ const montador = async(
     // DECLARANDO AS VARIAVEIS REUTILIZAVEIS
     let navegador, pagina, context, caminhoPasta
 
-    // ABRINDO O NAVEGADOR
-    navegador = await puppeteer.launch({
-        ignoreHTTPSErrors: true,
-        headless: verAcontecendo,
-        executablePath: caminhoNavegador,
-        args: [
-            '--no-sandbox',
-            '--disabled-setuid-sandbox'
-        ],
-        defaultViewport: {
-            width: 320,
-            height: 580
-        }
-    })
-
-    // CONFIGURANDO O MODO ANÔNIMO
-    if(modoAnonimo == true){
-        context = await navegador.createIncognitoBrowserContext()
-        pagina = await context.newPage()
-        const paginas = await navegador.pages()
-        await paginas[0].close()
-    }else{
-        const paginas = await navegador.pages()
-        pagina = paginas[0]
-    }
-
     // MONTANDO OS PERFIS
     for(let x = 0; x < seusPerfis.length; x++){
+
+        // ABRINDO O NAVEGADOR
+        navegador = await puppeteer.launch({
+            ignoreHTTPSErrors: true,
+            headless: verAcontecendo,
+            executablePath: caminhoNavegador,
+            args: [
+                '--no-sandbox',
+                '--disabled-setuid-sandbox'
+            ],
+            defaultViewport: {
+                width: 320,
+                height: 580
+            }
+        })
+
+        // CONFIGURANDO O MODO ANÔNIMO
+        if(modoAnonimo == true){
+            context = await navegador.createIncognitoBrowserContext()
+            pagina = await context.newPage()
+            const paginas = await navegador.pages()
+            await paginas[0].close()
+        }else{
+            const paginas = await navegador.pages()
+            pagina = paginas[0]
+        }
 
         // SELECIONANDO UM USER AGENT MOBILE
         if(userAgent == 'aleatorio'){
@@ -78,8 +78,7 @@ const montador = async(
         // ACESSANDO O PERFIL
         const resultadoAcessarPerfil = await acessarPerfil(pagina, usuario, senha, logs)
         if(resultadoAcessarPerfil == false){
-            const cookies = await pagina.cookies()
-            await pagina.deleteCookie(...cookies)
+            await navegador.close()
             continue
         } 
 
@@ -159,14 +158,12 @@ const montador = async(
             }
         }
 
-        // LIMPANDO OS COOKIES PARA RECOMEÇAR
-        const cookies = await pagina.cookies()
-        await pagina.deleteCookie(...cookies)
+        // FECHANDO O NAVEGADOR
+        await navegador.close()
     }
 
     // FECHANDO O NAVEGADOR
     logs.push('O robô terminou, pode voltar!')
-    await navegador.close()
 }
 
 module.exports = montador

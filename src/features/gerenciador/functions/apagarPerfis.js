@@ -1,4 +1,5 @@
 export async function apagarPerfis(
+    setPerfisGerenciador,
     setDisplayApagar,
     setBlur
 ){
@@ -33,6 +34,7 @@ export async function apagarPerfis(
         check.checked = false
     })
 
+    setPerfisGerenciador(perfisGerenciador)
     setDisplayApagar(false)
     setBlur(false)
 }

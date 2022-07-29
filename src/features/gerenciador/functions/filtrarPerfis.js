@@ -1,24 +1,46 @@
-export async function filtrarPerfis(setPerfis, setDisplayFiltrar, setBlur, setDisplayFiltrarCarregando){
+export async function filtrarPerfis(
+    setPerfisGerenciador, 
+    setDisplayFiltrar, 
+    setBlur
+){
 
-    setDisplayFiltrarCarregando('flex')
+    const filtro = document.querySelector('#filtro').value
+    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+    const novoArray = []
 
-    const configs = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ filtro: document.querySelector('#filtro').value })
+    for(let x = 0; x < perfisGerenciador.length; x++){
+        const perfil = perfisGerenciador[x]
+
+        if(filtro == 'todos'){
+            novoArray.push(perfil)
+        }
+
+        if(filtro == 'ativos'){
+            if(perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'inativos'){
+            if(perfil.status == 'Inativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'novamente'){
+            if(perfil.status == 'Tentar novamente'){
+                novoArray.push(perfil)
+            }
+        }
     }
 
-    // Chamando a rota de cadastro
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/filtrar`, configs)
-    const resultado = await api.json()
+    const checks = document.querySelectorAll('input[type="checkbox"]')
 
-    if(resultado.ok == true){
-        setDisplayFiltrarCarregando('none')
-        setPerfis(resultado.perfis)
-        setDisplayFiltrar(false)
-        setBlur(false)
-    }
+    checks.forEach((check)=>{
+        check.checked = false
+    })
+
+    setPerfisGerenciador(novoArray)
+    setDisplayFiltrar(false)
+    setBlur(false)
 }

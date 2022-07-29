@@ -1,20 +1,14 @@
 const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, logs)=>{
     try{
 
-        logs.push(`Seguindo perfis`)
+        logs.push(`Seguindo perfis sugeridos`)
         
         // Acessando o instagram do famoso
-        logs.push(`${usuario} - Acessando o perfil do famoso`)
-        await pagina.goto('https://www.instagram.com/othiagoventura/', { timeout: 60000 })
+        logs.push(`${usuario} - Acessando o explorer`)
+        await pagina.goto('https://www.instagram.com/explore/people/', { timeout: 60000 })
 
-        // Vendo os seguidores do famoso
-        logs.push(`${usuario} - Vendo os seguidores do famoso`)
-        await pagina.waitForSelector('._aa_6:nth-child(2)', { timeout: 60000 })
-        await pagina.click('._aa_6:nth-child(2)')
-        
         // Esperando carregar
         logs.push(`${usuario} - Esperando carregar`)
-        await pagina.waitForSelector('._aanp._aaey', { timeout: 60000 })
 
         // Seguindo os perfis
         for(let x = 0; x < seguirPerfis; x++){
@@ -50,17 +44,11 @@ const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, l
             logs.push(`Seguindo perfis`)
             
             // Acessando o instagram do famoso
-            logs.push(`${usuario} - Acessando o perfil do famoso`)
-            await pagina.goto('https://www.instagram.com/othiagoventura/', { timeout: 60000 })
-
-            // Vendo os seguidores do famoso
-            logs.push(`${usuario} - Vendo os seguidores do famoso`)
-            await pagina.waitForSelector('._aa_6:nth-child(2)', { timeout: 60000 })
-            await pagina.click('._aa_6:nth-child(2)')
+            logs.push(`${usuario} - Acessando o explorer`)
+            await pagina.goto('https://www.instagram.com/explore/people/', { timeout: 60000 })
             
             // Esperando carregar
             logs.push(`${usuario} - Esperando carregar`)
-            await pagina.waitForSelector('._aanp._aaey', { timeout: 60000 })
 
             // Seguindo os perfis
             for(let x = 0; x < seguirPerfis; x++){
