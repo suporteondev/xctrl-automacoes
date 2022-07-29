@@ -1,301 +1,169 @@
-import apagarIMG from './svg/apagar.svg'
-import filtrarIMG from './svg/filtrar.svg'
-import ativoIMG from './svg/ativo.svg'
-import inativoIMG from './svg/inativo.svg'
-import novamenteIMG from './svg/tentar-novamente.svg'
-import copiarperfisIMG from './svg/copiarperfis.svg'
-import transferirIMG from './svg/transferir.svg'
-import pesquisarIMG from './svg/pesquisar.svg'
-import tutorialIMG from '../../assets/svg/tutorial.svg'
-import dataIMG from '../../assets/svg/tempo.svg'
-import verificadorIMG from './svg/verificador.svg'    
-import removedorIMG from './svg/removedor.svg'    
-import olhoIMG from './svg/olho.svg'    
-import { useState, useEffect } from 'react'
 import { Conteudos } from './components/conteudos'
+import { Tabela } from './components/tabela'
 import { Cabeca } from '../../components/cabeca'
 import { Rodape } from '../../components/rodape'
-import { Filtrar } from './components/filtrar'
+import { Opcao as Opcao2 } from './components/opcao'
 import { Opcao } from '../../components/opcao'
-import { Topo } from './components/topo'
-import { Tabela } from './components/tabela'
-import { usePerfis } from './hooks/perfis'
-import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
-import { selecionarTodos } from './functions/selecionarTodos'
-import { apagarPerfis } from './functions/apagarPerfis'
-import { listarPerfis } from './functions/listarPerfis'
-import { copiarPerfis } from './functions/copiarPerfis'
-import { filtrarPerfis } from './functions/filtrarPerfis'
-import { transferirPerfis } from './functions/transferirPerfis'
-import { redirecionar } from '../../functions/redirecionar'
-import { useNavigate } from 'react-router-dom'
-import { mostrarSenhas } from './functions/mostrarSenhas'
-import { Carregando } from '../../components/carregando'
+import { AiFillDislike, AiFillLike } from 'react-icons/ai'
+import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
-import { abrirNavegador } from '../../functions/abrirNavegador'
-import { FaYoutube, FaCheck, FaUserSlash, FaSearch } from 'react-icons/fa'
+import { usePerfisGerenciador } from '../../providers/perfisGerenciador'
+import { FaYoutube} from 'react-icons/fa'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
-import { RiSendPlaneFill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
+import { selecionarTodos } from './functions/selecionarTodos'
+import { useEffect, useState } from 'react'
+import { Filtrar } from './components/filtrar'
+import { apagarPerfis } from './functions/apagarPerfis'
 
 const Gerenciador = ()=>{
 
-    const { perfis, setPerfis } = usePerfis()
-    const [ blur, setBlur ] = useState(false)
-
     const { acessoGerenciador } = useAcessoGerenciador()
-
-    const [ displayFiltrarCarregando, setDisplayFiltrarCarregando ] = useState('none')
-    const [ displayTransferirCarregando, setDisplayTransferirCarregando ] = useState('none')
-    const [ displayApagarCarregando, setDisplayApagarCarregando ] = useState('none')
-    const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
-    const [ displayCopiar, setDisplayCopiar ] = useState(false)
-    const [ displayTransferir, setDisplayTransferir ] = useState(false)
+    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+    
+    const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
-    const [ senhaVisivel, setSenhaVisivel ] = useState('password')
-    const Router = useNavigate()
 
+    // useEffect(()=>{
+    //     window.api.ipcRenderer.sendSync('setPerfisGerenciador', [])
+    // }, [])
+ 
     return (
         <div>
             <Cabeca blur={blur} voltar='/painel'/>
-
             <div>
-                <Filtrar display={displayFiltrar}>
-                    <div className='form'>
-                        <label>Filtros</label>
-                        <select id='filtro'>
-                            <option value='todos'>Todos os perfis</option>
-                            <option value='ativo'>Perfis ativos</option>
-                            <option value='inativo'>Perfis inativos</option>
-                            <option value='novamente'>Perfis para tentar novamente</option>
-                            <option value='0'>Perfis sem publicações</option>
-                            <option value='prontas-gni'>Perfis prontos para o GNI</option>
-                            <option value='prontas-dizu'>Perfis prontos para o DIZU</option>
-                        </select>
-                        <Carregando display={displayFiltrarCarregando}/>
-                        <div>
-                            <button style={{ backgroundColor: '#E53535'}} onClick={()=>{ 
-                                setDisplayFiltrar(false)
-                                setBlur(false)
-                            }}>Voltar</button>
-                            <button corFundo='#E53535' onClick={()=>{
-                                filtrarPerfis(setPerfis, setDisplayFiltrar, setBlur, setDisplayFiltrarCarregando)
-                            }}>Filtrar</button> 
-                        </div>
-                    </div>
-                </Filtrar>
-
-                <Filtrar display={displayCopiar}>
-                    <div className='form'>
-                        <label>Opções</label>
-                        <select id='copiar' onChange={()=>{ listarPerfis() }}>
-                            <option value='usuarios'>Listar somente os usuários</option>
-                            <option value='linha'>Listar usuários e senhas em modo linha</option>
-                            <option value='coluna'>Listar usuários e senhas em modo coluna</option>
-                        </select>
-                        <label>Perfis listados</label>
-                        <textarea id='textarea-perfis'></textarea>
-                        <div>
-                            <button style={{ backgroundColor: '#E53535'}} onClick={()=>{ 
-                                setDisplayCopiar(false)
-                                setBlur(false)
-                            }}>Voltar</button>
-                            <button corFundo='#E53535' onClick={()=> { copiarPerfis() }}>Copiar</button> 
-                        </div>
-                    </div>
-                </Filtrar>
-
-                <Filtrar display={displayTransferir}>
-                    <div className='form'>
-                        <label>Email de quem irá receber</label>
-                        <input name='email' type='email' placeholder='Digite o email...'/>
-                        <Carregando display={displayTransferirCarregando}/>
-                        <div>
-                            <button style={{ backgroundColor: '#E53535'}} onClick={()=>{ 
-                                setDisplayTransferir(false)
-                                setBlur(false)
-                            }}>Voltar</button>
-                            <button 
-                                corFundo='#E53535'
-                                onClick={()=>{ 
-                                    transferirPerfis(setPerfis, setDisplayTransferir, setBlur, setDisplayTransferirCarregando) 
-                                }
-                            }>Transferir</button> 
-                        </div>
-                    </div>
-                </Filtrar>
-
                 <Filtrar display={displayApagar}>
                     <div className='form'>
                         <label>Deseja apagar os perfis selecionados?</label>
-                        <Carregando display={displayApagarCarregando}/>
                         <div>
-                            <button 
-                                style={{ 
-                                    backgroundColor: '#E53535'
-                                }} 
-                                onClick={()=>{ 
-                                    setDisplayApagar(false)
-                                    setBlur(false)
-                                }}
-                            >
-                                Voltar
-                            </button>
-                            <button 
-                                corFundo='#E53535' 
-                                onClick={()=>{ 
-                                    apagarPerfis(setPerfis, setDisplayApagar, setBlur, setDisplayApagarCarregando) 
-                                }}
-                            >
-                                Apagar
-                            </button> 
+                            <button onClick={()=>{ 
+                                setDisplayApagar(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                apagarPerfis(
+                                    setDisplayApagar,
+                                    setBlur
+                                )
+                            }}>Apagar</button> 
                         </div>
                     </div>
                 </Filtrar>
             </div>
-
             <Conteudos blur={blur}>
-                <Topo>
-                    <h1>Você possui {perfis.length} perfis</h1>
-                    <div className='caixaPesquisa'>
-                        <input id='usuario' type='text' placeholder='Digite um usuário...'/>
-                        <div onClick={()=> { filtrarPorUsuario(setPerfis) }}>
-                            <FaSearch/>
-                        </div>
-                    </div>
-                </Topo>
                 <Tabela>
                     <table>
                         <thead>
-                            <tr>
-                                <td>
-                                    <input 
-                                        id='selecionador' 
-                                        type='checkbox' 
-                                        onClick={()=>{ 
-                                            selecionarTodos() 
-                                        }}
-                                    />
-                                </td>
-                                <td>Status</td>
-                                <td>Usuário</td>
-                                <td>
-                                    <span>Ver senhas</span>
-                                    <img 
-                                        src={olhoIMG} 
-                                        style={{ width: '20px', marginTop: '5px' }}
-                                        onClick={()=> mostrarSenhas(senhaVisivel, setSenhaVisivel)}
-                                    />
-                                </td>
-                                <td>Seguidores</td>
-                                <td>Seguindo</td>
-                                <td>Publicações</td>
-                            </tr>
+                            <td>
+                                <input 
+                                    id='selecionador' 
+                                    type='checkbox' 
+                                    onClick={()=>{ 
+                                        selecionarTodos() 
+                                    }}
+                                />
+                            </td>
+                            <td>Status</td>
+                            <td>Usuário</td>
+                            <td>Senha</td>
+                            <td>
+                                <Opcao2>
+                                    <span>Publicações</span>
+                                    P
+                                </Opcao2>
+                            </td>
+                            <td>
+                                <Opcao2>
+                                    <span>Seguidores</span>
+                                    S
+                                </Opcao2>
+                            </td>
+                            <td>
+                                <Opcao2>
+                                    <span>Seguindo</span>
+                                    S
+                                </Opcao2>
+                            </td>
+                            <td>Data</td>
                         </thead>
                         <tbody>
-                            {perfis.map((perfil, index)=>{
-
-                                let corTexto = null
-                                let statusIMG = null
-                                let statusMensagem = null
-
-                                if(perfil.status == 'ativo'){
-                                    corTexto = '#05A660'
-                                    statusIMG = ativoIMG
-                                    statusMensagem = 'Perfil ativo'
-                                }else if(perfil.status == 'inativo'){
-                                    corTexto = '#E53535'
-                                    statusIMG = inativoIMG
-                                    statusMensagem = 'Perfil inativo'
-                                }else if(perfil.status == 'novamente'){
-                                    corTexto = 'orange'
-                                    statusIMG = novamenteIMG
-                                    statusMensagem = 'Tentar novamente'
-                                }
-                                
-
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            <input className='checkbox' type='checkbox'/>
-                                        </td>
-                                        <td className='status'>
-                                            <Opcao corTexto={corTexto} cursor='no-drop' bottom='direita' left='direita'>
-                                                <span>{statusMensagem}</span>
-                                                <img src={statusIMG} style={{ width: '18px'}}/>
-                                            </Opcao>
-                                        </td>
-                                        <td className='usuario'>{perfil.usuario}</td>
-                                        <td className='senha'>
-                                            <input type={senhaVisivel} defaultValue={perfil.senha}/>
-                                        </td>
-                                        <td>{perfil.seguidores}</td>
-                                        <td>{perfil.seguindo}</td>
-                                        <td>{perfil.publicacoes}</td>
-                                    </tr>
-                                )
-                            })}
+                            {perfisGerenciador.map((perfil, index)=>(
+                                <tr key={index}>
+                                    <td>
+                                        <input className='checkbox' type='checkbox'/>
+                                    </td>
+                                    <td>
+                                        {perfil.status == 'Ativo' ? 
+                                            <Opcao2 bottom='direita' left='direita' status='#236EFF'>
+                                                <span>Perfil ativo</span>
+                                                <AiFillLike/>
+                                            </Opcao2>
+                                        : ''}
+                                        {perfil.status == 'Inativo' ? 
+                                            <Opcao2 bottom='direita' left='direita' status='#dc3545'>
+                                                <span>Perfil inativo</span>
+                                                <AiFillDislike/>
+                                            </Opcao2> 
+                                        : ''}
+                                        {perfil.status == 'Tentar novamente' ? 
+                                            <Opcao2 bottom='direita' left='direita' status='#ffc107'>
+                                                <span>Tentar novamente</span>
+                                                <BsExclamationTriangle/>
+                                            </Opcao2> 
+                                        : ''}
+                                    </td>
+                                    <td className='usuario'>{perfil.usuario}</td>
+                                    <td>{perfil.senha}</td>
+                                    <td>{perfil.publicacoes}</td>
+                                    <td>{perfil.seguidores}</td>
+                                    <td>{perfil.seguindo}</td>
+                                    <td>{perfil.data}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </Tabela>
             </Conteudos>
-
             <Rodape blur={blur}>
+                <Opcao>
+                    <span>Total de perfis</span>
+                    {perfisGerenciador.length}
+                </Opcao>
                 <Opcao>
                     {acessoGerenciador.data == 'Sem acesso' ? 
                         ''
                         :
                         <span>
-                            {acessoGerenciador.data == 'permanente' ? 'Acesso permanente' : 'Seu plano expira dia ' + acessoGerenciador.data}
+                            {
+                                acessoGerenciador.data == 'permanente' ? 
+                                'Acesso permanente' : 
+                                'Seu plano expira dia ' + acessoGerenciador.data
+                            }
                         </span>
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao funcao={()=> abrirNavegador('https://www.youtube.com/watch?v=daZ8VyvDyJU')}>
+                <Opcao>
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>
-                <Opcao funcao={()=>{
-                    redirecionar(Router, '/verificador')
-                }}>
-                    <span>Verificar perfis</span>
-                    <FaCheck/>
-                </Opcao>
-                <Opcao funcao={()=>{
-                    setDisplayFiltrar(true)
-                    setBlur(true)
-                }}>
+                <Opcao>
                     <span>Filtrar perfis</span>
                     <HiFilter/>
                 </Opcao>
-                <Opcao funcao={()=>{
-                    setDisplayCopiar(true)
-                    setBlur(true)
-                    listarPerfis()
-                }}>
+                <Opcao>
                     <span>Copiar perfis</span>
                     <IoCopy/>
                 </Opcao>
-                <Opcao funcao={()=>{
-                    setDisplayTransferir(true)
-                    setBlur(true)
-                }}>
-                    <span>Transferir perfis</span>
-                    <RiSendPlaneFill/>
-                </Opcao>
-                <Opcao funcao={()=>{
-                    setDisplayApagar(true)
-                    setBlur(true)
-                }}>
+                <Opcao
+                    funcao={()=>{
+                        setDisplayApagar(true) 
+                        setBlur(true)
+                    }}
+                >
                     <span>Apagar perfis</span>
                     <AiFillDelete/>
-                </Opcao>
-                <Opcao funcao={()=>{
-                    redirecionar(Router, '/removedor')
-                }}>
-                    <span>Remover perfis desativados GNI</span>
-                    <FaUserSlash/>
                 </Opcao>
             </Rodape>
         </div>

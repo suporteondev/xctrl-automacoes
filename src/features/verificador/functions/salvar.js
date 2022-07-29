@@ -1,22 +1,22 @@
 export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
-    const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
+    const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
+    const modoPerfis = document.querySelector('[name="modoPerfis"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
-    const esperarSegundos = document.querySelector('[name="esperarSegundos"]').value
-    const modoVerificacao = document.querySelector('[name="modoVerificacao"]').value
+    const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
     const configuracoes = {
         caminhoNavegador,
-        modoInvisivel,
+        verAcontecendo,
         modoAnonimo,
         userAgent,
+        modoPerfis,
         limparLogin,
-        esperarSegundos,
-        modoVerificacao
+        esperarEntre
     }
     
     window.api.ipcRenderer.sendSync('setConfiguracoesVerificador', configuracoes)

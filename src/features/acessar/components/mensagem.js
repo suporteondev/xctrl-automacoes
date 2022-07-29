@@ -5,7 +5,7 @@ const Mensagem = styled.p`
     margin-top: -5px;
     margin-bottom: 5px;
     font-size: 14px;
-    color: ${props => props.color};
+    color: ${props => props.theme.textos};
 `
 
 export { Mensagem }

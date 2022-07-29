@@ -18,40 +18,43 @@ import { ConfiguracoesVerificadorProvider } from './providers/configuracoesVerif
 import { ConfiguracoesRemovedorProvider } from './providers/configuracoesRemovedor'
 import { ConfiguracoesCriadorProvider } from './providers/configuracoesCriador'
 import { ConfiguracoesMontadorProvider } from './providers/configuracoesMontador'
+import { PerfisGerenciadorProvider } from './providers/perfisGerenciador'
 
 export default function App() {
     return (
-        <AcessoCriadorProvider>
-            <AcessoMontadorProvider>
-                <AcessoGerenciadorProvider>
-                    <ConfiguracoesMontadorProvider>
-                        <ConfiguracoesCriadorProvider>
-                            <ConfiguracoesRemovedorProvider>
-                                <ConfiguracoesVerificadorProvider>
-                                    <UsuarioLogadoProvider>
-                                        <TemaProvider>
-                                            <HashRouter>
-                                                <Routes>
-                                                    <Route exact path='/' element={<Acessar/>} />
-                                                    <Route exact path='/painel' element={<Painel/>} />
-                                                    <Route exact path='/comprar' element={<Comprar/>} />
-                                                    <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
-                                                    <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
-                                                    <Route exact path='/gerenciador' element={<Gerenciador/>} />
-                                                    <Route exact path='/verificador' element={<Verificador/>} />
-                                                    <Route exact path='/criador' element={<Criador/>} />
-                                                    <Route exact path='/montador' element={<Montador/>} />
-                                                    <Route exact path='/removedor' element={<Removedor/>} />
-                                                </Routes>
-                                            </HashRouter>
-                                        </TemaProvider>
-                                    </UsuarioLogadoProvider>
-                                </ConfiguracoesVerificadorProvider>
-                            </ConfiguracoesRemovedorProvider>
-                        </ConfiguracoesCriadorProvider>
-                    </ConfiguracoesMontadorProvider>
-                </AcessoGerenciadorProvider>
-            </AcessoMontadorProvider>
-        </AcessoCriadorProvider>
+        <PerfisGerenciadorProvider>
+            <AcessoCriadorProvider>
+                <AcessoMontadorProvider>
+                    <AcessoGerenciadorProvider>
+                        <ConfiguracoesMontadorProvider>
+                            <ConfiguracoesCriadorProvider>
+                                <ConfiguracoesRemovedorProvider>
+                                    <ConfiguracoesVerificadorProvider>
+                                        <UsuarioLogadoProvider>
+                                            <TemaProvider>
+                                                <HashRouter>
+                                                    <Routes>
+                                                        <Route exact path='/' element={<Acessar/>} />
+                                                        <Route exact path='/painel' element={<Painel/>} />
+                                                        <Route exact path='/comprar' element={<Comprar/>} />
+                                                        <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
+                                                        <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
+                                                        <Route exact path='/gerenciador' element={<Gerenciador/>} />
+                                                        <Route exact path='/verificador' element={<Verificador/>} />
+                                                        <Route exact path='/criador' element={<Criador/>} />
+                                                        <Route exact path='/montador' element={<Montador/>} />
+                                                        <Route exact path='/removedor' element={<Removedor/>} />
+                                                    </Routes>
+                                                </HashRouter>
+                                            </TemaProvider>
+                                        </UsuarioLogadoProvider>
+                                    </ConfiguracoesVerificadorProvider>
+                                </ConfiguracoesRemovedorProvider>
+                            </ConfiguracoesCriadorProvider>
+                        </ConfiguracoesMontadorProvider>
+                    </AcessoGerenciadorProvider>
+                </AcessoMontadorProvider>
+            </AcessoCriadorProvider>
+        </PerfisGerenciadorProvider>
     )
 }

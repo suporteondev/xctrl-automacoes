@@ -92,10 +92,12 @@ const Filtrar = styled.div`
                 height: 45px;
                 width: 100%;
                 border: none;
-                color: #fff;
+                margin-left: 3px;
+                margin-right: 3px;
+                color: ${props => props.theme.textos};
                 font-family: 'Poppins', sans-serif;
                 cursor: pointer;
-                background-color: #236EFF;
+                background-color: ${props => props.theme.linhas};
             }
         }
     }

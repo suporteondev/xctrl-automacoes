@@ -76,6 +76,24 @@ const Painel = ()=>{
                         ativo={acessoGerenciador.status}
                         onClick={()=>{ 
                             {acessoGerenciador.status == true ? 
+                                redirecionar(Router, '/verificador')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Verificador</h1>
+                        <p>
+                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
+                    <Servico 
+                        ativo={acessoGerenciador.status}
+                        onClick={()=>{ 
+                            {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/gerenciador')
                                 : 
                                 redirecionar(Router, '/comprar')

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Opcao = styled.div`
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 10px;
     border: 1px solid ${props => props.cor ? props.cor : props.theme.linhas};
@@ -11,9 +11,10 @@ const Opcao = styled.div`
     margin-right: 5px;
     position: relative;
     cursor: ${props => props.cursor ? props.cursor : 'pointer'};
-
-    :hover{
-        background-color: ${props => props.cor ? props.cor : props.theme.linhas};
+    background-color: ${props => props.cor ? props.cor : props.theme.linhas};
+    svg{
+        font-size: 20px;
+        color: ${props => props.status};
     }
 
     span{
@@ -25,18 +26,14 @@ const Opcao = styled.div`
         font-weight: 500;
         border-radius: 6px;
         position: absolute;
-        bottom: ${props => props.bottom == 'direita' ? '7px' : '45px'};
-        left: ${props => props.left == 'direita' ? '45px' : '0'};
+        bottom: ${props => props.bottom == 'direita' ? '7px' : '-35px'};
+        left: ${props => props.left == 'direita' ? '55px' : '0'};
         z-index: 1;
         white-space: nowrap;
     }
 
     :hover span{
         visibility: visible;
-    }
-
-    img{
-        height: 20px;
     }
 `
 

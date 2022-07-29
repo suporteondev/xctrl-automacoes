@@ -1,6 +1,8 @@
-export async function apagarPerfis(setPerfis, setDisplayApagar, setBlur, setDisplayApagarCarregando){
+export async function apagarPerfis(
+    setDisplayApagar,
+    setBlur
+){
 
-    setDisplayApagarCarregando('flex')
     const check = document.querySelectorAll('.checkbox')
     const perfis = []
 
@@ -11,23 +13,26 @@ export async function apagarPerfis(setPerfis, setDisplayApagar, setBlur, setDisp
         }
     })
 
-    const configs = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ perfis })
+    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+
+    for(let x = 0; x < perfis.length; x++){
+        const usuarioPerfil = perfis[x]
+        
+        perfisGerenciador.forEach((perfil, index)=>{
+            if(perfil.usuario == usuarioPerfil){
+                perfisGerenciador.splice(index, 1)
+            }
+        })
+
+        window.api.ipcRenderer.sendSync('setPerfisGerenciador', perfisGerenciador)
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/deletarperfis`, configs)
-    const resultado = await api.json()
-    
-    if(resultado.ok == true){
-        setDisplayApagarCarregando('none')
-        setPerfis(resultado.perfis)
-        setDisplayApagar(false)
-        setBlur(false)
-    }
-    
+    const checks = document.querySelectorAll('input[type="checkbox"]')
+
+    checks.forEach((check)=>{
+        check.checked = false
+    })
+
+    setDisplayApagar(false)
+    setBlur(false)
 }

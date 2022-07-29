@@ -17,15 +17,19 @@ app.on('ready', async () => {
         store.set('tema', 'light')
     }
 
+    if(store.get('perfisGerenciador') == undefined || store.get('perfisGerenciador') == 'undefined'){
+        store.set('perfisGerenciador', [])
+    }
+
     if(store.get('configuracoesVerificador') == undefined || store.get('configuracoesVerificador') == 'undefined'){
         store.set('configuracoesVerificador', {
             caminhoNavegador: '',
-            modoInvisivel: 'sim',
+            verAcontecendo: 'sim',
             modoAnonimo: 'sim',
-            userAgent: 'Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36',
+            userAgent: 'aleatorio',
+            modoPerfis: 'linha',
             limparLogin: 'sim',
-            esperarSegundos: '0',
-            modoVerificacao: 'linha'
+            esperarEntre: 0
         })
     }
 
@@ -134,6 +138,14 @@ app.on('ready', async () => {
         event.returnValue = store.set('tema', store.get('tema') === 'light' ? 'dark': 'light')
     })
 
+    ipcMain.on('setPerfisGerenciador', (event, args)=>{
+        event.returnValue = store.set('perfisGerenciador', args)
+    })
+
+    ipcMain.on('perfisGerenciador', (event)=>{
+        event.returnValue = store.get('perfisGerenciador')
+    })
+
     ipcMain.on('setConfiguracoesVerificador', (event, args)=>{
         event.returnValue = store.set('configuracoesVerificador', args)
     })
@@ -178,8 +190,8 @@ app.on('ready', async () => {
         event.returnValue = store.get('tema')
     })
 
-    ipcMain.on('logVerificar', (event)=>{
-        event.returnValue = global.verificar
+    ipcMain.on('logVerificador', (event)=>{
+        event.returnValue = global.verificador
     })
 
     ipcMain.on('logRemovedor', (event)=>{
@@ -221,7 +233,7 @@ app.on('ready', async () => {
 
     ipcMain.on('tamanho-gerenciador', (event)=>{
         mainWindow.setResizable(true)
-        mainWindow.setSize(800, 500)
+        mainWindow.setSize(750, 500)
         mainWindow.setResizable(false)
         event.returnValue = true
     })

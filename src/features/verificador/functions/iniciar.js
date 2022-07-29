@@ -1,13 +1,13 @@
 export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
-    const modoInvisivel = document.querySelector('[name="modoInvisivel"]').value
+    const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
-    const limparLogin = document.querySelector('[name="limparLogin"]').value
-    const esperarSegundos = document.querySelector('[name="esperarSegundos"]').value
-    const modoVerificacao = document.querySelector('[name="modoVerificacao"]').value
+    const modoPerfis = document.querySelector('[name="modoPerfis"]').value
     const seusPerfis = document.querySelector('[name="seusPerfis"]').value
+    const limparLogin = document.querySelector('[name="limparLogin"]').value
+    const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
     if(caminhoNavegador === ''){
@@ -20,7 +20,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
 
         const arrayPerfis = []
             
-        if(modoVerificacao == 'linha'){
+        if(modoPerfis == 'linha'){
             seusPerfis.split('\n').forEach((usuario)=>{
                 const arrayDados = usuario.split(' ')
                 arrayPerfis.push({ 
@@ -28,7 +28,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                     senha: arrayDados[1] 
                 })
             })
-        }else if(modoVerificacao == 'coluna'){
+        }else if(modoPerfis == 'coluna'){
             const meusPerfis = seusPerfis.split('\n\n')
             meusPerfis.forEach((perfil)=>{
                 arrayPerfis.push({
@@ -47,7 +47,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
             var perfisInativos = 0 
             var perfisNovamente = 0 
 
-            window.api.ipcRenderer.sendSync('logVerificar').forEach((mensagem)=>{
+            window.api.ipcRenderer.sendSync('logVerificador').forEach((mensagem)=>{
                 if(mensagem.includes('Perfil ativo') == true){
                     perfisAtivos += 1
                 }
@@ -66,13 +66,13 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
             setNovamentes(perfisNovamente)
             setAverificar(arrayPerfis.length - (perfisAtivos + perfisInativos + perfisNovamente))
             
-            setMeusLogs(window.api.ipcRenderer.sendSync('logVerificar'))
+            setMeusLogs(window.api.ipcRenderer.sendSync('logVerificador'))
             logs.scrollTop = logs.scrollHeight
 
-            if(window.api.ipcRenderer.sendSync('logVerificar')[window.api.ipcRenderer.sendSync('logVerificar').length - 1] == 'O robô terminou, pode voltar!'){
+            if(window.api.ipcRenderer.sendSync('logVerificador')[window.api.ipcRenderer.sendSync('logVerificador').length - 1] == 'O robô terminou, pode voltar!'){
                 setTimeout(clearInterval(intervalo), 3000)
                 logs.scrollTop = logs.scrollHeight
-                setDisplayVoltar('/gerenciador')
+                setDisplayVoltar('/painel')
             }
 
         }, 1000)
@@ -85,16 +85,16 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
             },
             body: JSON.stringify({ 
                 caminhoNavegador,
-                visivel: modoInvisivel, 
-                login: limparLogin, 
-                anonimo: modoAnonimo, 
-                userAgent: userAgent, 
-                tempo: esperarSegundos, 
-                perfis: arrayPerfis 
+                verAcontecendo, 
+                modoAnonimo, 
+                userAgent,
+                seusPerfis: arrayPerfis, 
+                limparLogin,
+                esperarEntre: Number(esperarEntre) * 1000 
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/verificar`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/verificador`, configs)
         const resultado = await api.json()
 
         setMensagem(<Mensagem cor='sucesso'>Verificador iniciado com sucesso!</Mensagem>)

@@ -125,7 +125,7 @@ const Montador = ()=>{
                                 <Entrada name='seguirPerfis' type='number' min={0} defaultValue={configuracoesMontador.seguirPerfis}/>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Limpar o login</Etiqueta>
+                                <Etiqueta>Limpar atividade de login</Etiqueta>
                                 <Select name='limparLogin' defaultValue={configuracoesMontador.limparLogin}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>

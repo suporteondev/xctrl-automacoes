@@ -3,6 +3,7 @@ const cors = require('cors')
 const server = express()
 
 global.verificar = []
+global.verificador = []
 global.removedor = []
 global.criador = []
 global.montador = []
@@ -15,6 +16,7 @@ server.use('/api/', require(`./routes/acessar`))
 server.use('/api/', require(`./routes/secure/perfis`))
 server.use('/api/', require(`./routes/secure/filtrarporusuario`))
 server.use('/api/', require(`./routes/secure/verificar`))
+server.use('/api/', require(`./routes/secure/verificador`))
 server.use('/api/', require(`./routes/secure/deletarperfis`))
 server.use('/api/', require(`./routes/secure/filtrar`))
 server.use('/api/', require(`./routes/secure/removedor`))

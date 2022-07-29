@@ -2,10 +2,9 @@ import styled from 'styled-components'
 
 const Tabela = styled.div`
     width: 100%;
-    max-height: calc(100vh - 190px);
-    padding-right: 5px;
+    min-height: calc(100vh - 140px);
+    max-height: calc(100vh - 140px);
     overflow-y: auto;
-    margin-top: 10px;
 
     ::-webkit-scrollbar {
         width: 5px;
@@ -28,14 +27,15 @@ const Tabela = styled.div`
         thead{
             height: 55px;
             color: ${props => props.theme.textos};
+            font-size: 12px;
             text-align: center;
             background-color: ${props => props.theme.linhaTabela};
+            white-space: nowrap;
             tr{
                 height: 56px;
                 td{
                     border-bottom: 1px solid ${props => props.theme.linhaTabela};
                     font-size: 12px;
-                    padding: 0 15px;
                     text-align: center;
                     position: relative;
 
@@ -48,7 +48,6 @@ const Tabela = styled.div`
                         visibility: hidden;
                         background-color: ${props => props.cor ? props.cor : props.theme.linhas};
                         color: ${props => props.theme.textos};
-                        padding: 5px 10px;
                         font-size: 12px;
                         font-weight: 500;
                         border-radius: 6px;
@@ -74,8 +73,10 @@ const Tabela = styled.div`
         }
 
         tbody{
+
             tr{
                 height: 56px;
+
                 td{
                     border-bottom: 1px solid ${props => props.theme.linhas};
                     font-size: 12px;

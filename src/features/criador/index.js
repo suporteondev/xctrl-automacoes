@@ -94,7 +94,7 @@ const Criador = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Limpar login</Etiqueta>
+                                <Etiqueta>Limpar atividade de login</Etiqueta>
                                 <Select name='limparLogin' defaultValue={configuracoesCriador.limparLogin}>
                                     <option value='sim'>Sim</option>
                                     <option value='nao'>Não</option>

@@ -74,7 +74,7 @@ const postarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
             await pagina.waitForSelector('._acan._acao._acas', { timeout: 60000 })
 
             const resultado = await pagina.evaluate(()=>{
-                if(document.querySelector('img[alt="Alterar foto do perfil"]') || document.querySelector('img[alt="Change profile photo"]')){
+                if(document.querySelector('img[alt="Alterar foto do perfil"]')){
                     return 'alterar'
                 }else{
                     return 'adicionar'
