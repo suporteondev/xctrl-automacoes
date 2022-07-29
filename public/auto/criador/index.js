@@ -45,37 +45,37 @@ const criador = async(
     // DECLARANDO AS VARIAVEIS REUTILIZAVEIS
     let navegador, paginaEmail, paginaInstagram, context
 
-    // ABRINDO O NAVEGADOR
-    navegador = await puppeteer.launch({
-        ignoreHTTPSErrors: true,
-        headless: verAcontecendoConfigurado,
-        executablePath: caminhoNavegador,
-        args: [
-            '--no-sandbox',
-            '--disabled-setuid-sandbox'
-        ]
-    })
-
-    // ABRINDO A NOVA PÁGINA DO EMAIL
-    if(navegadorAnonimoConfigurado == true){
-        context = await navegador.createIncognitoBrowserContext()
-        paginaEmail = await context.newPage()
-        const paginas = await navegador.pages()
-        await paginas[0].close()
-    }else{
-        const paginas = await navegador.pages()
-        paginaEmail = paginas[0]
-    }
-
-    // ABRINDO A NOVA PÁGINA DO INSTAGRAM
-    if(navegadorAnonimoConfigurado == true){
-        paginaInstagram = await context.newPage()
-    }else{
-        paginaInstagram = await navegador.newPage()
-    }
-
     // COMEÇANDO A CRIAÇÃO DOS PERFIS
     for(let x = 1; x < Number(quantidadePerfis) + 1; x++){
+
+        // ABRINDO O NAVEGADOR
+        navegador = await puppeteer.launch({
+            ignoreHTTPSErrors: true,
+            headless: verAcontecendoConfigurado,
+            executablePath: caminhoNavegador,
+            args: [
+                '--no-sandbox',
+                '--disabled-setuid-sandbox'
+            ]
+        })
+
+        // ABRINDO A NOVA PÁGINA DO EMAIL
+        if(navegadorAnonimoConfigurado == true){
+            context = await navegador.createIncognitoBrowserContext()
+            paginaEmail = await context.newPage()
+            const paginas = await navegador.pages()
+            await paginas[0].close()
+        }else{
+            const paginas = await navegador.pages()
+            paginaEmail = paginas[0]
+        }
+
+        // ABRINDO A NOVA PÁGINA DO INSTAGRAM
+        if(navegadorAnonimoConfigurado == true){
+            paginaInstagram = await context.newPage()
+        }else{
+            paginaInstagram = await navegador.newPage()
+        }
 
         // SELECIONANDO UM USER AGENT ALEATÓRIO DESKTOP PARA A PÁGINA DO EMAIL
         userAgent == 'aleatorio' ? 
@@ -97,10 +97,7 @@ const criador = async(
             resEmail = await capturarEmailFakermail(x, paginaEmail, logs)
         }
         if(resEmail.ok == false){
-            const cookies = await paginaEmail.cookies()
-            const cookies2 = await paginaInstagram.cookies()
-            await paginaEmail.deleteCookie(...cookies)
-            await paginaInstagram.deleteCookie(...cookies2)
+            await navegador.close()
             continue
         }
         const { email } = resEmail
@@ -123,10 +120,7 @@ const criador = async(
         })
         const resPreencher = await preencherDados(x, paginaInstagram, email, senhaPerfis, generoPerfis, logs)
         if(resPreencher.ok == false){
-            const cookies = await paginaEmail.cookies()
-            const cookies2 = await paginaInstagram.cookies()
-            await paginaEmail.deleteCookie(...cookies)
-            await paginaInstagram.deleteCookie(...cookies2)
+            await navegador.close()
             continue
         }
         const { usuario } = resPreencher
@@ -134,10 +128,7 @@ const criador = async(
         // SELECIONANDO A DATA DO PERFIL
         const resData = await selecionarData(x, paginaInstagram, logs)
         if(resData.ok == false){
-            const cookies = await paginaEmail.cookies()
-            const cookies2 = await paginaInstagram.cookies()
-            await paginaEmail.deleteCookie(...cookies)
-            await paginaInstagram.deleteCookie(...cookies2)
+            await navegador.close()
             continue
         }
 
@@ -151,10 +142,7 @@ const criador = async(
             resCodigo = await capturarCodigoFakermail(x, paginaEmail, logs)
         }
         if(resCodigo.ok == false){
-            const cookies = await paginaEmail.cookies()
-            const cookies2 = await paginaInstagram.cookies()
-            await paginaEmail.deleteCookie(...cookies)
-            await paginaInstagram.deleteCookie(...cookies2)
+            await navegador.close()
             continue
         }
         const { codigo } = resCodigo
@@ -162,10 +150,7 @@ const criador = async(
         // FINALIZANDO A CRIAÇÃO DO PERFIL
         const resDigitandoCodigo = await digitandoCodigo(x, paginaInstagram, comoSalvar, ondeSalvar, usuario, senhaPerfis, codigo, logs)
         if(resDigitandoCodigo.ok == false){
-            const cookies = await paginaEmail.cookies()
-            const cookies2 = await paginaInstagram.cookies()
-            await paginaEmail.deleteCookie(...cookies)
-            await paginaInstagram.deleteCookie(...cookies2)
+            await navegador.close()
             continue
         }
 
@@ -260,16 +245,13 @@ const criador = async(
             await paginaInstagram.waitForTimeout(esperarEntre)
         }
 
-        // LIMPANDO OS COOKIES PARA RECOMEÇAR
-        const cookies = await paginaEmail.cookies()
-        const cookies2 = await paginaInstagram.cookies()
-        await paginaEmail.deleteCookie(...cookies)
-        await paginaInstagram.deleteCookie(...cookies2)
+        // FECHANDO O NAVEGADOR
+        await navegador.close()
+        continue
     }
 
     // FECHANDO O NAVEGADOR
     logs.push('O robô terminou, pode voltar!')
-    await navegador.close()
 }
 
 module.exports = criador
