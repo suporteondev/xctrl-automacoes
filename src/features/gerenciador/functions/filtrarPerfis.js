@@ -32,6 +32,30 @@ export async function filtrarPerfis(
                 novoArray.push(perfil)
             }
         }
+
+        if(filtro == 'menos10Publicacoes'){
+            if(Number(perfil.publicacoes) < 10 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'mais10Publicacoes'){
+            if(Number(perfil.publicacoes) > 9 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'menos30Seguidores'){
+            if(Number(perfil.seguidores) < 30 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'mais30Seguidores'){
+            if(Number(perfil.seguidores) > 29 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
     }
 
     const checks = document.querySelectorAll('input[type="checkbox"]')

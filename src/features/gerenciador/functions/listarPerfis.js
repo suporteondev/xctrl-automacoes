@@ -6,7 +6,7 @@ export function listarPerfis(){
     check.forEach((e)=>{
         if(e.checked == true){
             let usuario = e.parentElement.parentNode.querySelector('.usuario').innerText
-            let senha = e.parentElement.parentNode.querySelector('.senha').innerText
+            let senha = e.parentElement.parentNode.querySelector('.senha input').value
             perfis.push({
                 usuario,
                 senha

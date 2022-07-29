@@ -7,18 +7,19 @@ import { Opcao } from '../../components/opcao'
 import { AiFillDislike, AiFillLike } from 'react-icons/ai'
 import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
-import { usePerfisGerenciador } from '../../providers/perfisGerenciador'
 import { listarPerfis } from './functions/listarPerfis'
 import { FaYoutube} from 'react-icons/fa'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
+import { IoIosSearch } from 'react-icons/io'
 import { selecionarTodos } from './functions/selecionarTodos'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Filtrar } from './components/filtrar'
 import { apagarPerfis } from './functions/apagarPerfis'
 import { copiarPerfis } from './functions/copiarPerfis'
 import { filtrarPerfis } from './functions/filtrarPerfis'
+import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
 
 const Gerenciador = ()=>{
 
@@ -29,13 +30,8 @@ const Gerenciador = ()=>{
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
+    const [ senhaVisivel, setSenhaVisivel ] = useState('password')
 
-    // useEffect(()=>{
-        
-    //     // setPerfisGerenciador([])
-    //     // window.api.ipcRenderer.sendSync('setPerfisGerenciador', [])
-    // }, [])
- 
     return (
         <div>
             <Cabeca blur={blur} voltar='/painel'/>
@@ -87,6 +83,11 @@ const Gerenciador = ()=>{
                             <option value='ativos'>Perfis ativos</option>
                             <option value='inativos'>Perfis inativos</option>
                             <option value='novamente'>Perfis para tentar novamente</option>
+                            <option value='menos10Publicacoes'>Perfis com menos de 10 publicações</option>
+                            <option value='mais10Publicacoes'>Perfis com mais de 10 publicações</option>
+                            <option value='menos30Seguidores'>Perfis com menos de 30 seguidores</option>
+                            <option value='mais30Seguidores'>Perfis com mais de 30 seguidores</option>
+                            
                         </select>
                         <div>
                             <button onClick={()=>{ 
@@ -119,7 +120,14 @@ const Gerenciador = ()=>{
                             </td>
                             <td>Status</td>
                             <td>Usuário</td>
-                            <td>Senha</td>
+                            <td onClick={()=>{
+                                setSenhaVisivel(senhaVisivel === 'password' ? 'text' : 'password')
+                            }}>
+                                <Opcao2>
+                                    <span>Clique para ver as senhas</span>
+                                    Senha
+                                </Opcao2>
+                            </td>
                             <td>
                                 <Opcao2>
                                     <span>Publicações</span>
@@ -167,7 +175,9 @@ const Gerenciador = ()=>{
                                         : ''}
                                     </td>
                                     <td className='usuario'>{perfil.usuario}</td>
-                                    <td className='senha'>{perfil.senha}</td>
+                                    <td className='senha'>
+                                        <input type={senhaVisivel} defaultValue={perfil.senha}/>
+                                    </td>
                                     <td>{perfil.publicacoes}</td>
                                     <td>{perfil.seguidores}</td>
                                     <td>{perfil.seguindo}</td>
@@ -179,10 +189,6 @@ const Gerenciador = ()=>{
                 </Tabela>
             </Conteudos>
             <Rodape blur={blur}>
-                <Opcao>
-                    <span>Total de perfis</span>
-                    {perfisGerenciador.length}
-                </Opcao>
                 <Opcao>
                     {acessoGerenciador.data == 'Sem acesso' ? 
                         ''
@@ -200,6 +206,10 @@ const Gerenciador = ()=>{
                 <Opcao>
                     <span>Manual de uso</span>
                     <FaYoutube/>
+                </Opcao>
+                <Opcao>
+                    <span>Total de perfis</span>
+                    {perfisGerenciador.length}
                 </Opcao>
                 <Opcao 
                     funcao={()=>{
@@ -228,6 +238,18 @@ const Gerenciador = ()=>{
                 >
                     <span>Apagar perfis</span>
                     <AiFillDelete/>
+                </Opcao>
+                <Opcao funcao={()=>{}}>
+                    <span>Digite um usuário...</span>
+                    <input name='usuarioPesquisado' type='text'/>
+                </Opcao>
+                <Opcao 
+                    funcao={()=>{
+                        filtrarPorUsuario(setPerfisGerenciador)
+                    }}
+                >
+                    <span>Pesquisar perfil</span>
+                    <IoIosSearch/>
                 </Opcao>
             </Rodape>
         </div>

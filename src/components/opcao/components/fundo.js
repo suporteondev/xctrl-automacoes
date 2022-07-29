@@ -15,6 +15,15 @@ const Fundo = styled.div`
     position: relative;
     color: ${props => props.theme.textos};
 
+    input{
+        border: none;
+        width: 100%;
+        height: 40px;
+        background-color: unset;
+        color: ${props => props.theme.textos};
+        font-family: 'Poppins', sans-serif;
+    }
+
     span{
         visibility: hidden;
         position: absolute;

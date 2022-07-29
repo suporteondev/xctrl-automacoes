@@ -1,25 +1,26 @@
-async function filtrarPorUsuario(setPerfis){
+export async function filtrarPorUsuario(
+    setPerfisGerenciador
+){
+    const usuario = document.querySelector('[name="usuarioPesquisado"]').value
+    
+    if(usuario != ''){
+        const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+        const novoArray = []
 
-    const usuario = document.querySelector('#usuario').value
+        for(let x = 0; x < perfisGerenciador.length; x++){
+            const perfil = perfisGerenciador[x]
 
-    if(usuario == ''){
-
-    }else{
-        const configs = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ filtro: usuario })
+            if(perfil.usuario == usuario){
+                novoArray.push(perfil)
+            }
         }
-    
-        // Chamando a rota de cadastro
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/filtrarporusuario`, configs)
-        const resultado = await api.json()
-    
-        setPerfis(resultado.perfis)
+
+        const checks = document.querySelectorAll('input[type="checkbox"]')
+
+        checks.forEach((check)=>{
+            check.checked = false
+        })
+
+        setPerfisGerenciador(novoArray)
     }
 }
-
-export { filtrarPorUsuario }
