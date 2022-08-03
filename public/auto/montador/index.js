@@ -83,10 +83,12 @@ const montador = async(
         } 
 
         // ALTERANDO O GÊNERO DOS PERFIS
-        await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
-        if(esperarEntre != 0){
-            logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-            await pagina.waitForTimeout(esperarEntre)
+        if(generoPerfis != 'nao'){
+            await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
+            if(esperarEntre != 0){
+                logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+                await pagina.waitForTimeout(esperarEntre)
+            }
         }
 
         // CAPTURANDO A PASTA DE PUBLICAÇÕES

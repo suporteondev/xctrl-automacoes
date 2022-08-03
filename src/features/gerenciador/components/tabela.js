@@ -7,8 +7,8 @@ const Tabela = styled.div`
     overflow-y: auto;
 
     ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
+        width: 10px;
+        height: 10px;
     }
 
     ::-webkit-scrollbar-track {
@@ -17,7 +17,6 @@ const Tabela = styled.div`
 
     ::-webkit-scrollbar-thumb {
         background-color:  ${props => props.theme.linhas};
-        border-radius: 20px;
     }
 
     table{

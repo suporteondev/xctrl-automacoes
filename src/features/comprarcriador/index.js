@@ -11,6 +11,9 @@ import { useNavigate } from 'react-router-dom'
 import { Entrada } from './components/entrada'
 import { redirecionar } from '../../functions/redirecionar'
 import { Descricao } from './components/descricao'
+import { Opcao } from '../../components/opcao'
+import { FaYoutube } from 'react-icons/fa'
+import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const ComprarCriador = ()=>{
 
@@ -42,7 +45,11 @@ const ComprarCriador = ()=>{
                     <Botao onClick={()=> redirecionar(Router, '/painel')}>Já paguei e quero usar</Botao>
                 </Conteudos>
             }
-            <Rodape>V1.0.0
+            <Rodape>
+                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=cEaMcyr3cdI')}}>
+                    <span>Manual de uso</span>
+                    <FaYoutube/>
+                </Opcao>
             </Rodape>
         </>
     )

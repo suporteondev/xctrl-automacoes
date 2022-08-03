@@ -56,6 +56,18 @@ export async function filtrarPerfis(
                 novoArray.push(perfil)
             }
         }
+
+        if(filtro == 'mais20Seguindo'){
+            if(Number(perfil.seguindo) > 19 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
+
+        if(filtro == 'menos20Seguindo'){
+            if(Number(perfil.seguindo) < 20 && perfil.status == 'Ativo'){
+                novoArray.push(perfil)
+            }
+        }
     }
 
     const checks = document.querySelectorAll('input[type="checkbox"]')

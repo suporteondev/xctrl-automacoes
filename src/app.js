@@ -8,6 +8,7 @@ import Montador from './pages/montador'
 import ComprarCriador from './pages/comprarcriador'
 import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
+import MegaPromocao from './pages/megapromocao'
 import { TemaProvider } from './providers/tema'
 import { UsuarioLogadoProvider } from './providers/usuarioLogado'
 import { AcessoCriadorProvider } from './providers/acessoCriador'
@@ -34,6 +35,7 @@ export default function App() {
                                                     <Route exact path='/' element={<Acessar/>} />
                                                     <Route exact path='/painel' element={<Painel/>} />
                                                     <Route exact path='/comprar' element={<Comprar/>} />
+                                                    <Route exact path='/megapromocao' element={<MegaPromocao/>} />
                                                     <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
                                                     <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
                                                     <Route exact path='/gerenciador' element={<Gerenciador/>} />

@@ -19,6 +19,9 @@ import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
 import { FaWhatsapp, FaYoutube } from 'react-icons/fa'
+import { HiDownload } from 'react-icons/hi'
+import { MdOutlineMoneyOff } from 'react-icons/md'
+import { useState } from 'react'
 
 const Painel = ()=>{
 
@@ -28,6 +31,11 @@ const Painel = ()=>{
     const { acessoGerenciador } = useAcessoGerenciador()
     const { acessoCriador } = useAcessoCriador()
     const { acessoMontador } = useAcessoMontador()
+    const [ novaVersao, setNovaVersao ] = useState({
+        titulo: '1.0.1',
+        descricao: 'Criador, montador, gerenciador (Verificar perfis, filtrar perfis, copiar perfis, apagar perfis.)',
+        download: 'https://xctrl.s3.sa-east-1.amazonaws.com/xctrl-1.0.0.zip'
+    })
 
     return (
         <>
@@ -76,24 +84,6 @@ const Painel = ()=>{
                         ativo={acessoGerenciador.status}
                         onClick={()=>{ 
                             {acessoGerenciador.status == true ? 
-                                redirecionar(Router, '/verificador')
-                                : 
-                                redirecionar(Router, '/comprar')
-                            }
-                        }}
-                    >
-                        <div>
-                            <img src={gerenciadorIMG}/>
-                        </div>
-                        <h1>Verificador</h1>
-                        <p>
-                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
-                        </p>
-                    </Servico>
-                    <Servico 
-                        ativo={acessoGerenciador.status}
-                        onClick={()=>{ 
-                            {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/gerenciador')
                                 : 
                                 redirecionar(Router, '/comprar')
@@ -115,10 +105,28 @@ const Painel = ()=>{
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>
-                <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561991663171&text=Ol%C3%A1,%20tudo%20bem?') }>
+                <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561995162761&text=Ol%C3%A1,%20tudo%20bem?') }>
                     <span>Suporte da plataforma</span>
                     <FaWhatsapp/>
                 </Opcao>
+                {window.api.ipcRenderer.sendSync('versaoAplicativo') != window.api.ipcRenderer.sendSync('versaoAtual') ?
+                    <a href={'https://xctrl.s3.sa-east-1.amazonaws.com/xctrl-' + window.api.ipcRenderer.sendSync('versaoAtual') + '.zip'} download>
+                        <Opcao>
+                            <span>Baixar a nova versão - {window.api.ipcRenderer.sendSync('versaoAtual')}</span>
+                            <HiDownload/>
+                        </Opcao>
+                    </a>
+                    :
+                    ''
+                }
+                {acessoCriador.status != true && acessoGerenciador.status != true && acessoMontador.status != true ? 
+                    <Opcao funcao={()=> redirecionar(Router, '/megapromocao')}>
+                        <span>Mega promoção</span>
+                        <MdOutlineMoneyOff/>
+                    </Opcao>
+                    :
+                    ''
+                }
                 V1.0.0
             </Rodape>
         </>

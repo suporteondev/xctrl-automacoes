@@ -40,7 +40,7 @@ const Verificador = ()=>{
         <>
             {executando == false ? 
                 <>
-                    <Cabeca voltar='/painel'/>
+                    <Cabeca voltar='/gerenciador'/>
                     <Conteudos>
                         <Titulo>Verificador de perfis</Titulo>
                         <Configuracoes>

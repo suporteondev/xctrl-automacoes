@@ -1,4 +1,18 @@
-export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar){
+export async function iniciar(
+    Mensagem, 
+    setMensagem, 
+    setExecutando, 
+    setMeusLogs, 
+    setCriadasSucesso, 
+    setNaoCriadas, 
+    setDisplayVoltar,
+    setFotosPerfisNumero,
+    setBiografiasAlteradasNumero,
+    setPublicacoesRealizadasNumero,
+    setPublicacoesStoryNumero,
+    setPerfisSeguidosNumero,
+    setMontarPerfisCriados
+){
 
     const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
@@ -36,11 +50,23 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
         logs.scrollTop = logs.scrollHeight
 
         setExecutando(true)
-        window.api.ipcRenderer.sendSync('tamanho-pequeno')
+        if(montarPerfis == 'sim'){
+            window.api.ipcRenderer.sendSync('tamanho-pequeno-3x')
+            setMontarPerfisCriados(true)
+        }else{
+            window.api.ipcRenderer.sendSync('tamanho-pequeno')
+            setMontarPerfisCriados(false)
+        }
         var intervalo = setInterval(()=>{
 
             var criadasComSucesso = 0
             var naoCriadas = 0 
+
+            var fotoPerfilAlteradas = 0 
+            var biografiasAlteradas = 0 
+            var publicacoesRealizadas = 0 
+            var publicacoesRealizadasStory = 0 
+            var perfisSeguidos = 0 
 
             window.api.ipcRenderer.sendSync('logCriador').forEach((mensagem)=>{
                 if(mensagem.includes('Perfil criado com sucesso!') == true){
@@ -56,10 +82,35 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 ){
                     naoCriadas += 1
                 }
+
+                if(mensagem.includes('Foto de perfil alterada com sucesso!') == true){
+                    fotoPerfilAlteradas += 1
+                }
+
+                if(mensagem.includes('Biografia alterada com sucesso!') == true){
+                    biografiasAlteradas += 1
+                }
+
+                if(mensagem.includes('Publicação realizada com sucesso!') == true){
+                    publicacoesRealizadas += 1
+                }
+
+                if(mensagem.includes('Story publicado com sucesso!') == true){
+                    publicacoesRealizadasStory += 1
+                }
+
+                if(mensagem.includes('Perfil seguido com sucesso!') == true){
+                    perfisSeguidos += 1
+                }
             })
 
             setCriadasSucesso(criadasComSucesso)
             setNaoCriadas(naoCriadas)
+            setFotosPerfisNumero(fotoPerfilAlteradas)
+            setBiografiasAlteradasNumero(biografiasAlteradas)
+            setPublicacoesRealizadasNumero(publicacoesRealizadas)
+            setPublicacoesStoryNumero(publicacoesRealizadasStory)
+            setPerfisSeguidosNumero(perfisSeguidos)
 
             setMeusLogs(window.api.ipcRenderer.sendSync('logCriador'))
             logs.scrollTop = logs.scrollHeight

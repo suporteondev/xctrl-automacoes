@@ -1,3 +1,5 @@
+var contador = 0
+
 const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, logs)=>{
     try{
 
@@ -22,17 +24,85 @@ const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, l
         // Seguindo os perfis
         for(let x = 0; x < seguirPerfis; x++){
             try{
+
+                const perfisSeguidos1 = await pagina.evaluate(()=>{
+                    const perfis = document.querySelectorAll('._acan._acap')
+                    var quantidadePerfisSeguidos = 0
+
+                    perfis.forEach((perfil)=>{
+                        if(perfil.innerText == 'Seguindo'){
+                            quantidadePerfisSeguidos = quantidadePerfisSeguidos + 1
+                        }
+                    })
+
+                    return quantidadePerfisSeguidos
+                })
+
                 logs.push(`${usuario} - Seguindo o ${x + 1}º perfil`)
-                await pagina.waitForSelector('._acan._acap._acas', { timeout: 60000 })
+                
+                try{
+                    await pagina.waitForSelector('._acan._acap._acas', { timeout: 60000 })
+                }catch(erro){
+                    logs.push(`${usuario} - Os perfis sugeridos acabaram, portanto iremos pular as ações de seguir.`)
+                }
+
+                // DESCENDO O SCROOL
+                await pagina.evaluate(()=>{
+                    const posicaoY = document.querySelector('._acan._acap._acas').getBoundingClientRect().y
+                    document.querySelector('html').scrollBy(0, Number(posicaoY - 60))
+                })
+
                 await pagina.click('._acan._acap._acas')
                 await pagina.waitForTimeout(2000)
+
+                try{
+                    await pagina.waitForSelector('._a9--._a9_1', {timeout: 3000})
+                    await pagina.click('._a9--._a9_1')
+
+                    logs.push(`${usuario} - Esse perfil sofreu restrição de seguir, portanto iremos pulá-lo!`)
+
+                    break
+                }catch(erro){
+                    
+                }
+
+                const perfisSeguidos2 = await pagina.evaluate(()=>{
+                    const perfis = document.querySelectorAll('._acan._acap')
+                    var quantidadePerfisSeguidos = 0
+
+                    perfis.forEach((perfil)=>{
+                        if(perfil.innerText == 'Seguindo'){
+                            quantidadePerfisSeguidos = quantidadePerfisSeguidos + 1
+                        }
+                    })
+
+                    return quantidadePerfisSeguidos
+                })
+
+                if(perfisSeguidos1 == perfisSeguidos2){
+                    if(contador < 3){
+                        logs.push(`${usuario} - Esse perfil está privado, iremos tentar seguir outro.`)
+                        x--
+                        contador++
+                        throw new Error('Erro de seguindo')
+                    }else{
+                        contador = 0
+                        throw new Error()
+                    }
+                }
+
+                contador = 0
                 logs.push(`${usuario} - Perfil seguido com sucesso!`)
+
                 if(esperarEntre != 0){
                     logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                     await pagina.waitForTimeout(esperarEntre)
                 }
             }catch(erro){
-                logs.push(`${usuario} - Não conseguimos seguir o ${x + 1}º perfil!`)
+                if(erro.message != 'Erro de seguindo'){
+                    console.log(erro.message)
+                    logs.push(`${usuario} - Não conseguimos seguir o ${x + 1}º perfil!`)
+                }
             }
         }
 

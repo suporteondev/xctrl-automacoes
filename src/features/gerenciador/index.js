@@ -8,7 +8,7 @@ import { AiFillDislike, AiFillLike } from 'react-icons/ai'
 import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { listarPerfis } from './functions/listarPerfis'
-import { FaYoutube} from 'react-icons/fa'
+import { FaCheck, FaYoutube} from 'react-icons/fa'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
@@ -20,6 +20,8 @@ import { apagarPerfis } from './functions/apagarPerfis'
 import { copiarPerfis } from './functions/copiarPerfis'
 import { filtrarPerfis } from './functions/filtrarPerfis'
 import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
+import { useNavigate } from 'react-router-dom'
+import { redirecionar } from '../../functions/redirecionar'
 
 const Gerenciador = ()=>{
 
@@ -31,6 +33,7 @@ const Gerenciador = ()=>{
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
+    const Router = useNavigate()
 
     return (
         <div>
@@ -87,7 +90,8 @@ const Gerenciador = ()=>{
                             <option value='mais10Publicacoes'>Perfis com mais de 10 publicações</option>
                             <option value='menos30Seguidores'>Perfis com menos de 30 seguidores</option>
                             <option value='mais30Seguidores'>Perfis com mais de 30 seguidores</option>
-                            
+                            <option value='mais20Seguindo'>Perfis que seguem mais que 20</option>
+                            <option value='menos20Seguindo'>Perfis que seguem menos que 20</option>
                         </select>
                         <div>
                             <button onClick={()=>{ 
@@ -210,6 +214,14 @@ const Gerenciador = ()=>{
                 <Opcao>
                     <span>Total de perfis</span>
                     {perfisGerenciador.length}
+                </Opcao>
+                <Opcao
+                    funcao={()=>{
+                        redirecionar(Router, '/verificador')
+                    }}
+                >
+                    <span>Verificar perfis</span>
+                    <FaCheck/>
                 </Opcao>
                 <Opcao 
                     funcao={()=>{

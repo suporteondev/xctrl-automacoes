@@ -42,7 +42,7 @@ const selecionarData = async(identificador, pagina, logs)=>{
             document.querySelectorAll('button[type="button"]')[1].click()
         })
 
-        logs.push(`perfil ${identificador} - ` + 'Data confirmada!')
+        logs.push(`perfil ${identificador} - ` + 'Data confirmada com sucesso!')
         
         return {
             ok: true

@@ -118,9 +118,9 @@ app.on('ready', async () => {
         mainWindow.show()
     })
 
-    // globalShortcut.register('Control+Shift+I', () => {
-    //     return false
-    // })
+    globalShortcut.register('Control+Shift+I', () => {
+        return false
+    })
 
     ipcMain.on('fechar', (event)=>{
         mainWindow.close()
@@ -206,6 +206,14 @@ app.on('ready', async () => {
         event.returnValue = global.montador
     })
 
+    ipcMain.on('versaoAplicativo', (event)=>{
+        event.returnValue = '1.0.0'
+    })
+
+    ipcMain.on('versaoAtual', (event)=>{
+        event.returnValue = store.get('versaoAtual')
+    })
+
     ipcMain.on('sair', (event)=>{
         event.returnValue = store.delete('usuarioLogado')
     })
@@ -226,7 +234,7 @@ app.on('ready', async () => {
 
     ipcMain.on('tamanho-pequeno-3x', (event)=>{
         mainWindow.setResizable(true)
-        mainWindow.setSize(420, 320)
+        mainWindow.setSize(450, 320)
         mainWindow.setResizable(false)
         event.returnValue = true
     })

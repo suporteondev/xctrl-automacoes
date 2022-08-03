@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const connectDB = require('../middlewares/connectDB')
 const Store = require('electron-store')
+const Versao = require('../models/versao')
 const store = new Store();
 
 router.post('/acessar', connectDB, async(req, res)=>{
@@ -57,8 +58,12 @@ router.post('/acessar', connectDB, async(req, res)=>{
             // Verificando se as senhas conferem
             if(resultado == true){
 
+                const versao = await Versao.find()
+                const versaoAtual = versao[0].titulo
+
                 store.set('logado', usuario.email)
                 store.set('nome', usuario.nome)
+                store.set('versaoAtual', versaoAtual)
 
                 return res.json({ 
                     ok: true, 

@@ -72,7 +72,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
             if(window.api.ipcRenderer.sendSync('logVerificador')[window.api.ipcRenderer.sendSync('logVerificador').length - 1] == 'O robô terminou, pode voltar!'){
                 setTimeout(clearInterval(intervalo), 3000)
                 logs.scrollTop = logs.scrollHeight
-                setDisplayVoltar('/painel')
+                setDisplayVoltar('/gerenciador')
             }
 
         }, 1000)

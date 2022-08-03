@@ -32,6 +32,15 @@ const Criador = ()=>{
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ criadasSucesso, setCriadasSucesso ] = useState(0)
     const [ naoCriadas, setNaoCriadas ] = useState(0)
+
+    const [ fotosPerfisNumero, setFotosPerfisNumero ] = useState(0)
+    const [ biografiasAlteradasNumero, setBiografiasAlteradasNumero ] = useState(0)
+    const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
+    const [ publicacoesStoryNumero, setPublicacoesStoryNumero ] = useState(0)
+    const [ perfisSeguidosNumero, setPerfisSeguidosNumero ] = useState(0)
+
+    const [ montarPerfisCriados, setMontarPerfisCriados ] = useState(false)
+
     const { configuracoesCriador, setConfiguracoesCriador } = useConfiguracoesCriador()
     const listaDeUserAgentsDesktop = [...new Set(userAgentsDesktop)]
 
@@ -153,7 +162,24 @@ const Criador = ()=>{
                             <span>Salvar configurações</span>
                             <IoIosSave/>
                         </Opcao>
-                        <Opcao funcao={()=>{ iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setCriadasSucesso, setNaoCriadas, setDisplayVoltar) }}>
+                        <Opcao 
+                            funcao={()=>{ 
+                                iniciar(
+                                    Mensagem, 
+                                    setMensagem, 
+                                    setExecutando, 
+                                    setMeusLogs, 
+                                    setCriadasSucesso, 
+                                    setNaoCriadas, 
+                                    setDisplayVoltar,
+                                    setFotosPerfisNumero,
+                                    setBiografiasAlteradasNumero,
+                                    setPublicacoesRealizadasNumero,
+                                    setPublicacoesStoryNumero,
+                                    setPerfisSeguidosNumero,
+                                    setMontarPerfisCriados
+                                ) 
+                            }}>
                             <span>Iniciar</span>
                             <IoPlay/>
                         </Opcao>
@@ -178,18 +204,44 @@ const Criador = ()=>{
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
-                        <p key={index}>{logs}</p>
+                        <p key={index} style={{ color: logs.includes('sucesso!') ? '#28a745' : '' }}>{logs}</p>
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#05A660'>
-                        <span>Criadas com sucesso</span>
-                        {criadasSucesso}
-                    </Opcao>
                     <Opcao cor='#E53535'>
                         <span>Não criadas</span>
                         {naoCriadas}
                     </Opcao>
+                    <Opcao cor='#05A660'>
+                        <span>Criadas com sucesso</span>
+                        {criadasSucesso}
+                    </Opcao>
+
+                    {montarPerfisCriados == true ?
+                        <>
+                            <Opcao cor='#0A84FF'>
+                                <span>Foto de perfil</span>
+                                {fotosPerfisNumero}
+                            </Opcao>
+                            <Opcao cor='#0A84FF'>
+                                <span>Biografia</span>
+                                {biografiasAlteradasNumero}
+                            </Opcao>
+                            <Opcao cor='#0A84FF'>
+                                <span>Feed</span>
+                                {publicacoesRealizadasNumero}
+                            </Opcao>
+                            <Opcao cor='#0A84FF'>
+                                <span>Story</span>
+                                {publicacoesStoryNumero}
+                            </Opcao>
+                            <Opcao cor='#0A84FF'>
+                                <span>Seguidos</span>
+                                {perfisSeguidosNumero}
+                            </Opcao>
+                        </> : ''
+                    }
+
                 </Rodape>
             </>
             }

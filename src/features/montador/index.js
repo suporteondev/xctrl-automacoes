@@ -96,6 +96,7 @@ const Montador = ()=>{
                                 <Select name='generoPerfis' defaultValue={configuracoesMontador.generoPerfis}>
                                     <option value='feminino'>Feminino</option>
                                     <option value='masculino'>Masculino</option>
+                                    <option value='nao'>Não alterar</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
@@ -177,7 +178,7 @@ const Montador = ()=>{
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
-                        <p key={index}>{logs}</p>
+                        <p key={index} style={{ color: logs.includes('sucesso!') ? '#28a745' : '' }}>{logs}</p>
                     ))}
                 </Logs>
                 <Rodape>

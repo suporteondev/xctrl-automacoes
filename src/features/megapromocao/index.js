@@ -15,7 +15,7 @@ import { Opcao } from '../../components/opcao'
 import { FaYoutube } from 'react-icons/fa'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 
-const ComprarMontador = ()=>{
+const MegaPromocao = ()=>{
 
     const [ pagamentoGerado, setPagamentoGerado ] = useState(false)
     const [ pixQrCode, setPixQrCode ] = useState('')
@@ -27,8 +27,8 @@ const ComprarMontador = ()=>{
             <Cabeca voltar='/painel'/>
             {pagamentoGerado == false ?
                 <Conteudos>
-                    <Titulo>Comprar montador de perfis</Titulo>
-                    <Descricao>Por apenas 20 reais por mês</Descricao>
+                    <Titulo>Mega promoção de lançamento</Titulo>
+                    <Descricao>Por apenas 30 reais por mês você tem o acesso no criador, montador e gerenciador de perfis</Descricao>
                     <Botao onClick={()=> gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCopiaCola)}>Gerar pagamento</Botao>
                 </Conteudos>
                 :
@@ -55,4 +55,4 @@ const ComprarMontador = ()=>{
     )
 }
 
-export { ComprarMontador }
+export { MegaPromocao }
