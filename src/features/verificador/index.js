@@ -107,7 +107,7 @@ const Verificador = ()=>{
                             }
                             <IoTime/>
                         </Opcao>
-                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
+                        <Opcao funcao={()=> { abrirNavegador('https://youtu.be/UZmnPhM6pu8')}}>
                             <span>Manual de uso</span>
                             <FaYoutube/>
                         </Opcao>
@@ -159,7 +159,7 @@ const Verificador = ()=>{
                         {novamentes}
                     </Opcao>
                     <Opcao cor='#E53535'>
-                        <span>Inativos</span>
+                        <span>Perfis inativos</span>
                         {inativos}
                     </Opcao>
                 </Rodape>

@@ -22,6 +22,7 @@ import { filtrarPerfis } from './functions/filtrarPerfis'
 import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
 import { useNavigate } from 'react-router-dom'
 import { redirecionar } from '../../functions/redirecionar'
+import { abrirNavegador } from '../../functions/abrirNavegador'
 
 const Gerenciador = ()=>{
 
@@ -207,7 +208,9 @@ const Gerenciador = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao>
+                <Opcao
+                    funcao={()=> abrirNavegador('https://youtu.be/RZ0pVEeL6TM')}
+                >
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>

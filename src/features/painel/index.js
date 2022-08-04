@@ -101,7 +101,7 @@ const Painel = ()=>{
                 </Servicos>
             </Conteudos>
             <Rodape>
-                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=cEaMcyr3cdI')}}>
+                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=32SgZd1zkiE')}}>
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>

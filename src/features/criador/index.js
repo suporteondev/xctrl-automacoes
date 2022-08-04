@@ -154,7 +154,7 @@ const Criador = ()=>{
                             }
                             <IoTime/>
                         </Opcao>
-                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=CAVBLC5Xaxw')}}>
+                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=1PBx9fYbYDM')}}>
                             <span>Manual de uso</span>
                             <FaYoutube/>
                         </Opcao>
@@ -204,7 +204,7 @@ const Criador = ()=>{
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
-                        <p key={index} style={{ color: logs.includes('sucesso!') ? '#28a745' : '' }}>{logs}</p>
+                        <p key={index} style={{ color: logs.includes('sucesso') ? '#28a745' : '' }}>{logs}</p>
                     ))}
                 </Logs>
                 <Rodape>

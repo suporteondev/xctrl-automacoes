@@ -71,7 +71,7 @@ const Acessar = ()=>{
             </Formulario>
             <Rodape>
                 
-                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=cEaMcyr3cdI')}}>
+                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=pw7okiJO1po')}}>
                     <span>Manual de uso</span>
                     <FaYoutube/>
                 </Opcao>
