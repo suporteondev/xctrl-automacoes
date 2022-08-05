@@ -15,11 +15,6 @@ import { useUsuarioLogado } from '../../providers/usuarioLogado'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
-import { Div } from './components/div'
-import { redirecionar } from '../../functions/redirecionar'
-import { abrirNavegador } from '../../functions/abrirNavegador'
-import { Opcao } from '../../components/opcao'
-import { FaYoutube } from 'react-icons/fa'
 
 const Acessar = ()=>{
 
@@ -69,14 +64,7 @@ const Acessar = ()=>{
                 {mensagem}
                 <Botao>Acessar conta</Botao>
             </Formulario>
-            <Rodape>
-                
-                <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=pw7okiJO1po')}}>
-                    <span>Manual de uso</span>
-                    <FaYoutube/>
-                </Opcao>
-                V1.0.0
-            </Rodape>
+            <Rodape>V1.0.0</Rodape>
         </Conteudos>
     )
 }

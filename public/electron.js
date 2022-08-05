@@ -99,6 +99,8 @@ app.on('ready', async () => {
             devTools: true,
             nodeIntegration: true,
             contextIsolation: true,
+            webSecurity: false,
+            overlayFullscreenVideo: true,
             enableRemoteModule: true,
             preload: join(__dirname, 'preload.js'),
         },
@@ -249,6 +251,13 @@ app.on('ready', async () => {
     ipcMain.on('tamanho-gerenciador', (event)=>{
         mainWindow.setResizable(true)
         mainWindow.setSize(750, 500)
+        mainWindow.setResizable(false)
+        event.returnValue = true
+    })
+
+    ipcMain.on('tamanho-manual', (event)=>{
+        mainWindow.setResizable(true)
+        mainWindow.setSize(750, 600)
         mainWindow.setResizable(false)
         event.returnValue = true
     })

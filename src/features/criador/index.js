@@ -154,10 +154,6 @@ const Criador = ()=>{
                             }
                             <IoTime/>
                         </Opcao>
-                        <Opcao funcao={()=> { abrirNavegador('https://www.youtube.com/watch?v=1PBx9fYbYDM')}}>
-                            <span>Manual de uso</span>
-                            <FaYoutube/>
-                        </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesCriador) }}>
                             <span>Salvar configurações</span>
                             <IoIosSave/>

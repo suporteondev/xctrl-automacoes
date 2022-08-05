@@ -150,10 +150,6 @@ const Montador = ()=>{
                             }
                             <IoTime/>
                         </Opcao>
-                        <Opcao funcao={()=> { abrirNavegador('https://youtu.be/jEciTC4L-jo')}}>
-                            <span>Manual de uso</span>
-                            <FaYoutube/>
-                        </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesMontador) }}>
                             <span>Salvar configurações</span>
                             <IoIosSave/>

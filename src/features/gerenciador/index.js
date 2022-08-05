@@ -208,12 +208,6 @@ const Gerenciador = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao
-                    funcao={()=> abrirNavegador('https://youtu.be/RZ0pVEeL6TM')}
-                >
-                    <span>Manual de uso</span>
-                    <FaYoutube/>
-                </Opcao>
                 <Opcao>
                     <span>Total de perfis</span>
                     {perfisGerenciador.length}

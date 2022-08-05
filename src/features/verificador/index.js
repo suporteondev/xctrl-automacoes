@@ -107,10 +107,6 @@ const Verificador = ()=>{
                             }
                             <IoTime/>
                         </Opcao>
-                        <Opcao funcao={()=> { abrirNavegador('https://youtu.be/UZmnPhM6pu8')}}>
-                            <span>Manual de uso</span>
-                            <FaYoutube/>
-                        </Opcao>
                         <Opcao funcao={()=>{ salvar(Mensagem, setMensagem, setConfiguracoesVerificador) }}>
                             <span>Salvar configurações</span>
                             <IoIosSave/>
