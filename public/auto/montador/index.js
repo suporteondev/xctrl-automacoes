@@ -9,15 +9,16 @@ const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
 const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
+const { rootPath } = require('electron-root-path')
+const chromePaths = require('chrome-paths')
+const path = require('path')
 var pastaEscolhida = []
 
 const montador = async(
-    caminhoNavegador, 
     verAcontecendo,
     modoAnonimo,
     userAgent,
     seusPerfis,
-    caminhoPastaFotos,
     generoPerfis,
     alterarFotoPerfil,
     alterarBiografia,
@@ -38,7 +39,7 @@ const montador = async(
         navegador = await puppeteer.launch({
             ignoreHTTPSErrors: true,
             headless: verAcontecendo,
-            executablePath: caminhoNavegador,
+            executablePath: chromePaths.chrome,
             args: [
                 '--no-sandbox',
                 '--disabled-setuid-sandbox'
@@ -83,20 +84,20 @@ const montador = async(
         } 
 
         // ALTERANDO O GÊNERO DOS PERFIS
-        if(generoPerfis != 'nao'){
-            await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
-            if(esperarEntre != 0){
-                logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                await pagina.waitForTimeout(esperarEntre)
-            }
+        await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
+        if(esperarEntre != 0){
+            logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
+            await pagina.waitForTimeout(esperarEntre)
         }
 
+        const caminhoPublicacoes = path.join(rootPath, `./publicacoes/${generoPerfis == 'masculino' ? 'masculinas' : 'femininas'}`)
+
         // CAPTURANDO A PASTA DE PUBLICAÇÕES
-        const pastas = fs.readdirSync(caminhoPastaFotos)
+        const pastas = fs.readdirSync(caminhoPublicacoes)
         let caminhoPasta = ''
         async function selecionarCaminho(){
             pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
-            caminhoPasta = `${caminhoPastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+            caminhoPasta = `${caminhoPublicacoes}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
             if(pastaEscolhida.indexOf(caminhoPasta) >=0){
                 return selecionarCaminho()
             }

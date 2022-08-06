@@ -14,7 +14,6 @@ export async function iniciar(
     setMontarPerfisCriados
 ){
 
-    const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const navegadorAnonimo = document.querySelector('[name="navegadorAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -24,22 +23,15 @@ export async function iniciar(
     const generoPerfis = document.querySelector('[name="generoPerfis"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
     const comoSalvar = document.querySelector('[name="comoSalvar"]').value
-    const ondeSalvar = document.querySelector('[name="ondeSalvar"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const montarPerfis = document.querySelector('[name="montarPerfis"]').value
     const logs = document.querySelector('#logs')
 
-    if(caminhoNavegador === ''){
-        setMensagem(<Mensagem>Configure o caminho do navegador!</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
-    }else if(quantidadePerfis === '' || quantidadePerfis === '0' || quantidadePerfis === 0){
+    if(quantidadePerfis === '' || quantidadePerfis === '0' || quantidadePerfis === 0){
         setMensagem(<Mensagem>A quantidade de perfis deve ser maior do que 0!</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }else if(senhaPerfis === ''){
         setMensagem(<Mensagem>Configure a senha dos perfis!</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
-    }else if(ondeSalvar === ''){
-        setMensagem(<Mensagem>Configure onde salvar os perfis!</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }else if(esperarEntre === ''){
         setMensagem(<Mensagem>Configure o tempo que deseja esperar entre as criações!</Mensagem>)
@@ -128,8 +120,7 @@ export async function iniciar(
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
-                caminhoNavegador,
+            body: JSON.stringify({
                 verAcontecendo,
                 navegadorAnonimo,
                 userAgent,
@@ -139,7 +130,6 @@ export async function iniciar(
                 generoPerfis,
                 limparLogin,
                 comoSalvar,
-                ondeSalvar,
                 esperarEntre: Number(esperarEntre) * 1000,
                 montarPerfis
             })

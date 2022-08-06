@@ -1,11 +1,9 @@
 export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
 
-    const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const modoPerfis = document.querySelector('[name="modoPerfis"]').value
-    const caminhoPastaFotos = document.querySelector('[name="caminhoPastaFotos"]').value
     const generoPerfis = document.querySelector('[name="generoPerfis"]').value
     const alterarFotoPerfil = document.querySelector('[name="alterarFotoPerfil"]').value
     const alterarBiografia = document.querySelector('[name="alterarBiografia"]').value
@@ -17,12 +15,10 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
     const logs = document.querySelector('#logs')
 
     const configuracoes = {
-        caminhoNavegador,
         verAcontecendo,
         modoAnonimo,
         userAgent,
         modoPerfis,
-        caminhoPastaFotos,
         generoPerfis,
         alterarFotoPerfil,
         alterarBiografia,

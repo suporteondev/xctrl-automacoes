@@ -16,11 +16,13 @@ const alterarBiografiaPerfil = require('../instagram/alterarBiografiaPerfil')
 const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
 const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
 const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
+const { rootPath } = require('electron-root-path')
+const chromePaths = require('chrome-paths')
+const path = require('path')
 const fs = require('fs')
 var pastaEscolhida = []
 
 const criador = async(
-    caminhoNavegador, 
     verAcontecendoConfigurado,
     navegadorAnonimoConfigurado,
     userAgent,
@@ -28,12 +30,10 @@ const criador = async(
     senhaPerfis, 
     limparLoginConfigurado,
     comoSalvar,
-    ondeSalvar,
     quantidadePerfis, 
     emailTemporario, 
     esperarEntre,
     montarPerfisConfigurado,
-    caminhoPastaFotos,
     alterarFotoPerfil,
     alterarBiografia,
     quantidadePublicacoesFeed,
@@ -52,7 +52,7 @@ const criador = async(
         navegador = await puppeteer.launch({
             ignoreHTTPSErrors: true,
             headless: verAcontecendoConfigurado,
-            executablePath: caminhoNavegador,
+            executablePath: chromePaths.chrome,
             args: [
                 '--no-sandbox',
                 '--disabled-setuid-sandbox'
@@ -148,7 +148,7 @@ const criador = async(
         const { codigo } = resCodigo
 
         // FINALIZANDO A CRIAÇÃO DO PERFIL
-        const resDigitandoCodigo = await digitandoCodigo(x, paginaInstagram, comoSalvar, ondeSalvar, usuario, senhaPerfis, codigo, logs)
+        const resDigitandoCodigo = await digitandoCodigo(x, paginaInstagram, comoSalvar, generoPerfis, usuario, senhaPerfis, codigo, logs)
         if(resDigitandoCodigo.ok == false){
             await navegador.close()
             continue
@@ -174,11 +174,12 @@ const criador = async(
             }
 
             // CAPTURANDO A PASTA DE PUBLICAÇÕES
-            const pastas = fs.readdirSync(caminhoPastaFotos)
+            const caminhoPublicacoes = path.join(rootPath, `./publicacoes/${generoPerfis == 'masculino' ? 'masculinas' : 'femininas'}`)
+            const pastas = fs.readdirSync(caminhoPublicacoes)
             let caminhoPasta = ''
             async function selecionarCaminho(){
                 pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
-                caminhoPasta = `${caminhoPastaFotos}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
+                caminhoPasta = `${caminhoPublicacoes}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
                 if(pastaEscolhida.indexOf(caminhoPasta) >=0){
                     return selecionarCaminho()
                 }

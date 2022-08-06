@@ -23,7 +23,6 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesVerificador') == undefined || store.get('configuracoesVerificador') == 'undefined'){
         store.set('configuracoesVerificador', {
-            caminhoNavegador: '',
             verAcontecendo: 'sim',
             modoAnonimo: 'sim',
             userAgent: 'aleatorio',
@@ -45,19 +44,21 @@ app.on('ready', async () => {
         })
     }
 
+    function numeroAleatorio(a, b) {
+        return Math.floor(Math.random() * (b - a + 1)) + a
+    }
+
     if(store.get('configuracoesCriador') == undefined || store.get('configuracoesCriador') == 'undefined'){
         store.set('configuracoesCriador', {
-            caminhoNavegador: '',
             verAcontecendo: 'sim',
             navegadorAnonimo: 'sim',
             userAgent: 'aleatorio',
             emailTemporario: 'mailtm',
             quantidadePerfis: '999999',
-            senhaPerfis: '',
+            senhaPerfis: `PadraoXCtrl@${numeroAleatorio(100000, 999999)}`,
             generoPerfis: 'feminino',
             limparLogin: 'sim',
             comoSalvar: 'linha',
-            ondeSalvar: '',
             esperarEntre: 0,
             montarPerfis: 'sim'
         })
@@ -65,12 +66,10 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesMontador') == undefined || store.get('configuracoesMontador') == 'undefined'){
         store.set('configuracoesMontador', {
-            caminhoNavegador: '',
             verAcontecendo: false,
             modoAnonimo: true,
             userAgent: 'aleatorio',
             modoPerfis: 'linha',
-            caminhoPastaFotos: '',
             generoPerfis: 'feminino',
             alterarFotoPerfil: true,
             alterarBiografia: true,

@@ -53,10 +53,6 @@ const Criador = ()=>{
                         <Titulo>Criador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
-                                <Etiqueta>Caminho do seu navegador</Etiqueta>
-                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesCriador.caminhoNavegador}/>
-                            </Caixa>
-                            <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesCriador.verAcontecendo}>
                                     <option value='sim'>Sim</option>
@@ -112,13 +108,9 @@ const Criador = ()=>{
                             <Caixa>
                                 <Etiqueta>Como salvar os perfis</Etiqueta>
                                 <Select name='comoSalvar' defaultValue={configuracoesCriador.comoSalvar}>
-                                    <option value='linha'>Modo linha - TXT</option>
-                                    <option value='coluna'>Modo coluna - TXT</option>
+                                    <option value='linha'>Modo linha</option>
+                                    <option value='coluna'>Modo coluna</option>
                                 </Select>
-                            </Caixa>
-                            <Caixa>
-                                <Etiqueta>Onde salvar os perfis</Etiqueta>
-                                <Entrada name='ondeSalvar' type='text' defaultValue={configuracoesCriador.ondeSalvar}/>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Esperar entre as ações (Segundos)</Etiqueta>
@@ -208,30 +200,30 @@ const Criador = ()=>{
                         <span>Não criadas</span>
                         {naoCriadas}
                     </Opcao>
-                    <Opcao cor='#05A660'>
+                    <Opcao cor='#28a745'>
                         <span>Criadas com sucesso</span>
                         {criadasSucesso}
                     </Opcao>
 
                     {montarPerfisCriados == true ?
                         <>
-                            <Opcao cor='#0A84FF'>
+                            <Opcao>
                                 <span>Foto de perfil</span>
                                 {fotosPerfisNumero}
                             </Opcao>
-                            <Opcao cor='#0A84FF'>
+                            <Opcao>
                                 <span>Biografia</span>
                                 {biografiasAlteradasNumero}
                             </Opcao>
-                            <Opcao cor='#0A84FF'>
+                            <Opcao>
                                 <span>Feed</span>
                                 {publicacoesRealizadasNumero}
                             </Opcao>
-                            <Opcao cor='#0A84FF'>
+                            <Opcao>
                                 <span>Story</span>
                                 {publicacoesStoryNumero}
                             </Opcao>
-                            <Opcao cor='#0A84FF'>
+                            <Opcao>
                                 <span>Seguidos</span>
                                 {perfisSeguidosNumero}
                             </Opcao>

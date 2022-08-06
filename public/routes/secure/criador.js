@@ -9,7 +9,6 @@ router.post('/criador', logado, async(req, res)=>{
     global.criador = []
 
     const { 
-        caminhoNavegador,
         verAcontecendo,
         navegadorAnonimo,
         userAgent,
@@ -19,7 +18,6 @@ router.post('/criador', logado, async(req, res)=>{
         generoPerfis,
         limparLogin,
         comoSalvar,
-        ondeSalvar,
         esperarEntre,
         montarPerfis
     } = req.body
@@ -30,7 +28,6 @@ router.post('/criador', logado, async(req, res)=>{
     const montarPerfisConfigurado = montarPerfis == 'sim' ? true : false
 
     const { 
-        caminhoPastaFotos,
         alterarFotoPerfil,
         alterarBiografia,
         quantidadePublicacoesFeed,
@@ -41,17 +38,7 @@ router.post('/criador', logado, async(req, res)=>{
     const alterarFotoPerfilConfigurado = alterarFotoPerfil == 'sim' ? true : false
     const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
 
-    if(montarPerfisConfigurado == true){
-        if(caminhoPastaFotos == ''){
-            return res.json({
-                ok: false,
-                mensagem: 'Configure o caminho da pasta de fotos no montador antes de iniciar!'
-            })
-        }
-    }
-
     await criador(
-        caminhoNavegador, 
         verAcontecendoConfigurado,
         navegadorAnonimoConfigurado,
         userAgent,
@@ -59,12 +46,10 @@ router.post('/criador', logado, async(req, res)=>{
         senhaPerfis, 
         limparLoginConfigurado,
         comoSalvar,
-        ondeSalvar,
         quantidadePerfis, 
         emailTemporario, 
         esperarEntre,
         montarPerfisConfigurado,
-        caminhoPastaFotos,
         alterarFotoPerfilConfigurado,
         alterarBiografiaConfigurado,
         quantidadePublicacoesFeed,

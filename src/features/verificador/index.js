@@ -44,10 +44,6 @@ const Verificador = ()=>{
                     <Conteudos>
                         <Titulo>Verificador de perfis</Titulo>
                         <Configuracoes>
-                        <Caixa>
-                                <Etiqueta>Caminho do seu navegador</Etiqueta>
-                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesVerificador.caminhoNavegador}/>
-                            </Caixa>
                             <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesVerificador.verAcontecendo}>
@@ -142,7 +138,7 @@ const Verificador = ()=>{
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Não verificados</span>
                         {averificar}
                     </Opcao>

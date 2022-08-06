@@ -1,6 +1,5 @@
 export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
 
-    const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -10,7 +9,6 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
     const logs = document.querySelector('#logs')
 
     const configuracoes = {
-        caminhoNavegador,
         verAcontecendo,
         modoAnonimo,
         userAgent,

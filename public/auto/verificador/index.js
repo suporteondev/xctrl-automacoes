@@ -3,9 +3,9 @@ const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
 const acessarPerfil = require('../instagram/acessarPerfil')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const verificarPerfil = require('../instagram/verificarPerfil')
+const chromePaths = require('chrome-paths')
 
 const verificador = async(
-    caminhoNavegador,
     verAcontecendo, 
     modoAnonimo, 
     userAgent,
@@ -25,7 +25,7 @@ const verificador = async(
         navegador = await puppeteer.launch({
             ignoreHTTPSErrors: true,
             headless: verAcontecendo,
-            executablePath: caminhoNavegador,
+            executablePath: chromePaths.chrome,
             args: [
                 '--no-sandbox',
                 '--disabled-setuid-sandbox'

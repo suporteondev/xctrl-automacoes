@@ -7,12 +7,10 @@ router.post('/montador', logado, async(req, res)=>{
     global.montador = []
 
     const { 
-        caminhoNavegador,
         verAcontecendo,
         modoAnonimo,
         userAgent,
         seusPerfis,
-        caminhoPastaFotos,
         generoPerfis,
         alterarFotoPerfil,
         alterarBiografia,
@@ -30,12 +28,10 @@ router.post('/montador', logado, async(req, res)=>{
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
 
     await montador(
-        caminhoNavegador, 
         verAcontecendoConfigurado,
         modoAnonimoConfigurado,
         userAgent,
         seusPerfis,
-        caminhoPastaFotos,
         generoPerfis,
         alterarFotoPerfilConfigurado,
         alterarBiografiaConfigurado,

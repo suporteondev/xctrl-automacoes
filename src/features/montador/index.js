@@ -50,10 +50,6 @@ const Montador = ()=>{
                         <Titulo>Montador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
-                                <Etiqueta>Caminho do seu navegador</Etiqueta>
-                                <Entrada name='caminhoNavegador' type='text' defaultValue={configuracoesMontador.caminhoNavegador}/>
-                            </Caixa>
-                            <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesMontador.verAcontecendo}>
                                     <option value='sim'>Sim</option>
@@ -88,15 +84,10 @@ const Montador = ()=>{
                                 <Textarea name='seusPerfis'></Textarea>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Caminho da pasta de fotos</Etiqueta>
-                                <Entrada name='caminhoPastaFotos' type='text' defaultValue={configuracoesMontador.caminhoPastaFotos}/>
-                            </Caixa>
-                            <Caixa>
                                 <Etiqueta>Gênero dos seus perfis</Etiqueta>
                                 <Select name='generoPerfis' defaultValue={configuracoesMontador.generoPerfis}>
                                     <option value='feminino'>Feminino</option>
                                     <option value='masculino'>Masculino</option>
-                                    <option value='nao'>Não alterar</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
@@ -178,23 +169,23 @@ const Montador = ()=>{
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Foto de perfil</span>
                         {fotosPerfisNumero}
                     </Opcao>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Biografia</span>
                         {biografiasAlteradasNumero}
                     </Opcao>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Feed</span>
                         {publicacoesRealizadasNumero}
                     </Opcao>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Story</span>
                         {publicacoesStoryNumero}
                     </Opcao>
-                    <Opcao cor='#0A84FF'>
+                    <Opcao>
                         <span>Seguidos</span>
                         {perfisSeguidosNumero}
                     </Opcao>

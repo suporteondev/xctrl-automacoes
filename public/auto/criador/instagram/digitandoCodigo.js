@@ -1,11 +1,12 @@
 const fs = require('fs')
-const acessarPerfil = require('../../instagram/acessarPerfil')
+const { rootPath } = require('electron-root-path')
+const path = require('path')
 
 const digitandoCodigo = async(
     identificador, 
     pagina, 
     comoSalvar,
-    ondeSalvar,
+    generoPerfis,
     usuario, 
     senha, 
     codigo,
@@ -13,6 +14,8 @@ const digitandoCodigo = async(
 )=>{
     try{
         
+        const ondeSalvar = path.join(rootPath, `./perfis/${generoPerfis == 'masculino' ? 'masculinos.txt' : 'femininos.txt'}`)
+
         // Esperando o seletor
         logs.push('Confirmando o código')
         await pagina.bringToFront()

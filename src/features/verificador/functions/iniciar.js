@@ -1,6 +1,5 @@
 export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar){
 
-    const caminhoNavegador = document.querySelector('[name="caminhoNavegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -10,10 +9,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
-    if(caminhoNavegador === ''){
-        setMensagem(<Mensagem>Configure o caminho do navegador</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
-    }else if(seusPerfis === ''){
+    if(seusPerfis === ''){
         setMensagem(<Mensagem>Preencha seus perfis antes de iniciar</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }else{
@@ -84,7 +80,6 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                caminhoNavegador,
                 verAcontecendo, 
                 modoAnonimo, 
                 userAgent,

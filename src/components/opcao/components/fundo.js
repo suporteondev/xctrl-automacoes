@@ -6,14 +6,14 @@ const Fundo = styled.div`
     padding: 0 10px;
     border-radius: 8px;
     margin-right: 5px;
-    border: 1px solid ${props => props.theme.linhas};
+    border: 1px solid ${props => props.cor ? props.cor : props.theme.linhas};
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     -webkit-app-region: no-drag;
     position: relative;
-    color: ${props => props.theme.textos};
+    color: ${props =>  props.cor ? props.cor : props.theme.textos};
 
     input{
         border: none;
@@ -35,7 +35,7 @@ const Fundo = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         white-space: nowrap;
-        color: ${props => props.theme.textos};
+        color: ${props => props.cor ? props.cor : props.theme.textos};
     }
 
     svg{
