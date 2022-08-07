@@ -1,6 +1,6 @@
 {
   "name": "xctrl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Central de automações da XCtrl.",
   "main": "public/electron.js",

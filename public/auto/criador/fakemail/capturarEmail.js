@@ -3,20 +3,21 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         // Acessando o cryptogmail
         logs.push('Capturando o email')
         await pagina.bringToFront()
-        logs.push(`perfil ${identificador} - ` + 'Acessando o fakermail')
-        await pagina.goto('https://fakermail.com/', { timeout: 60000 })
+        logs.push(`perfil ${identificador} - ` + 'Acessando o Fakemail')
+        await pagina.goto('https://www.fakemail.net/', { timeout: 60000 })
 
         // Esperando o botão de remover aparecer e clicando
         logs.push(`perfil ${identificador} - ` + 'Atualizando o email')
-        await pagina.waitForSelector('[d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"]', { timeout: 60000 })
-        await pagina.click('[d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"]')
-        await pagina.waitForSelector('[id="email-address"]', { timeout: 60000 })
-        await pagina.waitForTimeout(2000)
+        await pagina.waitForSelector('[title="Delete this email address"]', { timeout: 60000 })
+        await pagina.click('[title="Delete this email address"]')
+        await pagina.waitForSelector('.glyphicon.glyphicon-trash')
+        await pagina.click('.glyphicon.glyphicon-trash')
+        await pagina.waitForTimeout(10000)
 
         // Capturando o email do cryptogmail
         logs.push(`perfil ${identificador} - ` + 'Capturando o email')
         const email = await pagina.evaluate(()=>{
-            return document.querySelector('[id="email-address"]').value
+            return document.querySelector('[id="email"]').innerText
         })
 
         logs.push(`perfil ${identificador} - ` + 'Email capturado com sucesso!')
@@ -28,6 +29,7 @@ const capturarEmail = async(identificador, pagina, logs)=>{
         }
 
     }catch(erro){
+        console.log(erro.message)
         logs.push(`perfil ${identificador} - ` + 'Erro ao tentar capturar o email.')
         return {
             ok: false

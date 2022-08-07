@@ -24,6 +24,8 @@ export async function iniciar(
     const limparLogin = document.querySelector('[name="limparLogin"]').value
     const comoSalvar = document.querySelector('[name="comoSalvar"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
+    const limparPastaPrefetch = document.querySelector('[name="limparPastaPrefetch"]').value
+    const limparPastaTemp = document.querySelector('[name="limparPastaTemp"]').value
     const montarPerfis = document.querySelector('[name="montarPerfis"]').value
     const logs = document.querySelector('#logs')
 
@@ -131,6 +133,8 @@ export async function iniciar(
                 limparLogin,
                 comoSalvar,
                 esperarEntre: Number(esperarEntre) * 1000,
+                limparPastaPrefetch,
+                limparPastaTemp,
                 montarPerfis
             })
         }

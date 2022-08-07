@@ -66,6 +66,7 @@ const preencherDados = async(identificador, pagina, email, senha, genero, logs)=
             await pagina.waitForSelector('span.coreSpriteInputRefresh', { timeout: 5000 })
             await pagina.click('span.coreSpriteInputRefresh')
         }catch(erro){
+            logs.push(`perfil ${identificador} - ` + 'Altere o IP da sua VPN!')
             throw new Error('Erro')
         }
         

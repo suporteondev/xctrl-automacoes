@@ -5,12 +5,12 @@ const capturarCodigo = async(identificador, pagina, logs)=>{
         await pagina.bringToFront()
 
         logs.push(`perfil ${identificador} - ` + 'Aguardando o código chegar.')
-        await pagina.waitForSelector('ul li a', { timeout: 60000 })
+        await pagina.waitForSelector('[id="schranka"] td:nth-child(2)', { timeout: 60000 })
 
         // Capturando o código
         logs.push(`perfil ${identificador} - ` + 'Capturando o código')
         const codigo = await pagina.evaluate(()=>{
-            return document.querySelector('ul li a div[class="mx-5 text-sm leading-5 text-gray-500 truncate"]').innerText.split(' ')[0]
+            return document.querySelector('[id="schranka"] td:nth-child(2)').innerText.split(' ')[0]
         })
 
         // Retornando o código

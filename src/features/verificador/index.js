@@ -138,7 +138,7 @@ const Verificador = ()=>{
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao>
+                    <Opcao cor='#236EFF'>
                         <span>Não verificados</span>
                         {averificar}
                     </Opcao>

@@ -78,9 +78,10 @@ const Criador = ()=>{
                             <Caixa>
                                 <Etiqueta>Email temporário</Etiqueta>
                                 <Select name='emailTemporario' defaultValue={configuracoesCriador.emailTemporario}>
+                                    <option value='aleatorio'>Aleatório</option>
                                     <option value='mailtm'>Mail.tm</option>
                                     <option value='cryptogmail'>Cryptogmail</option>
-                                    <option value='fakermail'>Fakermail</option>
+                                    <option value='disposablemail'>Disposablemail</option>
                                 </Select>
                             </Caixa>
                             <Caixa>
@@ -115,6 +116,20 @@ const Criador = ()=>{
                             <Caixa>
                                 <Etiqueta>Esperar entre as ações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' defaultValue={configuracoesCriador.esperarEntre}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Limpar a pasta Prefetch</Etiqueta>
+                                <Select name='limparPastaPrefetch' defaultValue={configuracoesCriador.limparPastaPrefetch}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Limpar a pasta Temp</Etiqueta>
+                                <Select name='limparPastaTemp' defaultValue={configuracoesCriador.limparPastaTemp}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
                             </Caixa>
                             {acessoMontador.status == true ? 
                                 <Caixa>
@@ -188,8 +203,10 @@ const Criador = ()=>{
                         logs === 'Alterando a foto de perfil' ||
                         logs === 'Postando fotos no story' ||
                         logs === 'Postando fotos no Feed' ||
-                        logs === 'Seguindo perfis' ||
+                        logs === 'Seguindo perfis sugeridos' ||
                         logs === 'Limpando atividade de login' ||
+                        logs === 'Limpando a pasta Prefetch' ||
+                        logs === 'Limpando a pasta Temp' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
                         <p key={index} style={{ color: logs.includes('sucesso') ? '#28a745' : '' }}>{logs}</p>
@@ -208,23 +225,23 @@ const Criador = ()=>{
                     {montarPerfisCriados == true ?
                         <>
                             <Opcao>
-                                <span>Foto de perfil</span>
+                                <span>Fotos de perfil alteradas</span>
                                 {fotosPerfisNumero}
                             </Opcao>
                             <Opcao>
-                                <span>Biografia</span>
+                                <span>Biografias alteradas</span>
                                 {biografiasAlteradasNumero}
                             </Opcao>
                             <Opcao>
-                                <span>Feed</span>
+                                <span>Publicações no Feed</span>
                                 {publicacoesRealizadasNumero}
                             </Opcao>
                             <Opcao>
-                                <span>Story</span>
+                                <span>Publicações no Story</span>
                                 {publicacoesStoryNumero}
                             </Opcao>
                             <Opcao>
-                                <span>Seguidos</span>
+                                <span>Perfis seguidos</span>
                                 {perfisSeguidosNumero}
                             </Opcao>
                         </> : ''

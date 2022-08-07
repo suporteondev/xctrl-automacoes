@@ -19,6 +19,8 @@ router.post('/criador', logado, async(req, res)=>{
         limparLogin,
         comoSalvar,
         esperarEntre,
+        limparPastaPrefetch,
+        limparPastaTemp,
         montarPerfis
     } = req.body
 
@@ -26,6 +28,8 @@ router.post('/criador', logado, async(req, res)=>{
     const navegadorAnonimoConfigurado = navegadorAnonimo == 'sim' ? true : false
     const limparLoginConfigurado = limparLogin == 'sim' ? true : false
     const montarPerfisConfigurado = montarPerfis == 'sim' ? true : false
+    const limparPastaPrefetchConfigurado = limparPastaPrefetch == 'sim' ? true : false
+    const limparPastaTempConfigurado = limparPastaTemp == 'sim' ? true : false
 
     const { 
         alterarFotoPerfil,
@@ -49,6 +53,8 @@ router.post('/criador', logado, async(req, res)=>{
         quantidadePerfis, 
         emailTemporario, 
         esperarEntre,
+        limparPastaPrefetchConfigurado,
+        limparPastaTempConfigurado,
         montarPerfisConfigurado,
         alterarFotoPerfilConfigurado,
         alterarBiografiaConfigurado,

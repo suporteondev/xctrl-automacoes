@@ -53,13 +53,15 @@ app.on('ready', async () => {
             verAcontecendo: 'sim',
             navegadorAnonimo: 'sim',
             userAgent: 'aleatorio',
-            emailTemporario: 'mailtm',
+            emailTemporario: 'aleatorio',
             quantidadePerfis: '999999',
             senhaPerfis: `PadraoXCtrl@${numeroAleatorio(100000, 999999)}`,
             generoPerfis: 'feminino',
             limparLogin: 'sim',
             comoSalvar: 'linha',
             esperarEntre: 0,
+            limparPastaPrefetch: 'sim',
+            limparPastaTemp: 'sim',
             montarPerfis: 'sim'
         })
     }
@@ -208,7 +210,7 @@ app.on('ready', async () => {
     })
 
     ipcMain.on('versaoAplicativo', (event)=>{
-        event.returnValue = '1.0.0'
+        event.returnValue = '1.0.1'
     })
 
     ipcMain.on('versaoAtual', (event)=>{

@@ -170,23 +170,23 @@ const Montador = ()=>{
                 </Logs>
                 <Rodape>
                     <Opcao>
-                        <span>Foto de perfil</span>
+                        <span>Fotos de perfil alteradas</span>
                         {fotosPerfisNumero}
                     </Opcao>
                     <Opcao>
-                        <span>Biografia</span>
+                        <span>Biografias alteradas</span>
                         {biografiasAlteradasNumero}
                     </Opcao>
                     <Opcao>
-                        <span>Feed</span>
+                        <span>Publicações no Feed</span>
                         {publicacoesRealizadasNumero}
                     </Opcao>
                     <Opcao>
-                        <span>Story</span>
+                        <span>Publicações no Story</span>
                         {publicacoesStoryNumero}
                     </Opcao>
                     <Opcao>
-                        <span>Seguidos</span>
+                        <span>Perfis seguidos</span>
                         {perfisSeguidosNumero}
                     </Opcao>
                 </Rodape>

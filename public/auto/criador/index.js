@@ -1,12 +1,14 @@
 const puppeteer = require('puppeteer-core')
 const capturarEmail = require('./cryptogmail/capturarEmail')
+const capturarEmailFakemail = require('./fakemail/capturarEmail')
+const capturarCodigoFakemail = require('./fakemail/capturarCodigo')
+const capturarEmailDisposablemail = require('./disposablemail/capturarEmail')
+const capturarCodigoDisposablemail = require('./disposablemail/capturarCodigo')
 const capturarEmailTM = require('./mailtm/capturarEmail')
-const capturarEmailFakermail = require('./fakermail/capturarEmail')
 const preencherDados = require('./instagram/preencherDados')
 const selecionarData = require('./instagram/selecionarData')
 const capturarCodigo = require('./cryptogmail/capturarCodigo')
 const capturarCodigoTM = require('./mailtm/capturarCodigo')
-const capturarCodigoFakermail = require('./fakermail/capturarCodigo')
 const digitandoCodigo = require('./instagram/digitandoCodigo')
 const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
@@ -16,11 +18,19 @@ const alterarBiografiaPerfil = require('../instagram/alterarBiografiaPerfil')
 const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
 const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
 const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
+const limparPastaPrefetch = require('../../functions/limparPastaPrefetch')
+const limparPastaTemp = require('../../functions/limparPastaTemp')
 const { rootPath } = require('electron-root-path')
 const chromePaths = require('chrome-paths')
 const path = require('path')
 const fs = require('fs')
 var pastaEscolhida = []
+
+const listaEmailsTemporarios = [
+    'cryptogmail',
+    'mailtm',
+    'disposablemail'
+]
 
 const criador = async(
     verAcontecendoConfigurado,
@@ -33,6 +43,8 @@ const criador = async(
     quantidadePerfis, 
     emailTemporario, 
     esperarEntre,
+    limparPastaPrefetchConfigurado,
+    limparPastaTempConfigurado,
     montarPerfisConfigurado,
     alterarFotoPerfil,
     alterarBiografia,
@@ -43,10 +55,26 @@ const criador = async(
 )=>{
 
     // DECLARANDO AS VARIAVEIS REUTILIZAVEIS
-    let navegador, paginaEmail, paginaInstagram, context
+    let navegador, paginaEmail, paginaInstagram, context, emailTemporarioSelecionado
+
+    if(emailTemporario == 'aleatorio'){
+        emailTemporarioSelecionado = listaEmailsTemporarios[Math.floor(Math.random() * listaEmailsTemporarios.length)]
+    }else{
+        emailTemporarioSelecionado = emailTemporario
+    }
 
     // COMEÇANDO A CRIAÇÃO DOS PERFIS
     for(let x = 1; x < Number(quantidadePerfis) + 1; x++){
+
+        // LIMPANDO A PASTA PREFETCH
+        if(limparPastaPrefetchConfigurado == true){
+            await limparPastaPrefetch(logs)
+        }
+
+        // LIMPANDO A PASTA TEMP
+        if(limparPastaTempConfigurado == true){
+            await limparPastaTemp(logs)
+        }
 
         // ABRINDO O NAVEGADOR
         navegador = await puppeteer.launch({
@@ -81,6 +109,11 @@ const criador = async(
         userAgent == 'aleatorio' ? 
         await selecionarUserAgentAleatorio(paginaEmail, 'desktop') : 
         await paginaEmail.setUserAgent(userAgent)
+        await paginaEmail.setViewport({
+            width: 1000,
+            height: 700,
+            deviceScaleFactor: 1
+        })
 
         // ALTERANDO A LINGUAGEM DO NAVEGADOR
         await paginaEmail.setExtraHTTPHeaders({
@@ -89,12 +122,12 @@ const criador = async(
         
         // CAPTURANDO O EMAIL TEMPORÁRIO
         let resEmail
-        if(emailTemporario == 'cryptogmail'){
+        if(emailTemporarioSelecionado == 'cryptogmail'){
             resEmail = await capturarEmail(x, paginaEmail, logs)
-        }else if(emailTemporario == 'mailtm'){
+        }else if(emailTemporarioSelecionado == 'mailtm'){
             resEmail = await capturarEmailTM(x, paginaEmail, logs)
-        }else if(emailTemporario == 'fakermail'){
-            resEmail = await capturarEmailFakermail(x, paginaEmail, logs)
+        }else if(emailTemporarioSelecionado == 'disposablemail'){
+            resEmail = await capturarEmailDisposablemail(x, paginaEmail, logs)
         }
         if(resEmail.ok == false){
             await navegador.close()
@@ -134,14 +167,15 @@ const criador = async(
 
         // CAPTURANDO O CÓDIGO NO EMAIL TEMPORÁRIO
         let resCodigo
-        if(emailTemporario == 'cryptogmail'){
+        if(emailTemporarioSelecionado == 'cryptogmail'){
             resCodigo = await capturarCodigo(x, paginaEmail, logs)
-        }else if(emailTemporario == 'mailtm'){
+        }else if(emailTemporarioSelecionado == 'mailtm'){
             resCodigo = await capturarCodigoTM(x, paginaEmail, logs)
-        }else if(emailTemporario == 'fakermail'){
-            resCodigo = await capturarCodigoFakermail(x, paginaEmail, logs)
+        }else if(emailTemporarioSelecionado == 'disposablemail'){
+            resCodigo = await capturarCodigoDisposablemail(x, paginaEmail, logs)
         }
         if(resCodigo.ok == false){
+            emailTemporarioSelecionado = listaEmailsTemporarios[Math.floor(Math.random() * listaEmailsTemporarios.length)]
             await navegador.close()
             continue
         }
