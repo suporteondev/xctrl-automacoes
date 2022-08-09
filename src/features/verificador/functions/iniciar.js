@@ -49,7 +49,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                     perfisAtivos += 1
                 }
 
-                if(mensagem.includes('Tente novamente') == true){
+                if(mensagem.includes('Tentar novamente') == true){
                     perfisNovamente += 1
                 }
 

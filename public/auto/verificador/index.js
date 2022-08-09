@@ -3,6 +3,8 @@ const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
 const acessarPerfil = require('../instagram/acessarPerfil')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const verificarPerfil = require('../instagram/verificarPerfil')
+const Store = require('electron-store')
+const store = new Store()
 
 const verificador = async(
     navegadorEscolhido,
@@ -149,8 +151,22 @@ const verificador = async(
 
         // VERIFICANDO OS PERFIS
         for (let x = 0; x < seusPerfis.length; x++) {
+
             const { usuario: usuarioPerfil } = seusPerfis[x]
-            await verificarPerfil(pagina, usuarioPerfil, senha, logs)
+
+            // Capturando os perfis já adicionados no gerenciador
+            let perfisGerenciador = store.get('perfisGerenciador')
+            let novoArrayPerfisGerenciador = perfisGerenciador
+
+            // Capturando a data atual
+            let dataAtual = new Date()
+            let dia = dataAtual.getDate().toString().padStart(2, '0')
+            let mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0')
+            let ano = dataAtual.getFullYear()
+            let data = `${dia}/${mes}/${ano}`
+
+            await verificarPerfil(pagina, novoArrayPerfisGerenciador, usuarioPerfil, senha, data, logs)
+
             if(esperarEntre != 0){
                 logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                 await pagina.waitForTimeout(esperarEntre)

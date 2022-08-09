@@ -213,7 +213,7 @@ app.on('ready', async () => {
     })
 
     ipcMain.on('versaoAplicativo', (event)=>{
-        event.returnValue = '1.0.1'
+        event.returnValue = '1.0.2'
     })
 
     ipcMain.on('versaoAtual', (event)=>{
