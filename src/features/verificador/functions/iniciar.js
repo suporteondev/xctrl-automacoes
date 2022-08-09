@@ -1,5 +1,6 @@
 export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar){
 
+    const navegador = document.querySelector('[name="navegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -80,6 +81,7 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                navegador,
                 verAcontecendo, 
                 modoAnonimo, 
                 userAgent,

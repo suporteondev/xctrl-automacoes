@@ -1,10 +1,13 @@
 const fs = require('fs')
 const { rootPath } = require('electron-root-path')
 const path = require('path')
+const capturarCodigoVerificacao = require('../mailtm/capturarCodigoVerificacao')
 
 const digitandoCodigo = async(
     identificador, 
     pagina, 
+    paginaEmail,
+    emailTemporarioSelecionado,
     comoSalvar,
     generoPerfis,
     usuario, 
@@ -31,6 +34,7 @@ const digitandoCodigo = async(
         await pagina.click('button[type="submit"]')
         await pagina.waitForTimeout(30000)
 
+        // Ocorreu um erro ao criar sua conta. Tente novamente em breve.
         const ocorreuUmErro = await pagina.evaluate(()=>{
             const divs = document.querySelectorAll('div')
             let resultado = false
@@ -76,6 +80,18 @@ const digitandoCodigo = async(
                 logs.push(`perfil ${identificador} - Esperando carregar.`)
                 await pagina.waitForNavigation({ timeout: 60000 })
 
+                // FUI EU
+                await pagina.evaluate(()=>{
+                    const botoes = document.querySelectorAll('button')
+                    for(let x = 0; x < botoes.length; x++){
+                        const botao = botoes[x]
+                        if(botao.innerText == 'Fui eu'){
+                            botao.click()
+                            break
+                        }
+                    }
+                })
+
                 // Apertando em agora não
                 await pagina.waitForSelector('.cmbtv > button', { timeout: 60000 })
                 await pagina.click('.cmbtv > button')
@@ -110,6 +126,17 @@ const digitandoCodigo = async(
             }
         }
 
+        // FUI EU
+        await pagina.evaluate(()=>{
+            const botoes = document.querySelectorAll('button')
+            for(let x = 0; x < botoes.length; x++){
+                const botao = botoes[x]
+                if(botao.innerText == 'Fui eu'){
+                    botao.click()
+                    break
+                }
+            }
+        })
 
         // Esperando o direct aparecer
         logs.push(`perfil ${identificador} - ` + 'Esperando o direct aparecer')

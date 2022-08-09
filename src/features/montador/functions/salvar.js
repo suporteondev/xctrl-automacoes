@@ -1,5 +1,6 @@
 export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
 
+    const navegador = document.querySelector('[name="navegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -15,6 +16,7 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
     const logs = document.querySelector('#logs')
 
     const configuracoes = {
+        navegador,
         verAcontecendo,
         modoAnonimo,
         userAgent,

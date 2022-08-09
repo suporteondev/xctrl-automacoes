@@ -14,10 +14,8 @@ import { useState } from 'react'
 import { useConfiguracoesCriador } from '../../providers/configuracoesCriador'
 import { salvar } from './functions/salvar'
 import { Logs } from './components/logs'
-import { abrirNavegador } from '../../functions/abrirNavegador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
-import { FaYoutube } from 'react-icons/fa'
 import { IoIosSave } from 'react-icons/io'
 import { IoPlay, IoTime } from 'react-icons/io5'
 import { userAgentsDesktop } from '../../userAgentsDesktop'
@@ -32,15 +30,12 @@ const Criador = ()=>{
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ criadasSucesso, setCriadasSucesso ] = useState(0)
     const [ naoCriadas, setNaoCriadas ] = useState(0)
-
     const [ fotosPerfisNumero, setFotosPerfisNumero ] = useState(0)
     const [ biografiasAlteradasNumero, setBiografiasAlteradasNumero ] = useState(0)
     const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
     const [ publicacoesStoryNumero, setPublicacoesStoryNumero ] = useState(0)
     const [ perfisSeguidosNumero, setPerfisSeguidosNumero ] = useState(0)
-
     const [ montarPerfisCriados, setMontarPerfisCriados ] = useState(false)
-
     const { configuracoesCriador, setConfiguracoesCriador } = useConfiguracoesCriador()
     const listaDeUserAgentsDesktop = [...new Set(userAgentsDesktop)]
 
@@ -52,6 +47,14 @@ const Criador = ()=>{
                     <Conteudos>
                         <Titulo>Criador de perfis</Titulo>
                         <Configuracoes>
+                            <Caixa>
+                                <Etiqueta>Navegador</Etiqueta>
+                                <Select name='navegador' defaultValue={configuracoesCriador.navegador}>
+                                    <option value='google'>Google Chrome</option>
+                                    <option value='edge'>Edge</option>
+                                    <option value='brave'>Brave</option>
+                                </Select>
+                            </Caixa>
                             <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesCriador.verAcontecendo}>
@@ -237,12 +240,12 @@ const Criador = ()=>{
                                 {publicacoesRealizadasNumero}
                             </Opcao>
                             <Opcao>
-                                <span>Publicações no Story</span>
-                                {publicacoesStoryNumero}
-                            </Opcao>
-                            <Opcao>
                                 <span>Perfis seguidos</span>
                                 {perfisSeguidosNumero}
+                            </Opcao>
+                            <Opcao>
+                                <span>Publicações no Story</span>
+                                {publicacoesStoryNumero}
                             </Opcao>
                         </> : ''
                     }

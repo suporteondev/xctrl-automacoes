@@ -9,6 +9,7 @@ router.post('/criador', logado, async(req, res)=>{
     global.criador = []
 
     const { 
+        navegador,
         verAcontecendo,
         navegadorAnonimo,
         userAgent,
@@ -43,6 +44,7 @@ router.post('/criador', logado, async(req, res)=>{
     const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
 
     await criador(
+        navegador,
         verAcontecendoConfigurado,
         navegadorAnonimoConfigurado,
         userAgent,

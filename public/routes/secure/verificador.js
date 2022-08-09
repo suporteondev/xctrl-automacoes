@@ -9,6 +9,7 @@ router.post('/verificador', logado, async(req, res)=>{
     global.verificador = []
 
     const { 
+        navegador,
         verAcontecendo, 
         modoAnonimo, 
         userAgent,
@@ -22,6 +23,7 @@ router.post('/verificador', logado, async(req, res)=>{
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
 
     await verificador(
+        navegador,
         verAcontecendoConfigurado,
         modoAnonimoConfigurado,
         userAgent,

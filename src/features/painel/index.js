@@ -31,11 +31,6 @@ const Painel = ()=>{
     const { acessoGerenciador } = useAcessoGerenciador()
     const { acessoCriador } = useAcessoCriador()
     const { acessoMontador } = useAcessoMontador()
-    const [ novaVersao, setNovaVersao ] = useState({
-        titulo: '1.0.1',
-        descricao: 'Criador, montador, gerenciador (Verificar perfis, filtrar perfis, copiar perfis, apagar perfis.)',
-        download: 'https://xctrl.s3.sa-east-1.amazonaws.com/xctrl-1.0.0.zip'
-    })
 
     return (
         <>
@@ -127,7 +122,7 @@ const Painel = ()=>{
                     :
                     ''
                 }
-                V1.0.0
+                V{window.api.ipcRenderer.sendSync('versaoAplicativo')}
             </Rodape>
         </>
     )

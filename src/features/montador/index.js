@@ -50,6 +50,14 @@ const Montador = ()=>{
                         <Titulo>Montador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
+                                <Etiqueta>Navegador</Etiqueta>
+                                <Select name='navegador' defaultValue={configuracoesMontador.navegador}>
+                                    <option value='google'>Google Chrome</option>
+                                    <option value='edge'>Edge</option>
+                                    <option value='brave'>Brave</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesMontador.verAcontecendo}>
                                     <option value='sim'>Sim</option>
@@ -109,12 +117,12 @@ const Montador = ()=>{
                                 <Entrada name='quantidadePublicacoesFeed' type='number' min={0} defaultValue={configuracoesMontador.quantidadePublicacoesFeed}/>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Quantidade de publicações no story</Etiqueta>
-                                <Entrada name='quantidadePublicacoesStory' type='number' min={0} defaultValue={configuracoesMontador.quantidadePublicacoesStory}/>
-                            </Caixa>
-                            <Caixa>
                                 <Etiqueta>Seguir quantos perfis</Etiqueta>
                                 <Entrada name='seguirPerfis' type='number' min={0} defaultValue={configuracoesMontador.seguirPerfis}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Quantidade de publicações no story</Etiqueta>
+                                <Entrada name='quantidadePublicacoesStory' type='number' min={0} defaultValue={configuracoesMontador.quantidadePublicacoesStory}/>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Limpar atividade de login</Etiqueta>
@@ -182,12 +190,12 @@ const Montador = ()=>{
                         {publicacoesRealizadasNumero}
                     </Opcao>
                     <Opcao>
-                        <span>Publicações no Story</span>
-                        {publicacoesStoryNumero}
-                    </Opcao>
-                    <Opcao>
                         <span>Perfis seguidos</span>
                         {perfisSeguidosNumero}
+                    </Opcao>
+                    <Opcao>
+                        <span>Publicações no Story</span>
+                        {publicacoesStoryNumero}
                     </Opcao>
                 </Rodape>
             </>

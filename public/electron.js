@@ -23,6 +23,7 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesVerificador') == undefined || store.get('configuracoesVerificador') == 'undefined'){
         store.set('configuracoesVerificador', {
+            navegador: 'google',
             verAcontecendo: 'sim',
             modoAnonimo: 'sim',
             userAgent: 'aleatorio',
@@ -50,6 +51,7 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesCriador') == undefined || store.get('configuracoesCriador') == 'undefined'){
         store.set('configuracoesCriador', {
+            navegador: 'google',
             verAcontecendo: 'sim',
             navegadorAnonimo: 'sim',
             userAgent: 'aleatorio',
@@ -68,6 +70,7 @@ app.on('ready', async () => {
 
     if(store.get('configuracoesMontador') == undefined || store.get('configuracoesMontador') == 'undefined'){
         store.set('configuracoesMontador', {
+            navegador: 'google',
             verAcontecendo: false,
             modoAnonimo: true,
             userAgent: 'aleatorio',

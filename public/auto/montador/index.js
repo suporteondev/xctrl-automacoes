@@ -9,12 +9,12 @@ const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
 const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
-const { rootPath } = require('electron-root-path')
-const chromePaths = require('chrome-paths')
 const path = require('path')
+const { rootPath } = require('electron-root-path')
 var pastaEscolhida = []
 
 const montador = async(
+    navegadorEscolhido,
     verAcontecendo,
     modoAnonimo,
     userAgent,
@@ -36,20 +36,98 @@ const montador = async(
     for(let x = 0; x < seusPerfis.length; x++){
 
         // ABRINDO O NAVEGADOR
-        navegador = await puppeteer.launch({
-            ignoreHTTPSErrors: true,
-            headless: verAcontecendo,
-            executablePath: chromePaths.chrome,
-            args: [
-                '--no-sandbox',
-                '--disabled-setuid-sandbox'
-            ],
-            defaultViewport: {
-                width: 320,
-                height: 580
+        if(navegadorEscolhido == 'google'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
             }
-        })
-
+        }else if(navegadorEscolhido == 'edge'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }
+        }else if(navegadorEscolhido == 'brave'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }
+        }
+ 
         // CONFIGURANDO O MODO ANÔNIMO
         if(modoAnonimo == true){
             context = await navegador.createIncognitoBrowserContext()
@@ -124,7 +202,7 @@ const montador = async(
         }
 
         // POSTANDO FOTOS NO FEED
-        if(quantidadePublicacoesFeed != 0 || quantidadePublicacoesFeed != '0' || quantidadePublicacoesFeed != ''){
+        if(quantidadePublicacoesFeed != 0 && quantidadePublicacoesFeed != '0' && quantidadePublicacoesFeed != ''){
             logs.push(`Postando fotos no Feed`)
             for(let x = 0; x < quantidadePublicacoesFeed; x++){
                 await realizarPublicacoesFeed(pagina, x + 1, usuario, caminhoPasta, logs)
@@ -135,8 +213,13 @@ const montador = async(
             }
         }
 
+        // SEGUINDO PERFIS FAMOSOS
+        if(seguirPerfis != 0 && seguirPerfis != '0' && seguirPerfis != ''){
+            await seguirPerfisFamosos(pagina, usuario, seguirPerfis, esperarEntre, logs)
+        }
+
         // POSTANDO FOTOS NO STORY
-        if(quantidadePublicacoesStory != 0 || quantidadePublicacoesStory != '0' || quantidadePublicacoesStory != ''){
+        if(quantidadePublicacoesStory != 0 && quantidadePublicacoesStory != '0' && quantidadePublicacoesStory != ''){
             logs.push(`Postando fotos no story`)
             for(let x = 0; x < quantidadePublicacoesStory; x++){
                 await realizarPublicacoesStory(pagina, x + 1 , usuario, caminhoPasta, logs)
@@ -145,11 +228,6 @@ const montador = async(
                     await pagina.waitForTimeout(esperarEntre)
                 }
             }
-        }
-
-        // SEGUINDO PERFIS FAMOSOS
-        if(seguirPerfis != 0 || seguirPerfis != '0' || seguirPerfis != ''){
-            await seguirPerfisFamosos(pagina, usuario, seguirPerfis, esperarEntre, logs)
         }
 
         // LIMPANDO A ATIVIDADE DE LOGIN

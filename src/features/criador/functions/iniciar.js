@@ -14,6 +14,7 @@ export async function iniciar(
     setMontarPerfisCriados
 ){
 
+    const navegador = document.querySelector('[name="navegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const navegadorAnonimo = document.querySelector('[name="navegadorAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
@@ -123,6 +124,7 @@ export async function iniciar(
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                navegador,
                 verAcontecendo,
                 navegadorAnonimo,
                 userAgent,

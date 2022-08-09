@@ -45,6 +45,14 @@ const Verificador = ()=>{
                         <Titulo>Verificador de perfis</Titulo>
                         <Configuracoes>
                             <Caixa>
+                                <Etiqueta>Navegador</Etiqueta>
+                                <Select name='navegador' defaultValue={configuracoesVerificador.navegador}>
+                                    <option value='google'>Google Chrome</option>
+                                    <option value='edge'>Edge</option>
+                                    <option value='brave'>Brave</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
                                 <Etiqueta>Ver acontecendo</Etiqueta>
                                 <Select name='verAcontecendo' defaultValue={configuracoesVerificador.verAcontecendo}>
                                     <option value='sim'>Sim</option>

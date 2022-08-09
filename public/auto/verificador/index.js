@@ -3,9 +3,9 @@ const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
 const acessarPerfil = require('../instagram/acessarPerfil')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const verificarPerfil = require('../instagram/verificarPerfil')
-const chromePaths = require('chrome-paths')
 
 const verificador = async(
+    navegadorEscolhido,
     verAcontecendo, 
     modoAnonimo, 
     userAgent,
@@ -22,19 +22,97 @@ const verificador = async(
     for(let x = 0; x < seusPerfis.length; x++){
 
         // ABRINDO O NAVEGADOR
-        navegador = await puppeteer.launch({
-            ignoreHTTPSErrors: true,
-            headless: verAcontecendo,
-            executablePath: chromePaths.chrome,
-            args: [
-                '--no-sandbox',
-                '--disabled-setuid-sandbox'
-            ],
-            defaultViewport: {
-                width: 320,
-                height: 580
+        if(navegadorEscolhido == 'google'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
             }
-        })
+        }else if(navegadorEscolhido == 'edge'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }
+        }else if(navegadorEscolhido == 'brave'){
+            try{
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }catch(erro){
+                navegador = await puppeteer.launch({
+                    ignoreHTTPSErrors: true,
+                    headless: verAcontecendo,
+                    executablePath: "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+                    args: [
+                        '--no-sandbox',
+                        '--disabled-setuid-sandbox'
+                    ],
+                    defaultViewport: {
+                        width: 320,
+                        height: 580
+                    }
+                })   
+            }
+        }
 
         // CONFIGURANDO O MODO ANÔNIMO
         if(modoAnonimo == true){
