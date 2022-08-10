@@ -71,17 +71,17 @@ app.on('ready', async () => {
     if(store.get('configuracoesMontador') == undefined || store.get('configuracoesMontador') == 'undefined'){
         store.set('configuracoesMontador', {
             navegador: 'google',
-            verAcontecendo: false,
-            modoAnonimo: true,
+            verAcontecendo: 'nao',
+            modoAnonimo: 'sim',
             userAgent: 'aleatorio',
             modoPerfis: 'linha',
             generoPerfis: 'feminino',
-            alterarFotoPerfil: true,
-            alterarBiografia: true,
+            alterarFotoPerfil: 'sim',
+            alterarBiografia: 'sim',
             quantidadePublicacoesFeed: 10,
             quantidadePublicacoesStory: 3,
             seguirPerfis: 5,
-            limparLogin: true,
+            limparLogin: 'sim',
             esperarEntre: 0
         })
     }

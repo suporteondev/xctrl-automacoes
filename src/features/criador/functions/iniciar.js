@@ -52,6 +52,7 @@ export async function iniciar(
             window.api.ipcRenderer.sendSync('tamanho-pequeno')
             setMontarPerfisCriados(false)
         }
+        
         var intervalo = setInterval(()=>{
 
             var criadasComSucesso = 0

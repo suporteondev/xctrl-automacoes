@@ -260,6 +260,30 @@ const criador = async(
         // ALTERANDO O USER AGENT PARA MOBILE
         await selecionarUserAgentAleatorio(paginaInstagram, 'mobile')
 
+        logs.push(`perfil ${x} - ` + 'Verificando se existe algum cookie.')
+        await paginaInstagram.waitForTimeout(10000)
+        const cokkieEncontrado = await paginaInstagram.evaluate(()=>{
+            let resultado = false
+            const spans = document.querySelectorAll('span')
+            for(let x = 0; x < spans.length; x++){
+                const span = spans[x]
+                if(span.innerText == 'Permitir todos os cookies'){
+                    span.click()
+                    resultado = true
+                    break
+                }
+            }
+
+            return resultado
+        })
+        
+        if(cokkieEncontrado == true){
+            logs.push(`perfil ${x} - ` + 'Aceitando todos os cookies.')
+            await paginaInstagram.waitForTimeout(10000)
+        }else{
+            logs.push(`perfil ${x} - ` + 'Nenhum cookie encontrado.')
+        }
+
         if(montarPerfisConfigurado == true){
 
             // ALTERANDO O GÊNERO DOS PERFIS
