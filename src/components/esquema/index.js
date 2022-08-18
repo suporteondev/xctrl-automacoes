@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { useTema } from '../../providers/tema'
 import { EstiloGlobal } from '../../styles/estiloGlobal'

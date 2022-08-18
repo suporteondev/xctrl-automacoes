@@ -22,7 +22,10 @@ async function acessarPlataforma(
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, senha })
+        body: JSON.stringify({ 
+            email, 
+            senha
+        })
     }
 
     // Chamando a rota de cadastro
@@ -44,19 +47,9 @@ async function acessarPlataforma(
         window.api.ipcRenderer.sendSync('setUsuarioLogado', usuarioLogado)
 
         setTimeout(async()=>{
-
             setMensagem(<Mensagem color='#236EFF'>Estamos verificando seus acessos...</Mensagem>)
-            
-            await verificarAcessos(
-                setAcessoCriador,
-                setAcessoMontador,
-                setAcessoGerenciador
-            )
-
-            setTimeout(()=>{
-                Router('/painel')
-            }, 2000)
-
+            await verificarAcessos(setAcessoCriador, setAcessoMontador, setAcessoGerenciador)
+            setTimeout(()=>{ Router('/painel') }, 2000)
         }, 2000)
     }
 }

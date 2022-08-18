@@ -1,7 +1,7 @@
 const Store = require('electron-store')
 const store = new Store()
 
-const verificarPerfil = async(pagina, novoArrayPerfisGerenciador, usuario, senha, data, logs)=>{
+const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senha, data, logs)=>{
     
     try{
         
@@ -65,18 +65,18 @@ const verificarPerfil = async(pagina, novoArrayPerfisGerenciador, usuario, senha
             logs.push(usuario + ' - Tentar novamente!')
         }
 
-        for(let x = 0; x < novoArrayPerfisGerenciador.length; x++) {
+        for(let x = 0; x < novoArrayPerfisEngajamentos.length; x++) {
             // ATUALIZANDO OS DADOS DO PERFIL
-            if(novoArrayPerfisGerenciador[x].usuario.indexOf(usuario) >= 0){
-                novoArrayPerfisGerenciador[x] = perfil
-                store.set('perfisGerenciador', novoArrayPerfisGerenciador)
+            if(novoArrayPerfisEngajamentos[x].usuario.indexOf(usuario) >= 0){
+                novoArrayPerfisEngajamentos[x] = perfil
+                store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
                 return true
             }
         }
 
         // ADICIONANDO O PERFIL
-        novoArrayPerfisGerenciador.push(perfil)
-        store.set('perfisGerenciador', novoArrayPerfisGerenciador)
+        novoArrayPerfisEngajamentos.push(perfil)
+        store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
 
         return true
         
@@ -95,18 +95,18 @@ const verificarPerfil = async(pagina, novoArrayPerfisGerenciador, usuario, senha
 
         logs.push(usuario + ' - Tentar novamente!')
 
-        for(let x = 0; x < novoArrayPerfisGerenciador.length; x++) {
+        for(let x = 0; x < novoArrayPerfisEngajamentos.length; x++) {
             // ATUALIZANDO OS DADOS DO PERFIL
-            if(novoArrayPerfisGerenciador[x].usuario.indexOf(usuario) >= 0){
-                novoArrayPerfisGerenciador[x] = perfil
-                store.set('perfisGerenciador', novoArrayPerfisGerenciador)
+            if(novoArrayPerfisEngajamentos[x].usuario.indexOf(usuario) >= 0){
+                novoArrayPerfisEngajamentos[x] = perfil
+                store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
                 return true
             }
         }
 
         // ADICIONANDO O PERFIL
-        novoArrayPerfisGerenciador.push(perfil)
-        store.set('perfisGerenciador', novoArrayPerfisGerenciador)
+        novoArrayPerfisEngajamentos.push(perfil)
+        store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
 
         return true
     }

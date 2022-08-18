@@ -33,38 +33,43 @@ export async function filtrarPerfis(
             }
         }
 
-        if(filtro == 'menos10Publicacoes'){
-            if(Number(perfil.publicacoes) < 10 && perfil.status == 'Ativo'){
+        if(filtro == 'perfisZerados'){
+            if(
+                Number(perfil.seguindo) == 0 && 
+                Number(perfil.publicacoes) == 0 && 
+                Number(perfil.seguidores) == 0 && 
+                perfil.status == 'Ativo'
+            ){
                 novoArray.push(perfil)
             }
         }
 
-        if(filtro == 'mais10Publicacoes'){
-            if(Number(perfil.publicacoes) > 9 && perfil.status == 'Ativo'){
+        if(filtro == 'qtdPublicacoes'){
+            const quantidade = document.querySelector('#quantidade').value
+            if(
+                Number(perfil.publicacoes) == Number(quantidade) &&
+                perfil.status == 'Ativo'
+            ){
                 novoArray.push(perfil)
             }
         }
 
-        if(filtro == 'menos30Seguidores'){
-            if(Number(perfil.seguidores) < 30 && perfil.status == 'Ativo'){
+        if(filtro == 'qtdSeguidores'){
+            const quantidade = document.querySelector('#quantidade').value
+            if(
+                Number(perfil.seguidores) == Number(quantidade) &&
+                perfil.status == 'Ativo'
+            ){
                 novoArray.push(perfil)
             }
         }
 
-        if(filtro == 'mais30Seguidores'){
-            if(Number(perfil.seguidores) > 29 && perfil.status == 'Ativo'){
-                novoArray.push(perfil)
-            }
-        }
-
-        if(filtro == 'mais20Seguindo'){
-            if(Number(perfil.seguindo) > 19 && perfil.status == 'Ativo'){
-                novoArray.push(perfil)
-            }
-        }
-
-        if(filtro == 'menos20Seguindo'){
-            if(Number(perfil.seguindo) < 20 && perfil.status == 'Ativo'){
+        if(filtro == 'qtdSeguindo'){
+            const quantidade = document.querySelector('#quantidade').value
+            if(
+                Number(perfil.seguindo) == Number(quantidade) &&
+                perfil.status == 'Ativo'
+            ){
                 novoArray.push(perfil)
             }
         }

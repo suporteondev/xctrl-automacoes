@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Conteudos } from './components/conteudos'
 import { Cabeca } from '../../components/cabeca'
 import { Rodape } from '../../components/rodape'
@@ -21,7 +21,7 @@ import { useAcessoMontador } from '../../providers/acessoMontador'
 import { FaWhatsapp, FaYoutube } from 'react-icons/fa'
 import { HiDownload } from 'react-icons/hi'
 import { MdOutlineMoneyOff } from 'react-icons/md'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Painel = ()=>{
 
@@ -31,6 +31,7 @@ const Painel = ()=>{
     const { acessoGerenciador } = useAcessoGerenciador()
     const { acessoCriador } = useAcessoCriador()
     const { acessoMontador } = useAcessoMontador()
+    
 
     return (
         <>
@@ -89,6 +90,24 @@ const Painel = ()=>{
                             <img src={gerenciadorIMG}/>
                         </div>
                         <h1>Gerenciador</h1>
+                        <p>
+                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
+                    <Servico 
+                        ativo={acessoGerenciador.status}
+                        onClick={()=>{ 
+                            {acessoGerenciador.status == true ? 
+                                redirecionar(Router, '/engajamentos')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Engajamentos</h1>
                         <p>
                             {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>

@@ -4,9 +4,7 @@ const Store = require('electron-store')
 const store = new Store()
 const criador = require('../../auto/criador/index')
 
-router.post('/criador', logado, async(req, res)=>{
-
-    global.criador = []
+router.post('/iniciarcriador', logado, async(req, res)=>{
 
     const { 
         navegador,
@@ -22,7 +20,8 @@ router.post('/criador', logado, async(req, res)=>{
         esperarEntre,
         limparPastaPrefetch,
         limparPastaTemp,
-        montarPerfis
+        montarPerfis,
+        aba
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo == 'sim' ? false : true
@@ -42,6 +41,9 @@ router.post('/criador', logado, async(req, res)=>{
 
     const alterarFotoPerfilConfigurado = alterarFotoPerfil == 'sim' ? true : false
     const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
+
+    global.criador[aba] = []
+    global.redirecionar = '/logscriador'
 
     await criador(
         navegador,
@@ -63,7 +65,7 @@ router.post('/criador', logado, async(req, res)=>{
         quantidadePublicacoesFeed,
         quantidadePublicacoesStory,
         seguirPerfis,
-        global.criador
+        global.criador[aba]
     )
 
     return res.json({

@@ -8,8 +8,12 @@ import Montador from './pages/montador'
 import ComprarCriador from './pages/comprarcriador'
 import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
+import Engajamentos from './pages/engajamentos'
+import Adicionador from './pages/adicionador'
+import Seguidores from './pages/seguidores'
 import Manual from './pages/manual'
 import MegaPromocao from './pages/megapromocao'
+import LogsCriador from './pages/logscriador'
 import { TemaProvider } from './providers/tema'
 import { UsuarioLogadoProvider } from './providers/usuarioLogado'
 import { AcessoCriadorProvider } from './providers/acessoCriador'
@@ -19,41 +23,51 @@ import { ConfiguracoesVerificadorProvider } from './providers/configuracoesVerif
 import { ConfiguracoesCriadorProvider } from './providers/configuracoesCriador'
 import { ConfiguracoesMontadorProvider } from './providers/configuracoesMontador'
 import { PerfisGerenciadorProvider } from './providers/perfisGerenciador'
+import { ConfiguracoesAdicionadorProvider } from './providers/configuracoesAdicionador'
+import { ConfiguracoesSeguidoresProvider } from './providers/configuracoesSeguidores'
 
 export default function App() {
     return (
-        <PerfisGerenciadorProvider>
-            <AcessoCriadorProvider>
-                <AcessoMontadorProvider>
-                    <AcessoGerenciadorProvider>
-                        <ConfiguracoesMontadorProvider>
-                            <ConfiguracoesCriadorProvider>
-                                <ConfiguracoesVerificadorProvider>
-                                    <UsuarioLogadoProvider>
-                                        <TemaProvider>
-                                            <HashRouter>
-                                                <Routes>
-                                                    <Route exact path='/' element={<Acessar/>} />
-                                                    <Route exact path='/painel' element={<Painel/>} />
-                                                    <Route exact path='/manual' element={<Manual/>} />
-                                                    <Route exact path='/comprar' element={<Comprar/>} />
-                                                    <Route exact path='/megapromocao' element={<MegaPromocao/>} />
-                                                    <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
-                                                    <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
-                                                    <Route exact path='/gerenciador' element={<Gerenciador/>} />
-                                                    <Route exact path='/verificador' element={<Verificador/>} />
-                                                    <Route exact path='/criador' element={<Criador/>} />
-                                                    <Route exact path='/montador' element={<Montador/>} />
-                                                </Routes>
-                                            </HashRouter>
-                                        </TemaProvider>
-                                    </UsuarioLogadoProvider>
-                                </ConfiguracoesVerificadorProvider>
-                            </ConfiguracoesCriadorProvider>
-                        </ConfiguracoesMontadorProvider>
-                    </AcessoGerenciadorProvider>
-                </AcessoMontadorProvider>
-            </AcessoCriadorProvider>
-        </PerfisGerenciadorProvider>
+        <ConfiguracoesSeguidoresProvider>
+            <ConfiguracoesAdicionadorProvider>
+                <PerfisGerenciadorProvider>
+                    <AcessoCriadorProvider>
+                        <AcessoMontadorProvider>
+                            <AcessoGerenciadorProvider>
+                                <ConfiguracoesMontadorProvider>
+                                    <ConfiguracoesCriadorProvider>
+                                        <ConfiguracoesVerificadorProvider>
+                                            <UsuarioLogadoProvider>
+                                                <TemaProvider>
+                                                    <HashRouter>
+                                                        <Routes>
+                                                            <Route exact path='/' element={<Acessar/>} />
+                                                            <Route exact path='/painel' element={<Painel/>} />
+                                                            <Route exact path='/seguidores' element={<Seguidores/>} />
+                                                            <Route exact path='/manual' element={<Manual/>} />
+                                                            <Route exact path='/comprar' element={<Comprar/>} />
+                                                            <Route exact path='/megapromocao' element={<MegaPromocao/>} />
+                                                            <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
+                                                            <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
+                                                            <Route exact path='/gerenciador' element={<Gerenciador/>} />
+                                                            <Route exact path='/engajamentos' element={<Engajamentos/>} />
+                                                            <Route exact path='/adicionador' element={<Adicionador/>} />
+                                                            <Route exact path='/verificador' element={<Verificador/>} />
+                                                            <Route exact path='/criador' element={<Criador/>} />
+                                                            <Route exact path='/montador' element={<Montador/>} />
+                                                            <Route exact path='/logscriador' element={<LogsCriador/>} />
+                                                        </Routes>
+                                                    </HashRouter>
+                                                </TemaProvider>
+                                            </UsuarioLogadoProvider>
+                                        </ConfiguracoesVerificadorProvider>
+                                    </ConfiguracoesCriadorProvider>
+                                </ConfiguracoesMontadorProvider>
+                            </AcessoGerenciadorProvider>
+                        </AcessoMontadorProvider>
+                    </AcessoCriadorProvider>
+                </PerfisGerenciadorProvider>
+            </ConfiguracoesAdicionadorProvider>
+        </ConfiguracoesSeguidoresProvider>
     )
 }

@@ -33,6 +33,7 @@ const Gerenciador = ()=>{
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
+    const [ displayQuantidade, setDisplayQuantidade ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
 
@@ -82,18 +83,35 @@ const Gerenciador = ()=>{
                 <Filtrar display={displayFiltrar}>
                     <div className='form'>
                         <label>Filtros</label>
-                        <select id='filtro'>
+                        <select id='filtro' onChange={()=> {
+                            const filtro = document.querySelector('#filtro').value
+                            if(
+                                filtro == 'qtdPublicacoes' ||
+                                filtro == 'qtdSeguidores' ||
+                                filtro == 'qtdSeguindo'
+                            ){
+                                setDisplayQuantidade(true)
+                            }else{
+                                setDisplayQuantidade(false)
+                            }
+                        }}>
                             <option value='todos'>Todos os perfis</option>
                             <option value='ativos'>Perfis ativos</option>
                             <option value='inativos'>Perfis inativos</option>
                             <option value='novamente'>Perfis para tentar novamente</option>
-                            <option value='menos10Publicacoes'>Perfis com menos de 10 publicações</option>
-                            <option value='mais10Publicacoes'>Perfis com mais de 10 publicações</option>
-                            <option value='menos30Seguidores'>Perfis com menos de 30 seguidores</option>
-                            <option value='mais30Seguidores'>Perfis com mais de 30 seguidores</option>
-                            <option value='mais20Seguindo'>Perfis que seguem mais que 20</option>
-                            <option value='menos20Seguindo'>Perfis que seguem menos que 20</option>
+                            <option value='perfisZerados'>Perfis totalmente vazios</option>
+                            <option value='qtdPublicacoes'>Filtrar por quantidade de publicações</option>
+                            <option value='qtdSeguidores'>Filtrar por quantidade de seguidores</option>
+                            <option value='qtdSeguindo'>Filtrar por quantidade de seguindo</option>
                         </select>
+                        {displayQuantidade == true ? 
+                            <>
+                                <label>Quantidade</label>
+                                <input id='quantidade' type='number' min={1} defaultValue={0}/>    
+                            </>
+                            :
+                            ''
+                        }
                         <div>
                             <button onClick={()=>{ 
                                 setDisplayFiltrar(false) 

@@ -36,7 +36,7 @@ const Cabeca = ({ voltar, blur })=>{
                     </Circulo>
                 }
                 <Circulo onClick={minimizar}>
-                    <FaMinus onClick={minimizar}/>
+                    <FaMinus/>
                 </Circulo>
                 <Circulo onClick={fechar}>
                     <FaTimes/>

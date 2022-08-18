@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Conteudos } from './components/conteudos'
 import { Formulario } from './components/formulario'
 import { Caixa } from './components/caixa'
@@ -15,6 +15,7 @@ import { useUsuarioLogado } from '../../providers/usuarioLogado'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
+import { redirecionar } from '../../functions/redirecionar'
 
 const Acessar = ()=>{
 
@@ -62,9 +63,9 @@ const Acessar = ()=>{
                     />
                 </Caixa>
                 {mensagem}
-                <Botao>Acessar conta</Botao>
+                <Botao id='teste'>Acessar conta</Botao>
             </Formulario>
-            <Rodape>V{window.api.ipcRenderer.sendSync('versaoAplicativo')}</Rodape>
+            <Rodape>V1.0.2</Rodape>
         </Conteudos>
     )
 }

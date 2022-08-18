@@ -286,6 +286,8 @@ const criador = async(
 
         if(montarPerfisConfigurado == true){
 
+            logs.push(usuario + ' - Montador em execução')
+
             // ALTERANDO O GÊNERO DOS PERFIS
             await alterarGeneroPerfil(paginaInstagram, usuario, generoPerfis, logs)
             if(esperarEntre != 0){
@@ -352,6 +354,13 @@ const criador = async(
                         await paginaInstagram.waitForTimeout(esperarEntre)
                     }
                 }
+            }
+
+            var buscar = `${usuario} - Montador em execução`
+            var indice = logs.indexOf(buscar)
+            while(indice >= 0){
+                logs.splice(indice, 1)
+                indice = logs.indexOf(buscar)
             }
         }
 
