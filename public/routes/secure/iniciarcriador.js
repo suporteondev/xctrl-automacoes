@@ -43,7 +43,6 @@ router.post('/iniciarcriador', logado, async(req, res)=>{
     const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
 
     global.criador[aba] = []
-    global.redirecionar = '/logscriador'
 
     await criador(
         navegador,

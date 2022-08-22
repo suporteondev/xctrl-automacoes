@@ -177,14 +177,6 @@ const LogsCriador = ()=>{
                     <span>Criadas com sucesso</span>
                     {criadasSucesso}
                 </Opcao>
-                {montadorEmExecucao == true ?
-                    <Opcao cor='orange'>
-                        <span>Montador em execução</span>
-                        <RiAlertFill/>
-                    </Opcao>
-                    :
-                    ''
-                }
                 {montarPerfisCriados == true ?
                     <>
                         <Opcao>

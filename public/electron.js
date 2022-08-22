@@ -63,13 +63,15 @@ const redirecionar = require('./configs/ipcs/redirecionar')
 const setRedirecionar = require('./configs/ipcs/setRedirecionar')
 const novaAba = require('./configs/ipcs/novaAba')
 
+process.setMaxListeners(0)
+
 app.on('ready', async () => {   
 
     const portaEscolhida = server.listen(0, ()=>{
         global.porta = portaEscolhida.address().port
     })
 
-    await abrirJanela(300, 500)
+    await abrirJanela(350, 500, '')
 
     // ATALHOS
     // esconderConsole(globalShortcut)

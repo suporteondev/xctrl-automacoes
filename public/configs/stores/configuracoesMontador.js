@@ -9,6 +9,7 @@ function configuracoesMontador(store){
             modoAnonimo: 'sim',
             userAgent: 'aleatorio',
             modoPerfis: 'linha',
+            seusPerfis: '',
             generoPerfis: 'feminino',
             alterarFotoPerfil: 'sim',
             alterarBiografia: 'sim',

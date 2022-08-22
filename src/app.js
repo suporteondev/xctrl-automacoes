@@ -14,6 +14,7 @@ import Seguidores from './pages/seguidores'
 import Manual from './pages/manual'
 import MegaPromocao from './pages/megapromocao'
 import LogsCriador from './pages/logscriador'
+import LogsMontador from './pages/logsmontador'
 import { TemaProvider } from './providers/tema'
 import { UsuarioLogadoProvider } from './providers/usuarioLogado'
 import { AcessoCriadorProvider } from './providers/acessoCriador'
@@ -56,6 +57,7 @@ export default function App() {
                                                             <Route exact path='/criador' element={<Criador/>} />
                                                             <Route exact path='/montador' element={<Montador/>} />
                                                             <Route exact path='/logscriador' element={<LogsCriador/>} />
+                                                            <Route exact path='/logsmontador' element={<LogsMontador/>} />
                                                         </Routes>
                                                     </HashRouter>
                                                 </TemaProvider>

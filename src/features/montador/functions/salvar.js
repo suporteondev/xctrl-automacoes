@@ -5,6 +5,7 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const modoPerfis = document.querySelector('[name="modoPerfis"]').value
+    const seusPerfis = document.querySelector('[name="seusPerfis"]').value
     const generoPerfis = document.querySelector('[name="generoPerfis"]').value
     const alterarFotoPerfil = document.querySelector('[name="alterarFotoPerfil"]').value
     const alterarBiografia = document.querySelector('[name="alterarBiografia"]').value
@@ -21,6 +22,7 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
         modoAnonimo,
         userAgent,
         modoPerfis,
+        seusPerfis,
         generoPerfis,
         alterarFotoPerfil,
         alterarBiografia,

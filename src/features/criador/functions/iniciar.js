@@ -39,5 +39,4 @@ export async function iniciar(Mensagem, setMensagem){
             logs.scrollTop = logs.scrollHeight
         }
     }
-
 }

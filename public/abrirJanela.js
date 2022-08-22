@@ -4,7 +4,7 @@ const { BrowserWindow, screen } = require('electron')
 const isDev = require('electron-is-dev')
 var contador = 1
 
-async function abrirJanela(largura, altura){
+async function abrirJanela(largura, altura, logs){
 
     const primaryDisplay = screen.getPrimaryDisplay()
     const { width, height } = primaryDisplay.workAreaSize
@@ -20,9 +20,9 @@ async function abrirJanela(largura, altura){
             resizable: false,
             name: 'aba' + contador,
             height: 500,
-            width: 300,
+            width: 350,
             title: 'aba' + contador,
-            x: (width / 2) - 150,
+            x: (width / 2) - 175,
             y: (height / 2) - 250,
             icon: __dirname + '/icon.png',
             webPreferences: {
@@ -67,10 +67,10 @@ async function abrirJanela(largura, altura){
             },
         })
 
-        url = isDev ? `http://localhost:3000#/logscriador?aba=${contador}` : format({
+        url = isDev ? `http://localhost:3000#/${logs}?aba=${contador}` : format({
             pathname: join(__dirname , `./index.html`),
             protocol: 'file:',
-            hash: `/logscriador?aba=${contador}`,
+            hash: `/${logs}?aba=${contador}`,
             slashes: true,
         })
     }
