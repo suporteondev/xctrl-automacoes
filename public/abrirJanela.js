@@ -18,10 +18,10 @@ async function abrirJanela(largura, altura, logs){
             frame: false,
             show: false,
             resizable: false,
-            name: 'aba' + contador,
+            name: 'xctrl',
             height: 500,
             width: 350,
-            title: 'aba' + contador,
+            title: 'xctrl',
             x: (width / 2) - 175,
             y: (height / 2) - 250,
             icon: __dirname + '/icon.png',
@@ -49,10 +49,10 @@ async function abrirJanela(largura, altura, logs){
             frame: false,
             show: false,
             resizable: false,
-            name: 'aba' + contador,
+            name: 'xctrl',
             height: altura,
             width: largura,
-            title: 'aba' + contador,
+            title: 'xctrl',
             x: 0,
             y: 0,
             icon: __dirname + '/icon.png',
@@ -75,7 +75,7 @@ async function abrirJanela(largura, altura, logs){
         })
     }
 
-    mainWindow.setTitle('aba' + contador)
+    mainWindow.setTitle('xctrl')
     mainWindow.loadURL(url)
     mainWindow.setIcon(__dirname + '/icon.png')
     mainWindow.once('ready-to-show', ()=>{

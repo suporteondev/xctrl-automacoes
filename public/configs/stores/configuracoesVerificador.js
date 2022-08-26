@@ -9,6 +9,7 @@ function configuracoesVerificador(store){
             modoAnonimo: 'sim',
             userAgent: 'aleatorio',
             modoPerfis: 'linha',
+            seusPerfis: '',
             limparLogin: 'sim',
             esperarEntre: 0
         })

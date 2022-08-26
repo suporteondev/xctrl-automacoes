@@ -159,7 +159,7 @@ const LogsCriador = ()=>{
                     logs === 'Alterando a foto de perfil' ||
                     logs === 'Postando fotos no story' ||
                     logs === 'Postando fotos no Feed' ||
-                    logs === 'Seguindo perfis sugeridos' ||
+                    logs === 'Seguindo perfis verificados' ||
                     logs === 'Limpando atividade de login' ||
                     logs === 'Limpando a pasta Prefetch' ||
                     logs === 'Limpando a pasta Temp' ||

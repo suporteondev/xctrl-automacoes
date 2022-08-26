@@ -156,10 +156,8 @@ const Criador = ()=>{
                 </Opcao>
                 <Opcao 
                     funcao={()=>{ 
-                        iniciar(
-                            Mensagem, 
-                            setMensagem
-                        ) 
+                        salvar(Mensagem, setMensagem, setConfiguracoesCriador)
+                        iniciar(Mensagem, setMensagem) 
                     }}>
                     <span>Iniciar</span>
                     <IoPlay/>

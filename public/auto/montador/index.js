@@ -161,11 +161,49 @@ const montador = async(
             continue
         } 
 
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
+        }
+
         // ALTERANDO O GÊNERO DOS PERFIS
         await alterarGeneroPerfil(pagina, usuario, generoPerfis, logs)
         if(esperarEntre != 0){
             logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
             await pagina.waitForTimeout(esperarEntre)
+        }
+    
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
         }
 
         const caminhoPublicacoes = path.join(rootPath, `./publicacoes/${generoPerfis == 'masculino' ? 'masculinas' : 'femininas'}`)
@@ -192,6 +230,25 @@ const montador = async(
             }
         }
 
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
+        }
+
         // ALTERANDO A BIOGRAFIA DO PERFIL
         if(alterarBiografia == true){
             await alterarBiografiaPerfil(pagina, usuario, logs)
@@ -201,16 +258,72 @@ const montador = async(
             }
         }
 
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
+        }
+
         // POSTANDO FOTOS NO FEED
         if(quantidadePublicacoesFeed != 0 && quantidadePublicacoesFeed != '0' && quantidadePublicacoesFeed != ''){
             logs.push(`Postando fotos no Feed`)
             for(let x = 0; x < quantidadePublicacoesFeed; x++){
+
+                var perfilBloqueado = await pagina.evaluate(()=>{
+
+                    let resultado = false
+        
+                    document.querySelectorAll('span').forEach((e)=>{
+                        if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                            resultado = true
+                        }
+                    })
+        
+                    return resultado
+                })
+        
+                if(perfilBloqueado == true){
+                    break
+                }
+
                 await realizarPublicacoesFeed(pagina, x + 1, usuario, caminhoPasta, logs)
                 if(esperarEntre != 0){
                     logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                     await pagina.waitForTimeout(esperarEntre)
                 }
             }
+        }
+
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
         }
 
         // SEGUINDO PERFIS FAMOSOS
@@ -222,12 +335,49 @@ const montador = async(
         if(quantidadePublicacoesStory != 0 && quantidadePublicacoesStory != '0' && quantidadePublicacoesStory != ''){
             logs.push(`Postando fotos no story`)
             for(let x = 0; x < quantidadePublicacoesStory; x++){
+
+                var perfilBloqueado = await pagina.evaluate(()=>{
+
+                    let resultado = false
+        
+                    document.querySelectorAll('span').forEach((e)=>{
+                        if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                            resultado = true
+                        }
+                    })
+        
+                    return resultado
+                })
+        
+                if(perfilBloqueado == true){
+                    break
+                }
+
                 await realizarPublicacoesStory(pagina, x + 1 , usuario, caminhoPasta, logs)
                 if(esperarEntre != 0){
                     logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                     await pagina.waitForTimeout(esperarEntre)
                 }
             }
+        }
+
+        var perfilBloqueado = await pagina.evaluate(()=>{
+
+            let resultado = false
+
+            document.querySelectorAll('span').forEach((e)=>{
+                if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                    resultado = true
+                }
+            })
+
+            return resultado
+        })
+
+        if(perfilBloqueado == true){
+            logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
+            await navegador.close()
+            continue
         }
 
         // LIMPANDO A ATIVIDADE DE LOGIN

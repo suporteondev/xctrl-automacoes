@@ -36,23 +36,20 @@ const Manual = ()=>{
         <>
             <Cabeca voltar='/painel'/>
             <Conteudos>
-                <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como eu acesso a plataforma?</Titulo>
-                <iframe width="710" height="420" src="https://www.youtube.com/embed/pw7okiJO1po" title="XCtrl - Como acessar a plataforma?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                
                 <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como funciona o painel de controle?</Titulo>
-                <iframe width="710" height="420" src="https://www.youtube.com/embed/32SgZd1zkiE" title="XCtrl - Painel de controle" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="710" height="420" src="https://www.youtube.com/embed/mNRQC1r9f-Y" title="XCtrl - Como eu uso o painel de controle?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 
                 <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como configurar e usar o criador de perfis?</Titulo>
                 <iframe width="710" height="420" src="https://www.youtube.com/embed/1PBx9fYbYDM" title="XCtrl - Criador de perfis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 
                 <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como configurar e usar o montador de perfis?</Titulo>
-                <iframe width="710" height="420" src="https://www.youtube.com/embed/jEciTC4L-jo" title="XCtrl - Montador de perfis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="710" height="420" src="https://www.youtube.com/embed/9_9wkWbyHgM" title="XCtrl - Como eu uso o montador de perfis?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 
                 <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como configurar e usar o verificador de perfis?</Titulo>
-                <iframe width="710" height="420" src="https://www.youtube.com/embed/UZmnPhM6pu8" title="XCtrl - Verificador de perfis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="710" height="420" src="https://www.youtube.com/embed/ri5_bBMx5gc" title="XCtrl - Como eu uso o verificador de perfis?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                 <Titulo style={{ marginBottom: '20px', marginTop: '15px'}}>Como usar o gerenciador de perfis?</Titulo>
-                <iframe width="710" height="420" src="https://www.youtube.com/embed/RZ0pVEeL6TM" title="XCtrl - Gerenciador de perfis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="710" height="420" src="https://www.youtube.com/embed/Y4rpSQoxJPA" title="XCtrl - Como eu uso o criador de perfis?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                 <div style={{ marginBottom: '20px'}}></div>
             </Conteudos>

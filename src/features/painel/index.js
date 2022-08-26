@@ -133,14 +133,6 @@ const Painel = ()=>{
                     :
                     ''
                 }
-                {acessoCriador.status != true && acessoGerenciador.status != true && acessoMontador.status != true ? 
-                    <Opcao funcao={()=> redirecionar(Router, '/megapromocao')}>
-                        <span>Mega promoção</span>
-                        <MdOutlineMoneyOff/>
-                    </Opcao>
-                    :
-                    ''
-                }
                 V{window.api.ipcRenderer.sendSync('versaoAplicativo')}
             </Rodape>
         </>

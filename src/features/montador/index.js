@@ -143,6 +143,7 @@ const Montador = ()=>{
                     <IoIosSave/>
                 </Opcao>
                 <Opcao funcao={()=>{ 
+                    salvar(Mensagem, setMensagem, setConfiguracoesMontador)
                     iniciar(Mensagem, setMensagem) 
                 }}>
                     <span>Iniciar</span>

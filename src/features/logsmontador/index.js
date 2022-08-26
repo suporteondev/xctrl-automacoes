@@ -158,7 +158,7 @@ const LogsMontador = ()=>{
                     logs === 'Alterando a foto de perfil' ||
                     logs === 'Postando fotos no story' ||
                     logs === 'Postando fotos no Feed' ||
-                    logs === 'Seguindo perfis sugeridos' ||
+                    logs === 'Seguindo perfis verificados' ||
                     logs === 'Limpando atividade de login' ||
                     logs === 'O robô terminou, pode voltar!' ? 
                     <h1 key={index}>{logs}</h1> : 
