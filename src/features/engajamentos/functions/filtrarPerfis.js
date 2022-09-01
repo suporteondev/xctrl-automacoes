@@ -66,11 +66,27 @@ export async function filtrarPerfis(
 
         if(filtro == 'qtdSeguindo'){
             const quantidade = document.querySelector('#quantidade').value
-            if(
-                Number(perfil.seguindo) == Number(quantidade) &&
-                perfil.status == 'Ativo'
-            ){
-                novoArray.push(perfil)
+            const como = document.querySelector('#como').value
+
+            // MAIOR
+            if(como == '1' || como == 1){
+                if(Number(perfil.seguindo) > Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // MENOR
+            if(como == '2' || como == 2){
+                if(Number(perfil.seguindo) < Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // IGUAL
+            if(como == '3' || como == 3){
+                if(Number(perfil.seguindo) == Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
             }
         }
     }

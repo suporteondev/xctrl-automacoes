@@ -67,12 +67,8 @@ const Seguidores = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Quantidade de seguidores</Etiqueta>
-                                <Select name='quantidadeSeguidores' defaultValue={configuracoesSeguidores.quantidadeSeguidores}>
-                                    {window.api.ipcRenderer.sendSync('perfisEngajamentos').map((perfil, index)=> (
-                                        <option key={index} value={index + 1}>{index + 1}</option>
-                                    ))}
-                                </Select>
+                                <Etiqueta>Usuários dos perfis que vão seguir</Etiqueta>
+                                <Textarea name='usuariosSeguidores'></Textarea>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Usuários dos perfis que vão ser seguidos</Etiqueta>
@@ -131,20 +127,12 @@ const Seguidores = ()=>{
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#236EFF'>
-                        <span>Não verificados</span>
-                        {averificar}
-                    </Opcao>
-                    <Opcao cor='#05A660'>
-                        <span>Perfis ativos</span>
+                    <Opcao cor='#28a745'>
+                        <span>Perfis seguidos</span>
                         {ativos}
                     </Opcao>
-                    <Opcao cor='#FFA500'>
-                        <span>Tentar novamente</span>
-                        {novamentes}
-                    </Opcao>
                     <Opcao cor='#E53535'>
-                        <span>Perfis inativos</span>
+                        <span>Não seguidos</span>
                         {inativos}
                     </Opcao>
                 </Rodape>

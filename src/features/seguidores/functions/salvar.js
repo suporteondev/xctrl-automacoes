@@ -4,7 +4,6 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
-    const quantidadeSeguidores = document.querySelector('[name="quantidadeSeguidores"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
@@ -12,7 +11,6 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
         navegador,
         verAcontecendo,
         modoAnonimo,
-        quantidadeSeguidores,
         esperarEntre
     }
     

@@ -139,21 +139,13 @@ const Adicionador = ()=>{
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#236EFF'>
-                        <span>Não verificados</span>
-                        {averificar}
-                    </Opcao>
                     <Opcao cor='#05A660'>
-                        <span>Perfis ativos</span>
+                        <span>Perfis adicionados</span>
                         {ativos}
                     </Opcao>
                     <Opcao cor='#FFA500'>
-                        <span>Tentar novamente</span>
+                        <span>Não adicionados</span>
                         {novamentes}
-                    </Opcao>
-                    <Opcao cor='#E53535'>
-                        <span>Perfis inativos</span>
-                        {inativos}
                     </Opcao>
                 </Rodape>
             </>

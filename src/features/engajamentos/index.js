@@ -100,15 +100,14 @@ const Engajamentos = ()=>{
                             <option value='ativos'>Perfis ativos</option>
                             <option value='inativos'>Perfis inativos</option>
                             <option value='novamente'>Perfis para tentar novamente</option>
-                            <option value='perfisZerados'>Perfis totalmente vazios</option>
-                            <option value='qtdPublicacoes'>Filtrar por quantidade de publicações</option>
-                            <option value='qtdSeguidores'>Filtrar por quantidade de seguidores</option>
                             <option value='qtdSeguindo'>Filtrar por quantidade de seguindo</option>
                         </select>
                         {displayQuantidade == true ? 
                             <>
                                 <label>Quantidade</label>
-                                <input id='quantidade' type='number' min={1} defaultValue={0}/>    
+                                <input id='quantidade' type='number' min={1} defaultValue={0}/>  
+                                <label>Maior (1), menor (2) ou igual (3)</label>
+                                <input id='como' type='number' min={1} defaultValue={1}/>   
                             </>
                             :
                             ''

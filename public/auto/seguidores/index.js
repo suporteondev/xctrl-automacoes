@@ -6,6 +6,7 @@ const seguirPerfis = async(
     verAcontecendo, 
     modoAnonimo,
     usuarios,
+    usuariosSeguidores,
     esperarEntre,
     perfisEngajamentos,
     logs
@@ -118,10 +119,18 @@ const seguirPerfis = async(
         pagina = paginas[0]
     }
 
-    for(let x = 0; x < perfisEngajamentos.length; x++){
+    for(let x = 0; x < usuariosSeguidores.length; x++){
+
+        logs.push('Acessando o instagram')
+
+        // CAPTURANDO O USUÁRIO DO PERFIL SEGUIDOR
+        const usuarioSeguidor = usuariosSeguidores[x]
+
+        // CAPTURANDO A INDEX DO PERFIL QUE VAI SEGUIR
+        const indexPerfil = perfisEngajamentos.findIndex(perfil => perfil.usuario === usuarioSeguidor)
 
         // CAPTURANDO OS DADOS DO PERFIL QUE VAI SEGUIR
-        const { usuario, cookies, userAgent } = perfisEngajamentos[x]
+        const { usuario, cookies, userAgent } = perfisEngajamentos[indexPerfil]
 
         // SELECIONANDO UM USER AGENT MOBILE
         await pagina.setUserAgent(userAgent)
@@ -130,13 +139,17 @@ const seguirPerfis = async(
         await pagina.setExtraHTTPHeaders({ 'Accept-Language': 'pt-br' })
         
         // ACESSANDO O PERFIL PELO COOKIE
+        logs.push(usuario + ' - Acessando o perfil')
         await pagina.setCookie(...cookies)
 
         // SEGUINDO OS PERFIS
         for(let x = 0; x < usuarios.length; x++){
             try{
+
                 // CAPTURANDO O USUÁRIO DO PERFIL A SER SEGUIDO
                 const usuarioPerfil = usuarios[x]
+
+                logs.push(usuario + ' - Seguindo ' + usuarioPerfil)
 
                 // ACESSANDO O PERFIL DO USUÁRIO
                 await pagina.goto(`https://www.instagram.com/${usuarioPerfil}/`)
@@ -145,12 +158,15 @@ const seguirPerfis = async(
                 await pagina.waitForSelector('._aacl._aaco._aacw._adda._aad6._aade')
                 await pagina.click('._aacl._aaco._aacw._adda._aad6._aade')
 
+                logs.push(usuario + ' - Seguido com sucesso!')
+
                 // AGUARDANDO O TEMPO CONFIGURADO
                 if(esperarEntre != 0){
                     logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                     await pagina.waitForTimeout(esperarEntre)
                 }
             }catch(erro){
+                logs.push(usuario + ' - Não conseguimos seguir esse perfil!')
                 console.log(erro.message)
             }
         }

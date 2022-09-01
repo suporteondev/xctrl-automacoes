@@ -74,7 +74,7 @@ app.on('ready', async () => {
     await abrirJanela(350, 500, '')
 
     // ATALHOS
-    // esconderConsole(globalShortcut)
+    esconderConsole(globalShortcut)
 
     // STORES
     usuarioLogado(store)

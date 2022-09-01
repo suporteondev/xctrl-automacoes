@@ -144,6 +144,7 @@ const adicionador = async(
         // ACESSANDO O PERFIL
         const resultadoAcessarPerfil = await acessarPerfil(pagina, usuario, senha, logs)
         if(resultadoAcessarPerfil == false){
+            logs.push(usuario + ' - Tentar novamente!')
             await navegador.close()
             continue
         } 

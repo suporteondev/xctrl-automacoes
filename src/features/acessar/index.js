@@ -65,7 +65,7 @@ const Acessar = ()=>{
                 {mensagem}
                 <Botao id='teste'>Acessar conta</Botao>
             </Formulario>
-            <Rodape>V1.0.2</Rodape>
+            <Rodape>V{window.api.ipcRenderer.sendSync('versaoAplicativo')}</Rodape>
         </Conteudos>
     )
 }

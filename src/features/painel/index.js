@@ -94,7 +94,7 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
-                    {/* <Servico 
+                    <Servico 
                         ativo={acessoGerenciador.status}
                         onClick={()=>{ 
                             {acessoGerenciador.status == true ? 
@@ -111,7 +111,7 @@ const Painel = ()=>{
                         <p>
                             {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>
-                    </Servico> */}
+                    </Servico>
                 </Servicos>
             </Conteudos>
             <Rodape>

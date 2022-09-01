@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const seguidores = require('../../auto/seguidores/index')
-const logado = require('../../middlewares/logado')
+const seguidores = require('../../../auto/seguidores/index')
+const logado = require('../../../middlewares/logado')
 
 router.post('/seguidores', logado, async(req, res)=>{
 
@@ -11,7 +11,6 @@ router.post('/seguidores', logado, async(req, res)=>{
         verAcontecendo, 
         modoAnonimo,
         usuarios,
-        usuariosSeguidores,
         esperarEntre,
         perfisEngajamentos
     } = req.body
@@ -24,7 +23,6 @@ router.post('/seguidores', logado, async(req, res)=>{
         verAcontecendoConfigurado, 
         modoAnonimoConfigurado,
         usuarios,
-        usuariosSeguidores,
         esperarEntre,
         perfisEngajamentos,
         global.seguidores
