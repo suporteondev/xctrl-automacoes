@@ -1,3 +1,5 @@
+import { filtrarTodosPerfis } from "./filtrarTodosPerfis"
+
 export async function filtrarPerfis(
     setPerfisGerenciador, 
     setDisplayFiltrar, 
@@ -5,7 +7,7 @@ export async function filtrarPerfis(
 ){
 
     const filtro = document.querySelector('#filtro').value
-    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+    const perfisGerenciador = await filtrarTodosPerfis()
     const novoArray = []
 
     for(let x = 0; x < perfisGerenciador.length; x++){

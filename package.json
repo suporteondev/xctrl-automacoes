@@ -20,7 +20,6 @@
   },
   "homepage": "./",
   "dependencies": {
-    "@electron/remote": "^2.0.8",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
@@ -33,9 +32,9 @@
     "mongoose": "^6.2.7",
     "open": "^8.4.0",
     "puppeteer-core": "^13.5.1",
+    "python-shell": "^3.0.1",
     "react-icons": "^4.4.0",
-    "styled-components": "^5.3.5",
-    "user-agents": "^1.0.1001"
+    "styled-components": "^5.3.5"
   },
   "scripts": {
     "react-start": "react-scripts start",

@@ -1,11 +1,16 @@
 import { useEffect } from 'react'
 import { Esquema } from '../components/esquema/index'
-import { LogsCriador } from '../features/logscriador'
+import { Realizador } from '../features/realizador'
 
 export default function Page(){
+
+    useEffect(()=>{
+        window.api.ipcRenderer.sendSync('tamanho-medio')
+    }, [])
+
     return (
         <Esquema>
-            <LogsCriador/>
+            <Realizador/>
         </Esquema>
     )
 }

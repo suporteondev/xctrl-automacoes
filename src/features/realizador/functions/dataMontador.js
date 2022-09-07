@@ -1,4 +1,4 @@
-async function dataCriador(setDataAcessoCriador){
+async function dataMontador(setDataMontador){
 
     const configs = {
         method: 'POST',
@@ -8,12 +8,12 @@ async function dataCriador(setDataAcessoCriador){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessocriador`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessomontador`, configs)
     const resultado = await api.json()
 
     if(resultado.ok == true){
-        setDataAcessoCriador(resultado.data)
+        setDataMontador(resultado.data)
     }
 }
 
-export { dataCriador }
+export { dataMontador }

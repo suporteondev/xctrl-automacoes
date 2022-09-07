@@ -13,15 +13,14 @@ router.post('/iniciarverificador', logado, async(req, res)=>{
         userAgent,
         seusPerfis, 
         limparLogin,
-        esperarEntre,
-        aba
+        esperarEntre
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo === 'sim' ? false : true
     const modoAnonimoConfigurado = modoAnonimo === 'sim' ? true : false
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
 
-    global.verificador[aba] = []
+    global.verificador = []
 
     await verificador(
         navegador,
@@ -31,7 +30,7 @@ router.post('/iniciarverificador', logado, async(req, res)=>{
         seusPerfis,
         limparLoginConfigurado,
         esperarEntre,
-        global.verificador[aba]
+        global.verificador
     )
    
     return res.json({

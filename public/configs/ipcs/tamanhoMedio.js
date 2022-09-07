@@ -1,11 +1,8 @@
-function tamanhoMedio(ipcMain, BrowserWindow){
+function tamanhoMedio(ipcMain, mainWindow){
     ipcMain.on('tamanho-medio', (event)=>{
-        const { id } = BrowserWindow.getFocusedWindow()
-
-        BrowserWindow.fromId(id).setResizable(true)
-        BrowserWindow.fromId(id).setSize(350, 500)
-        BrowserWindow.fromId(id).setResizable(false)
-
+        mainWindow.setResizable(true)
+        mainWindow.setSize(350, 500)
+        mainWindow.setResizable(false)
         event.returnValue = true
     })
 }

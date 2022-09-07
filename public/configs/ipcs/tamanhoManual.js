@@ -1,11 +1,8 @@
-function tamanhoManual(ipcMain, BrowserWindow){
+function tamanhoManual(ipcMain, mainWindow){
     ipcMain.on('tamanho-manual', (event)=>{
-        const { id } = BrowserWindow.getFocusedWindow()
-
-        BrowserWindow.fromId(id).setResizable(true)
-        BrowserWindow.fromId(id).setSize(750, 600)
-        BrowserWindow.fromId(id).setResizable(false)
-
+        mainWindow.setResizable(true)
+        mainWindow.setSize(750, 600)
+        mainWindow.setResizable(false)
         event.returnValue = true
     })
 }

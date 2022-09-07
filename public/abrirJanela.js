@@ -1,7 +1,10 @@
 const { join } = require('path')
 const { format } = require('url')
 const { BrowserWindow, screen } = require('electron')
+const { rootPath } = require('electron-root-path')
 const isDev = require('electron-is-dev')
+const fs = require('fs')
+const titulo = fs.readFileSync(rootPath + '\\versao.txt', {encoding:'utf8', flag:'r'})
 var contador = 1
 
 async function abrirJanela(largura, altura, logs){
@@ -18,10 +21,10 @@ async function abrirJanela(largura, altura, logs){
             frame: false,
             show: false,
             resizable: false,
-            name: 'xctrl',
+            name: titulo,
             height: 500,
             width: 350,
-            title: 'xctrl',
+            title: titulo,
             x: (width / 2) - 175,
             y: (height / 2) - 250,
             icon: __dirname + '/icon.png',
@@ -49,10 +52,10 @@ async function abrirJanela(largura, altura, logs){
             frame: false,
             show: false,
             resizable: false,
-            name: 'xctrl',
+            name: titulo,
             height: altura,
             width: largura,
-            title: 'xctrl',
+            title: titulo,
             x: 0,
             y: 0,
             icon: __dirname + '/icon.png',
@@ -75,7 +78,7 @@ async function abrirJanela(largura, altura, logs){
         })
     }
 
-    mainWindow.setTitle('xctrl')
+    mainWindow.setTitle(titulo)
     mainWindow.loadURL(url)
     mainWindow.setIcon(__dirname + '/icon.png')
     mainWindow.once('ready-to-show', ()=>{

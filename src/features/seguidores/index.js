@@ -10,7 +10,7 @@ import { Opcao } from '../../components/opcao'
 import { Select } from './components/select'
 import { iniciar } from './functions/iniciar'
 import { Mensagem } from './components/mensagem'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { salvar } from './functions/salvar'
 import { Textarea } from './components/textarea'
 import { Logs } from './components/logs'
@@ -21,6 +21,7 @@ import { IoIosSave } from 'react-icons/io'
 import { IoPlay, IoTime } from 'react-icons/io5'
 import { userAgentsMobile } from '../../userAgentsMobile'
 import { useConfiguracoesSeguidores } from '../../providers/configuracoesSeguidores'
+import { usePerfisSelecionadosEngajamentos } from '../../providers/perfisSelecionadosEngajamentos'
 
 const Seguidores = ()=>{
 
@@ -34,6 +35,7 @@ const Seguidores = ()=>{
     const [ novamentes, setNovamentes ] = useState(0)
     const [ averificar, setAverificar ] = useState(0)
     const { configuracoesSeguidores, setConfiguracoesSeguidores } = useConfiguracoesSeguidores()
+    const { perfisSelecionadosEngajamentos } = usePerfisSelecionadosEngajamentos()
     const listaDeUserAgentsMobile = [...new Set(userAgentsMobile)]
 
     return (
@@ -67,11 +69,7 @@ const Seguidores = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Usuários dos perfis que vão seguir</Etiqueta>
-                                <Textarea name='usuariosSeguidores'></Textarea>
-                            </Caixa>
-                            <Caixa>
-                                <Etiqueta>Usuários dos perfis que vão ser seguidos</Etiqueta>
+                                <Etiqueta>Lista de usuários a serem seguidos</Etiqueta>
                                 <Textarea name='usuarios'></Textarea>
                             </Caixa>
                             <Caixa>
@@ -106,7 +104,8 @@ const Seguidores = ()=>{
                                 setNovamentes, 
                                 setInativos, 
                                 setAverificar, 
-                                setDisplayVoltar
+                                setDisplayVoltar,
+                                perfisSelecionadosEngajamentos
                             ) 
                         }}>
                             <span>Iniciar</span>

@@ -1,4 +1,4 @@
-export async function apagarPerfis(
+async function apagarPerfis(
     setPerfisGerenciador,
     setDisplayApagar,
     setBlur
@@ -14,27 +14,29 @@ export async function apagarPerfis(
         }
     })
 
-    const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisEngajamentos')
-
-    for(let x = 0; x < perfis.length; x++){
-        const usuarioPerfil = perfis[x]
-        
-        perfisGerenciador.forEach((perfil, index)=>{
-            if(perfil.usuario == usuarioPerfil){
-                perfisGerenciador.splice(index, 1)
-            }
+    const configs = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            perfis 
         })
-
-        window.api.ipcRenderer.sendSync('setPerfisEngajamentos', perfisGerenciador)
     }
+
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamentos/apagarperfis`, configs)
+    const resultado = await api.json()
+
+    setPerfisGerenciador(resultado.perfis)
+    setBlur(false)
+    setDisplayApagar(false)
 
     const checks = document.querySelectorAll('input[type="checkbox"]')
 
     checks.forEach((check)=>{
         check.checked = false
     })
-
-    setPerfisGerenciador(perfisGerenciador)
-    setDisplayApagar(false)
-    setBlur(false)
 }
+
+export { apagarPerfis }

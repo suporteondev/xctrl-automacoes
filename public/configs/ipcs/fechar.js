@@ -1,7 +1,7 @@
-function fechar(ipcMain, BrowserWindow){
+function fechar(ipcMain, mainWindow){
     ipcMain.on('fechar', (event)=>{
-        const { id } = BrowserWindow.getFocusedWindow()
-        return BrowserWindow.fromId(id).close()
+        mainWindow.close()
+        event.returnValue = true
     })
 }
 

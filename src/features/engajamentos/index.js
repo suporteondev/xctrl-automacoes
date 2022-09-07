@@ -15,7 +15,7 @@ import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
 import { IoIosSearch } from 'react-icons/io'
 import { selecionarTodos } from './functions/selecionarTodos'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Filtrar } from './components/filtrar'
 import { apagarPerfis } from './functions/apagarPerfis'
 import { copiarPerfis } from './functions/copiarPerfis'
@@ -24,12 +24,14 @@ import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
 import { useNavigate } from 'react-router-dom'
 import { redirecionar } from '../../functions/redirecionar'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
+import { usePerfisSelecionadosEngajamentos } from '../../providers/perfisSelecionadosEngajamentos'
 
 const Engajamentos = ()=>{
 
     const { acessoGerenciador } = useAcessoGerenciador()
-    const perfisEngajamentos2 = window.api.ipcRenderer.sendSync('perfisEngajamentos')
-    const [ perfisEngajamentos, setPerfisEngajamentos ] = useState(perfisEngajamentos2)
+    const [ perfisEngajamentos, setPerfisEngajamentos ] = useState([])
+    const { perfisSelecionadosEngajamentos, setPerfisSelecionadosEngajamentos } = usePerfisSelecionadosEngajamentos() 
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
@@ -37,6 +39,11 @@ const Engajamentos = ()=>{
     const [ displayQuantidade, setDisplayQuantidade ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
+
+    useEffect(async()=>{
+        const perfis = await filtrarTodosPerfis()
+        setPerfisEngajamentos(perfis)
+    }, [])
 
     return (
         <div>
@@ -268,7 +275,30 @@ const Engajamentos = ()=>{
                 </Opcao>
                 <Opcao
                     funcao={()=>{
-                        redirecionar(Router, '/seguidores')
+                        const check = document.querySelectorAll('.checkbox')
+                        const perfis = []
+
+                        check.forEach((e)=>{
+                            if(e.checked == true){
+                                
+                                const usuario = e.parentElement.parentNode.querySelector('.usuario').innerText
+                                
+                                // CAPTURANDO A POSIÇÃO DO PERFIL QUE SERÁ ATUALIZADO
+                                const indexPerfil = perfisEngajamentos.findIndex(perfil => perfil.usuario === usuario)
+
+                                // ATUALIZANDO O PERFIL  
+                                const perfil = perfisEngajamentos[indexPerfil]
+
+                                perfis.push(perfil)
+                            }
+                        })
+
+                        if(perfis.length > 0){
+                            setPerfisSelecionadosEngajamentos(perfis)
+                            redirecionar(Router, '/seguidores')
+                        }else{
+                            window.alert('Selecione ao menos um perfil!')
+                        }
                     }}
                 >
                     <span>Enviar seguidores</span>

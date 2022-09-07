@@ -5,10 +5,9 @@ const seguirPerfis = async(
     navegadorEscolhido,
     verAcontecendo, 
     modoAnonimo,
+    perfis,
     usuarios,
-    usuariosSeguidores,
     esperarEntre,
-    perfisEngajamentos,
     logs
 )=>{
 
@@ -119,28 +118,22 @@ const seguirPerfis = async(
         pagina = paginas[0]
     }
 
-    for(let x = 0; x < usuariosSeguidores.length; x++){
+    for(let x = 0; x < perfis.length; x++){
 
         logs.push('Acessando o instagram')
 
         // CAPTURANDO O USUÁRIO DO PERFIL SEGUIDOR
-        const usuarioSeguidor = usuariosSeguidores[x]
+        const { usuario, cookie } = perfis[x]
 
-        // CAPTURANDO A INDEX DO PERFIL QUE VAI SEGUIR
-        const indexPerfil = perfisEngajamentos.findIndex(perfil => perfil.usuario === usuarioSeguidor)
-
-        // CAPTURANDO OS DADOS DO PERFIL QUE VAI SEGUIR
-        const { usuario, cookies, userAgent } = perfisEngajamentos[indexPerfil]
-
-        // SELECIONANDO UM USER AGENT MOBILE
-        await pagina.setUserAgent(userAgent)
+        // SETANDO O USER AGENT
+        await selecionarUserAgentAleatorio(pagina, 'mobile')
 
         // ALTERANDO A LINGUAGEM DO NAVEGADOR
         await pagina.setExtraHTTPHeaders({ 'Accept-Language': 'pt-br' })
         
         // ACESSANDO O PERFIL PELO COOKIE
         logs.push(usuario + ' - Acessando o perfil')
-        await pagina.setCookie(...cookies)
+        await pagina.setCookie(...cookie)
 
         // SEGUINDO OS PERFIS
         for(let x = 0; x < usuarios.length; x++){
@@ -153,6 +146,25 @@ const seguirPerfis = async(
 
                 // ACESSANDO O PERFIL DO USUÁRIO
                 await pagina.goto(`https://www.instagram.com/${usuarioPerfil}/`)
+
+                var perfilBloqueado = await pagina.evaluate(()=>{
+
+                    let resultado = false
+        
+                    document.querySelectorAll('span').forEach((e)=>{
+                        if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
+                            resultado = true
+                        }
+                    })
+        
+                    return resultado
+                })
+        
+                if(perfilBloqueado == true){
+                    logs.push(usuario + ' - Não conseguimos seguir esse perfil!')
+                    logs.push(`${usuario} - O perfil foi bloqueado.`)
+                    break
+                }
 
                 // SEGUINDO O USUÁRIO
                 await pagina.waitForSelector('._aacl._aaco._aacw._adda._aad6._aade')

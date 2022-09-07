@@ -295,7 +295,7 @@ const criador = async(
                 await paginaInstagram.waitForTimeout(esperarEntre)
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     
@@ -337,7 +337,7 @@ const criador = async(
                 }
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     
@@ -365,7 +365,7 @@ const criador = async(
                 }
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     
@@ -396,7 +396,7 @@ const criador = async(
                 }
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     
@@ -420,7 +420,7 @@ const criador = async(
                 await seguirPerfisFamosos(paginaInstagram, usuario, seguirPerfis, esperarEntre, logs)
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     
@@ -451,7 +451,7 @@ const criador = async(
                 }
             }
 
-            var perfilBloqueado = await pagina.evaluate(()=>{
+            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
 
                 let resultado = false
     

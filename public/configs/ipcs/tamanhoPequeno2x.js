@@ -1,11 +1,8 @@
-function tamanhoPequeno2x(ipcMain, BrowserWindow){
+function tamanhoPequeno2x(ipcMain, mainWindow){
     ipcMain.on('tamanho-pequeno-2x', (event)=>{
-        const { id } = BrowserWindow.getFocusedWindow()
-
-        BrowserWindow.fromId(id).setResizable(true)
-        BrowserWindow.fromId(id).setSize(350, 300)
-        BrowserWindow.fromId(id).setResizable(false)
-
+        mainWindow.setResizable(true)
+        mainWindow.setSize(350, 300)
+        mainWindow.setResizable(false)
         event.returnValue = true
     })
 }

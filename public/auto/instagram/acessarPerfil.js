@@ -29,8 +29,12 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
         await pagina.waitForNavigation({ timeout: 60000 })
 
         // Apertando em agora não
-        await pagina.waitForSelector('.cmbtv > button', { timeout: 60000 })
-        await pagina.click('.cmbtv > button')
+        try{
+            await pagina.waitForSelector('.cmbtv > button', { timeout: 10000 })
+            await pagina.click('.cmbtv > button')
+        }catch(erro){
+            
+        }
 
         // Esperando o direct aparecer
         await pagina.waitForSelector('[aria-label="Página inicial"]') 
@@ -75,8 +79,12 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
             await pagina.waitForNavigation({ timeout: 60000 })
 
             // Apertando em agora não
-            await pagina.waitForSelector('.cmbtv > button', { timeout: 60000 })
-            await pagina.click('.cmbtv > button')
+            try{
+                await pagina.waitForSelector('.cmbtv > button', { timeout: 10000 })
+                await pagina.click('.cmbtv > button')
+            }catch(erro){
+                
+            }
 
             // Esperando o direct aparecer
             await pagina.waitForSelector('[aria-label="Página inicial"]') 

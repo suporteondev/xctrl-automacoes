@@ -7,10 +7,6 @@ const acessarInstagram = async(pagina, usuario, senha, logs, identificador)=>{
         logs.push('Acessando o instagram')
         await pagina.goto('https://www.instagram.com/accounts/login/', { timeout: 60000 })
 
-        logs.push(`perfil ${identificador}` + ' - Deletando os cookies.')
-        const cookies = await pagina.cookies()
-        await pagina.deleteCookie(...cookies)
-
         // Digitando o usuário
         logs.push(`perfil ${identificador}` + ' - Digitando usuário.')
         await pagina.waitForSelector('input[name="username"]', { timeout: 60000 })

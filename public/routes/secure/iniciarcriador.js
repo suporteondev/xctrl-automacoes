@@ -20,8 +20,7 @@ router.post('/iniciarcriador', logado, async(req, res)=>{
         esperarEntre,
         limparPastaPrefetch,
         limparPastaTemp,
-        montarPerfis,
-        aba
+        montarPerfis
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo == 'sim' ? false : true
@@ -42,7 +41,7 @@ router.post('/iniciarcriador', logado, async(req, res)=>{
     const alterarFotoPerfilConfigurado = alterarFotoPerfil == 'sim' ? true : false
     const alterarBiografiaConfigurado = alterarBiografia == 'sim' ? true : false
 
-    global.criador[aba] = []
+    global.criador = []
 
     await criador(
         navegador,
@@ -64,7 +63,7 @@ router.post('/iniciarcriador', logado, async(req, res)=>{
         quantidadePublicacoesFeed,
         quantidadePublicacoesStory,
         seguirPerfis,
-        global.criador[aba]
+        global.criador
     )
 
     return res.json({

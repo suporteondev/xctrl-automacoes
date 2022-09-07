@@ -1,11 +1,11 @@
 const router = require('express').Router()
 const Store = require('electron-store')
-const connectDB = require('../../middlewares/connectDB')
-const logado = require('../../middlewares/logado')
-const Perfil = require('../../models/perfil')
+const connectDB = require('../../../middlewares/connectDB')
+const logado = require('../../../middlewares/logado')
+const Perfil = require('../../../models/perfil')
 const store = new Store()
 
-router.post('/deletarperfis', logado, connectDB, async(req, res)=>{
+router.post('/apagarperfis', logado, connectDB, async(req, res)=>{
 
     // Capturando os dados da requisição
     const { perfis } = req.body
@@ -31,7 +31,7 @@ router.post('/deletarperfis', logado, connectDB, async(req, res)=>{
     // Retorando os perfis
     res.json({
         ok: true,
-        mensagem: 'Perfis deletados com sucesso!',
+        mensagem: 'Perfis apagados com sucesso!',
         perfis: meusPerfis
     })
 })

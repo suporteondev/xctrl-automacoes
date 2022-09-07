@@ -112,6 +112,24 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
+                    {/* <Servico 
+                        ativo={acessoGerenciador.status}
+                        onClick={()=>{ 
+                            {acessoGerenciador.status == true ? 
+                                redirecionar(Router, '/realizador')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Realizador</h1>
+                        <p>
+                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico> */}
                 </Servicos>
             </Conteudos>
             <Rodape>

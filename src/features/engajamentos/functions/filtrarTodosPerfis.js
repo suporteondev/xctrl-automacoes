@@ -1,4 +1,4 @@
-async function filtrarTodosPerfis(setPerfis){
+async function filtrarTodosPerfis(){
 
     const configs = {
         method: 'POST',
@@ -8,10 +8,10 @@ async function filtrarTodosPerfis(setPerfis){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/perfis`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamentos/listarperfis`, configs)
     const resultado = await api.json()
 
-    setPerfis(resultado.perfis)
+    return resultado.perfis
 }
 
 export { filtrarTodosPerfis }

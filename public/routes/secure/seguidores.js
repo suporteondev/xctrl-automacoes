@@ -10,10 +10,9 @@ router.post('/seguidores', logado, async(req, res)=>{
         navegador,
         verAcontecendo, 
         modoAnonimo,
+        perfis,
         usuarios,
-        usuariosSeguidores,
-        esperarEntre,
-        perfisEngajamentos
+        esperarEntre
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo === 'sim' ? false : true
@@ -23,10 +22,9 @@ router.post('/seguidores', logado, async(req, res)=>{
         navegador,
         verAcontecendoConfigurado, 
         modoAnonimoConfigurado,
+        perfis,
         usuarios,
-        usuariosSeguidores,
         esperarEntre,
-        perfisEngajamentos,
         global.seguidores
     )
    

@@ -1,7 +1,10 @@
+const Perfil = require('../../models/perfil')
 const Store = require('electron-store')
 const store = new Store()
 
 const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senha, data, logs)=>{
+
+    const { email: ref } = store.get('usuarioLogado')
     
     try{
         
@@ -16,13 +19,14 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
         await pagina.waitForSelector('[aria-label="Página inicial"]')
         
         // Capturando as informações do perfil
-        const perfil = await pagina.evaluate(({ usuario, senha, data })=>{
+        const perfil = await pagina.evaluate(({ usuario, senha, data, ref })=>{
             const titulos = document.querySelectorAll('h2')
 
             for(let x = 0; x < titulos.length; x++){
                 const titulo = titulos[x]
                 if(titulo.innerText == 'Esta página não está disponível.'){ 
                     return {
+                        ref,
                         status: 'Inativo',
                         usuario,
                         senha,
@@ -36,6 +40,7 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
 
             if(document.querySelectorAll('._ac2a._ac2b')){
                 return {
+                    ref,
                     status: 'Ativo',
                     usuario,
                     senha,
@@ -47,6 +52,7 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
             }
 
             return {
+                ref,
                 status: 'Tentar novamente',
                 usuario,
                 senha,
@@ -55,7 +61,7 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
                 seguindo: '0',
                 data
             }
-        }, { usuario, senha, data })
+        }, { usuario, senha, data, ref })
 
         if(perfil.status == 'Ativo'){
             logs.push(usuario + ' - Perfil ativo!')
@@ -65,25 +71,23 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
             logs.push(usuario + ' - Tentar novamente!')
         }
 
-        for(let x = 0; x < novoArrayPerfisEngajamentos.length; x++) {
-            // ATUALIZANDO OS DADOS DO PERFIL
-            if(novoArrayPerfisEngajamentos[x].usuario.indexOf(usuario) >= 0){
-                novoArrayPerfisEngajamentos[x] = perfil
-                store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
-                return true
-            }
-        }
+        // ADICIONANDO OU ATUALIZANDO O PERFIL NO GERENCIADOR
+        const existe = await Perfil.findOne({ ref, usuario })
 
-        // ADICIONANDO O PERFIL
-        novoArrayPerfisEngajamentos.push(perfil)
-        store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
+        if(existe){
+            await Perfil.findOneAndUpdate({ ref, usuario}, perfil)
+        }else{
+            await Perfil.create(perfil)
+        }
 
         return true
         
     }catch(erro){
-        console.log(erro.message)
-        
+
+        logs.push(usuario + ' - Tentar novamente!')
+
         const perfil = {
+            ref,
             status: 'Tentar novamente',
             usuario,
             senha,
@@ -93,20 +97,14 @@ const verificarPerfil = async(pagina, novoArrayPerfisEngajamentos, usuario, senh
             data
         }
 
-        logs.push(usuario + ' - Tentar novamente!')
+        // ADICIONANDO OU ATUALIZANDO O PERFIL NO GERENCIADOR
+        const existe = await Perfil.findOne({ ref, usuario })
 
-        for(let x = 0; x < novoArrayPerfisEngajamentos.length; x++) {
-            // ATUALIZANDO OS DADOS DO PERFIL
-            if(novoArrayPerfisEngajamentos[x].usuario.indexOf(usuario) >= 0){
-                novoArrayPerfisEngajamentos[x] = perfil
-                store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
-                return true
-            }
+        if(existe){
+            await Perfil.findOneAndUpdate({ ref, usuario}, perfil)
+        }else{
+            await Perfil.create(perfil)
         }
-
-        // ADICIONANDO O PERFIL
-        novoArrayPerfisEngajamentos.push(perfil)
-        store.set('perfisGerenciador', novoArrayPerfisEngajamentos)
 
         return true
     }

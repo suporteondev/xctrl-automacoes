@@ -17,8 +17,7 @@ router.post('/iniciarmontador', logado, async(req, res)=>{
         quantidadePublicacoesStory,
         seguirPerfis,
         limparLogin,
-        esperarEntre,
-        aba
+        esperarEntre
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo === 'sim' ? false : true
@@ -27,7 +26,7 @@ router.post('/iniciarmontador', logado, async(req, res)=>{
     const alterarBiografiaConfigurado = alterarBiografia === 'sim' ? true : false
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
 
-    global.montador[aba] = []
+    global.montador = []
 
     await montador(
         navegador,
@@ -43,7 +42,7 @@ router.post('/iniciarmontador', logado, async(req, res)=>{
         seguirPerfis,
         limparLoginConfigurado,
         esperarEntre,
-        global.montador[aba]
+        global.montador
     )
 
     return res.json({

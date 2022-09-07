@@ -1,10 +1,12 @@
+import { filtrarTodosPerfis } from "./filtrarTodosPerfis"
+
 export async function filtrarPorUsuario(
     setPerfisGerenciador
 ){
     const usuario = document.querySelector('[name="usuarioPesquisado"]').value
     
     if(usuario != ''){
-        const perfisGerenciador = window.api.ipcRenderer.sendSync('perfisGerenciador')
+        const perfisGerenciador = await filtrarTodosPerfis()
         const novoArray = []
 
         for(let x = 0; x < perfisGerenciador.length; x++){

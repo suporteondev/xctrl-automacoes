@@ -1,32 +1,33 @@
-export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs, setAtivos, setNovamentes, setInativos, setAverificar, setDisplayVoltar){
+export async function iniciar(
+    Mensagem, 
+    setMensagem, 
+    setExecutando, 
+    setMeusLogs, 
+    setAtivos, 
+    setNovamentes, 
+    setInativos, 
+    setAverificar, 
+    setDisplayVoltar,
+    perfis
+){
 
     const navegador = document.querySelector('[name="navegador"]').value
     const verAcontecendo = document.querySelector('[name="verAcontecendo"]').value
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
-    const usuariosSeguidores = document.querySelector('[name="usuariosSeguidores"]').value
     const usuarios = document.querySelector('[name="usuarios"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
-    if(usuariosSeguidores === ''){
-        setMensagem(<Mensagem>Preencha ao menos um usuário seguidor antes de iniciar</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
-    }else if(usuarios === ''){
-        setMensagem(<Mensagem>Preencha ao menos um usuário a ser seguido antes de iniciar</Mensagem>)
+    if(usuarios === ''){
+        setMensagem(<Mensagem>Preencha ao menos um usuário antes de iniciar</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }else{
 
         const arrayUsuarios = []
-        const arrayUsuariosSeguidores = []
             
         usuarios.split('\n').forEach((usuario)=>{
             const arrayDados = usuario.split(' ')
             arrayUsuarios.push(arrayDados[0])
-        })
-
-        usuariosSeguidores.split('\n').forEach((usuario)=>{
-            const arrayDados = usuario.split(' ')
-            arrayUsuariosSeguidores.push(arrayDados[0])
         })
 
         setExecutando(true)
@@ -69,18 +70,14 @@ export async function iniciar(Mensagem, setMensagem, setExecutando, setMeusLogs,
                 navegador,
                 verAcontecendo, 
                 modoAnonimo,
+                perfis,
                 usuarios: arrayUsuarios,
-                usuariosSeguidores: arrayUsuariosSeguidores,
-                esperarEntre: Number(esperarEntre) * 1000,
-                perfisEngajamentos: window.api.ipcRenderer.sendSync('perfisEngajamentos')
+                esperarEntre: Number(esperarEntre) * 1000
             })
         }
     
         const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/seguidores`, configs)
         const resultado = await api.json()
-
-        setMensagem(<Mensagem cor='sucesso'>Verificador iniciado com sucesso!</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
     }
 
 }

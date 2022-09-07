@@ -14,7 +14,7 @@ import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
 import { IoIosSearch } from 'react-icons/io'
 import { selecionarTodos } from './functions/selecionarTodos'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Filtrar } from './components/filtrar'
 import { apagarPerfis } from './functions/apagarPerfis'
 import { copiarPerfis } from './functions/copiarPerfis'
@@ -23,12 +23,12 @@ import { filtrarPorUsuario } from './functions/filtrarPorUsuario'
 import { useNavigate } from 'react-router-dom'
 import { redirecionar } from '../../functions/redirecionar'
 import { abrirNavegador } from '../../functions/abrirNavegador'
+import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
 
 const Gerenciador = ()=>{
 
     const { acessoGerenciador } = useAcessoGerenciador()
-    const perfisGerenciador2 = window.api.ipcRenderer.sendSync('perfisGerenciador')
-    const [ perfisGerenciador, setPerfisGerenciador ] = useState(perfisGerenciador2)
+    const [ perfisGerenciador, setPerfisGerenciador ] = useState([])
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
@@ -36,6 +36,11 @@ const Gerenciador = ()=>{
     const [ displayQuantidade, setDisplayQuantidade ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
+
+    useEffect(async()=>{
+        const perfisEncontrados = await filtrarTodosPerfis()
+        setPerfisGerenciador(perfisEncontrados)
+    }, [])
 
     return (
         <div>

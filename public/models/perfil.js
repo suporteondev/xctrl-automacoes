@@ -7,7 +7,8 @@ const PerfilSchema = new Schema({
     senha: String,
     seguidores: String,
     seguindo: String,
-    publicacoes: String
+    publicacoes: String,
+    data: String
 })
 
 module.exports = model('Perfil', PerfilSchema)

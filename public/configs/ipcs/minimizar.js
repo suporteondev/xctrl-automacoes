@@ -1,7 +1,7 @@
-function minimizar(ipcMain, BrowserWindow){
+function minimizar(ipcMain, mainWindow){
     ipcMain.on('minimizar', (event)=>{
-        const { id } = BrowserWindow.getFocusedWindow()
-        return BrowserWindow.fromId(id).minimize()
+        mainWindow.minimize()
+        event.returnValue = true
     })
 }
 

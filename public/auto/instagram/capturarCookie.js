@@ -1,10 +1,12 @@
 const Store = require('electron-store')
+const Engajamento = require('../../models/engajamento')
 const store = new Store()
 
 const capturarCookie = async(pagina, novoArrayPerfisEngajamentos, usuario, senha, data, logs)=>{
     
-    let cookies = await pagina.cookies()
-    let userAgent = await pagina.evaluate(() => navigator.userAgent )
+    const { email: ref } = store.get('usuarioLogado')
+    const cookie = await pagina.cookies()
+    const userAgent = await pagina.evaluate(() => navigator.userAgent )
 
     try{
 
@@ -19,9 +21,10 @@ const capturarCookie = async(pagina, novoArrayPerfisEngajamentos, usuario, senha
         await pagina.waitForSelector('[aria-label="Página inicial"]')
         
         // Capturando as informações do perfil
-        const perfil = await pagina.evaluate(({ usuario, senha, data, cookies, userAgent })=>{
+        const perfil = await pagina.evaluate(({ ref, usuario, senha, data, cookie, userAgent })=>{
             if(document.querySelectorAll('._ac2a._ac2b')){
                 return {
+                    ref,
                     status: 'Ativo',
                     usuario,
                     senha,
@@ -29,12 +32,13 @@ const capturarCookie = async(pagina, novoArrayPerfisEngajamentos, usuario, senha
                     seguidores: document.querySelectorAll('._ac2a._ac2b')[1].innerText,
                     seguindo: document.querySelectorAll('._ac2a._ac2b')[2].innerText,
                     data,
-                    cookies,
+                    cookie,
                     userAgent
                 }
             }
 
             return {
+                ref,
                 status: 'Tentar novamente',
                 usuario,
                 senha,
@@ -42,10 +46,10 @@ const capturarCookie = async(pagina, novoArrayPerfisEngajamentos, usuario, senha
                 seguidores: '0',
                 seguindo: '0',
                 data,
-                cookies,
+                cookie,
                 userAgent
             }
-        }, { usuario, senha, data, cookies, userAgent })
+        }, { ref, usuario, senha, data, cookie, userAgent })
 
         if(perfil.status == 'Ativo'){
             logs.push(usuario + ' - Perfil ativo!')
@@ -53,24 +57,42 @@ const capturarCookie = async(pagina, novoArrayPerfisEngajamentos, usuario, senha
             logs.push(usuario + ' - Tentar novamente!')
         }
 
-        for(let x = 0; x < novoArrayPerfisEngajamentos.length; x++) {
-            // ATUALIZANDO OS DADOS DO PERFIL
-            if(novoArrayPerfisEngajamentos[x].usuario.indexOf(usuario) >= 0){
-                novoArrayPerfisEngajamentos[x] = perfil
-                store.set('perfisEngajamentos', novoArrayPerfisEngajamentos)
-                return true
-            }
-        }
+        // ADICIONANDO O PERFIL NO ENGAJAMENTO
+        const existe = await Engajamento.findOne({ ref, usuario })
 
-        // ADICIONANDO O PERFIL
-        novoArrayPerfisEngajamentos.push(perfil)
-        store.set('perfisEngajamentos', novoArrayPerfisEngajamentos)
+        if(existe){
+            await Engajamento.findOneAndUpdate({ ref, usuario}, perfil)
+        }else{
+            await Engajamento.create(perfil)
+        }
 
         return true
         
     }catch(erro){
-        console.log(erro.message)
         logs.push(usuario + ' - Tentar novamente!')
+
+        const perfil = {
+            ref,
+            status: 'Tentar novamente',
+            usuario,
+            senha,
+            publicacoes: '0',
+            seguidores: '0',
+            seguindo: '0',
+            data,
+            cookie,
+            userAgent
+        }
+
+        // ADICIONANDO O PERFIL NO ENGAJAMENTO
+        const existe = await Engajamento.findOne({ ref, usuario })
+
+        if(existe){
+            await Engajamento.findOneAndUpdate({ ref, usuario }, perfil)
+        }else{
+            await Engajamento.create(perfil)
+        }
+
         return true
     }
 }
