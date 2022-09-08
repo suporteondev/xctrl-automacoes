@@ -223,7 +223,7 @@ const montador = async(
 
         // POSTANDO A FOTO DE PERFIL
         if(alterarFotoPerfil == true){
-            await postarFotoPerfil(pagina, usuario, senha, caminhoPasta, logs)
+            await postarFotoPerfil(pagina, usuario, caminhoPasta, logs)
             if(esperarEntre != 0){
                 logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
                 await pagina.waitForTimeout(esperarEntre)

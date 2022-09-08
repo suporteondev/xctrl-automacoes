@@ -85,7 +85,7 @@ const Verificador = ()=>{
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Seus perfis</Etiqueta>
-                                <Textarea name='seusPerfis' defaultValue={configuracoesVerificador.seusPerfis}></Textarea>
+                                <Textarea name='seusPerfis'></Textarea>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Limpar atividade de login</Etiqueta>

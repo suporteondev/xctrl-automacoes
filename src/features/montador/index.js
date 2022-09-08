@@ -84,7 +84,7 @@ const Montador = ()=>{
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Seus perfis</Etiqueta>
-                                <Textarea name='seusPerfis' defaultValue={configuracoesMontador.seusPerfis}></Textarea>
+                                <Textarea name='seusPerfis'></Textarea>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Gênero dos seus perfis</Etiqueta>

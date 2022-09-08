@@ -1,7 +1,7 @@
 const fs = require('fs')
 var contador = 1
 
-const postarFotoPerfil = async(pagina, usuario, senha, pastaFotos, logs)=>{
+const postarFotoPerfil = async(pagina, usuario, pastaFotos, logs)=>{
     try{
 
         logs.push('Alterando a foto de perfil')

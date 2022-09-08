@@ -32,7 +32,6 @@
     "mongoose": "^6.2.7",
     "open": "^8.4.0",
     "puppeteer-core": "^13.5.1",
-    "python-shell": "^3.0.1",
     "react-icons": "^4.4.0",
     "styled-components": "^5.3.5"
   },
