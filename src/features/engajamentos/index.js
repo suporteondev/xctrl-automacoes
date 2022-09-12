@@ -9,7 +9,7 @@ import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { listarPerfis } from './functions/listarPerfis'
 import { FaAd, FaCheck, FaYoutube, FaUserPlus } from 'react-icons/fa'
-import { MdOutlineAddCircle } from 'react-icons/md'
+import { MdLibraryAdd, MdLibraryAddCheck, MdOutlineAddCircle } from 'react-icons/md'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
@@ -25,7 +25,9 @@ import { useNavigate } from 'react-router-dom'
 import { redirecionar } from '../../functions/redirecionar'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
+import { selecionarPerfis } from './functions/selecionarPerfis'
 import { usePerfisSelecionadosEngajamentos } from '../../providers/perfisSelecionadosEngajamentos'
+import { Titulo } from '../../components/cabeca/components/titulo'
 
 const Engajamentos = ()=>{
 
@@ -36,6 +38,7 @@ const Engajamentos = ()=>{
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
+    const [ displaySelecionar, setDisplaySelecionar ] = useState(false)
     const [ displayQuantidade, setDisplayQuantidade ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
@@ -49,6 +52,32 @@ const Engajamentos = ()=>{
         <div>
             <Cabeca blur={blur} voltar='/painel'/>
             <div>
+                {/* <Titulo 
+                    style={{ 
+                        marginTop: '10px', 
+                        marginBottom: '-10px',
+                        textAlign: 'center'
+                    }}
+                >Engajamento</Titulo> */}
+                <Filtrar display={displaySelecionar}>
+                    <div className='form'>
+                        <label>Selecionar do perfil:</label>
+                        <input id='selecionarMinimo' type='number' defaultValue={1}/>
+                        <label>Até o perfil:</label>
+                        <input id='selecionarMaximo' type='number' defaultValue={10}/>
+                        <div>
+                            <button onClick={()=>{ 
+                                setDisplaySelecionar(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                selecionarPerfis()
+                                setDisplaySelecionar(false) 
+                                setBlur(false)
+                            }}>Selecionar</button> 
+                        </div>
+                    </div>
+                </Filtrar>
                 <Filtrar display={displayApagar}>
                     <div className='form'>
                         <label>Deseja apagar os perfis selecionados?</label>
@@ -148,6 +177,7 @@ const Engajamentos = ()=>{
                                     }}
                                 />
                             </td>
+                            <td>#</td>
                             <td>Status</td>
                             <td>Usuário</td>
                             <td onClick={()=>{
@@ -184,6 +214,7 @@ const Engajamentos = ()=>{
                                     <td>
                                         <input className='checkbox' type='checkbox'/>
                                     </td>
+                                    <td>{index + 1}</td>
                                     <td>
                                         {perfil.status == 'Ativo' ? 
                                             <Opcao2 bottom='direita' left='direita' status='#236EFF'>
@@ -239,11 +270,13 @@ const Engajamentos = ()=>{
                 </Opcao>
                 <Opcao
                     funcao={()=>{
-                        redirecionar(Router, '/adicionador')
+                        setDisplaySelecionar(true)
+                        setBlur(true)
                     }}
                 >
-                    <span>Adicionar perfis</span>
-                    <MdOutlineAddCircle/>
+                    <span>Selecionar perfis</span>
+                    <MdLibraryAddCheck/>
+                    
                 </Opcao>
                 <Opcao 
                     funcao={()=>{

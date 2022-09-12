@@ -8,7 +8,8 @@ import { AiFillDislike, AiFillLike } from 'react-icons/ai'
 import { BsExclamationTriangle } from 'react-icons/bs'
 import { useAcessoGerenciador } from '../../providers/acessoGerenciador'
 import { listarPerfis } from './functions/listarPerfis'
-import { FaCheck, FaYoutube} from 'react-icons/fa'
+import { FaCheck, FaCheckCircle, FaCheckSquare, FaYoutube } from 'react-icons/fa'
+import { MdLibraryAddCheck, MdLibraryAdd } from 'react-icons/md'
 import { IoTime, IoCopy } from 'react-icons/io5'
 import { HiFilter } from 'react-icons/hi'
 import { AiFillDelete } from 'react-icons/ai'
@@ -24,6 +25,9 @@ import { useNavigate } from 'react-router-dom'
 import { redirecionar } from '../../functions/redirecionar'
 import { abrirNavegador } from '../../functions/abrirNavegador'
 import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
+import { selecionarPerfis } from './functions/selecionarPerfis'
+import { transferirPerfis } from './functions/transferirPerfis'
+import { BiTransferAlt } from 'react-icons/bi'
 
 const Gerenciador = ()=>{
 
@@ -31,9 +35,12 @@ const Gerenciador = ()=>{
     const [ perfisGerenciador, setPerfisGerenciador ] = useState([])
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
+    const [ displayTransferir, setDisplayTransferir ] = useState(false)
     const [ displayCopiar, setDisplayCopiar ] = useState(false)
     const [ displayFiltrar, setDisplayFiltrar ] = useState(false)
+    const [ displaySelecionar, setDisplaySelecionar ] = useState(false)
     const [ displayQuantidade, setDisplayQuantidade ] = useState(false)
+    const [ displayModoCompleto, setDisplayModoCompleto ] = useState(false)
     const [ senhaVisivel, setSenhaVisivel ] = useState('password')
     const Router = useNavigate()
 
@@ -64,6 +71,24 @@ const Gerenciador = ()=>{
                         </div>
                     </div>
                 </Filtrar>
+                <Filtrar display={displayTransferir}>
+                    <div className='form'>
+                        <label>Deseja transferir os perfis selecionados para o engajamento?</label>
+                        <div>
+                            <button onClick={()=>{ 
+                                setDisplayTransferir(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                transferirPerfis(
+                                    setPerfisGerenciador,
+                                    setDisplayTransferir,
+                                    setBlur
+                                )
+                            }}>Transferir</button> 
+                        </div>
+                    </div>
+                </Filtrar>
                 <Filtrar display={displayCopiar}>
                     <div className='form'>
                         <label>Opções</label>
@@ -85,35 +110,72 @@ const Gerenciador = ()=>{
                         </div>
                     </div>
                 </Filtrar>
+                <Filtrar display={displaySelecionar}>
+                    <div className='form'>
+                        <label>Selecionar do perfil:</label>
+                        <input id='selecionarMinimo' type='number' defaultValue={1}/>
+                        <label>Até o perfil:</label>
+                        <input id='selecionarMaximo' type='number' defaultValue={10}/>
+                        <div>
+                            <button onClick={()=>{ 
+                                setDisplaySelecionar(false) 
+                                setBlur(false)
+                            }}>Voltar</button>
+                            <button onClick={()=>{
+                                selecionarPerfis()
+                                setDisplaySelecionar(false) 
+                                setBlur(false)
+                            }}>Selecionar</button> 
+                        </div>
+                    </div>
+                </Filtrar>
                 <Filtrar display={displayFiltrar}>
                     <div className='form'>
                         <label>Filtros</label>
                         <select id='filtro' onChange={()=> {
                             const filtro = document.querySelector('#filtro').value
-                            if(
-                                filtro == 'qtdPublicacoes' ||
-                                filtro == 'qtdSeguidores' ||
-                                filtro == 'qtdSeguindo'
-                            ){
+                            if(filtro == 'qtdPublicacoes' || filtro == 'qtdSeguidores' || filtro == 'qtdSeguindo'){
                                 setDisplayQuantidade(true)
                             }else{
                                 setDisplayQuantidade(false)
+                            }
+                            
+                            if(filtro == 'modoCompleto'){
+                                setDisplayModoCompleto(true)
+                            }else{
+                                setDisplayModoCompleto(false)
                             }
                         }}>
                             <option value='todos'>Todos os perfis</option>
                             <option value='ativos'>Perfis ativos</option>
                             <option value='inativos'>Perfis inativos</option>
                             <option value='novamente'>Perfis para tentar novamente</option>
-                            <option value='perfisZerados'>Perfis totalmente vazios</option>
                             <option value='qtdPublicacoes'>Filtrar por quantidade de publicações</option>
                             <option value='qtdSeguidores'>Filtrar por quantidade de seguidores</option>
                             <option value='qtdSeguindo'>Filtrar por quantidade de seguindo</option>
+                            <option value='modoCompleto'>Filtrar de modo completo</option>
                         </select>
-                        {displayQuantidade == true ? 
+                        {displayQuantidade == true ?
                             <>
-                                <label>Quantidade</label>
-                                <input id='quantidade' type='number' min={1} defaultValue={0}/>    
-                            </>
+                            <label>Quantidade</label>
+                            <input id='quantidade' type='number' min={1} defaultValue={0}/>  
+                            <label>Maior (1), menor (2) ou igual (3)</label>
+                            <input id='como' type='number' min={1} defaultValue={1}/>   
+                        </>
+                            :
+                            ''
+                        }
+                        {displayModoCompleto == true ?
+                            <>
+                            <label>Quantidade de publicações</label>
+                            <input id='quantidadePublicacoes' type='number' defaultValue={0}/>  
+                            <label>Quantidade de seguidores</label>
+                            <input id='quantidadeSeguidores' type='number' defaultValue={0}/>  
+                            <label>Quantidade de seguindo</label>
+                            <input id='quantidadeSeguindo' type='number' defaultValue={0}/>  
+                            <label>Maior (1), menor (2) ou igual (3)</label>
+                            <input id='como' type='number' min={1} defaultValue={1}/>   
+                        </>
                             :
                             ''
                         }
@@ -146,6 +208,7 @@ const Gerenciador = ()=>{
                                     }}
                                 />
                             </td>
+                            <td>#</td>
                             <td>Status</td>
                             <td>Usuário</td>
                             <td onClick={()=>{
@@ -182,6 +245,7 @@ const Gerenciador = ()=>{
                                     <td>
                                         <input className='checkbox' type='checkbox'/>
                                     </td>
+                                    <td>{index + 1}</td>
                                     <td>
                                         {perfil.status == 'Ativo' ? 
                                             <Opcao2 bottom='direita' left='direita' status='#236EFF'>
@@ -241,7 +305,16 @@ const Gerenciador = ()=>{
                     }}
                 >
                     <span>Verificar perfis</span>
-                    <FaCheck/>
+                    <MdLibraryAdd/>
+                </Opcao>
+                <Opcao
+                    funcao={()=>{
+                        setDisplaySelecionar(true)
+                        setBlur(true)
+                    }}
+                >
+                    <span>Selecionar perfis</span>
+                    <MdLibraryAddCheck/>
                 </Opcao>
                 <Opcao 
                     funcao={()=>{
@@ -251,6 +324,16 @@ const Gerenciador = ()=>{
                 >
                     <span>Filtrar perfis</span>
                     <HiFilter/>
+                </Opcao>
+                <Opcao 
+                    funcao={()=>{
+                        setDisplayTransferir(true) 
+                        setBlur(true)
+                        listarPerfis()
+                    }}
+                >
+                    <span>Transferir perfis</span>
+                    <BiTransferAlt/>
                 </Opcao>
                 <Opcao 
                     funcao={()=>{

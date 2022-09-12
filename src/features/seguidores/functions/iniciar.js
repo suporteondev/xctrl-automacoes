@@ -46,6 +46,10 @@ export async function iniciar(
                 if(mensagem.includes('Não conseguimos') == true){
                     perfisInativos += 1
                 }
+
+                if(mensagem.includes('Perfil foi bloqueado.') == true){
+                    perfisInativos += 1
+                }
             })
 
             setAtivos(perfisAtivos)

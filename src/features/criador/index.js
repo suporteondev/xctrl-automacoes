@@ -15,7 +15,8 @@ import { useConfiguracoesCriador } from '../../providers/configuracoesCriador'
 import { salvar } from './functions/salvar'
 import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
-import { IoIosSave } from 'react-icons/io'
+import { IoIosSave, IoMdAlert } from 'react-icons/io'
+import { RiAlertFill } from 'react-icons/ri'
 import { IoPlay, IoTime } from 'react-icons/io5'
 import { userAgentsDesktop } from '../../userAgentsDesktop'
 import { Logs } from './components/logs'
@@ -37,6 +38,7 @@ const Criador = ()=>{
     const [ publicacoesStoryNumero, setPublicacoesStoryNumero ] = useState(0)
     const [ perfisSeguidosNumero, setPerfisSeguidosNumero ] = useState(0)
     const [ montarPerfisCriados, setMontarPerfisCriados ] = useState(false)
+    const [ montadorEmExecucao, setMontadorEmExecucao ] = useState(false)
     const listaDeUserAgentsDesktop = [...new Set(userAgentsDesktop)]
 
     return (
@@ -185,7 +187,8 @@ const Criador = ()=>{
                                     setPublicacoesRealizadasNumero,
                                     setPublicacoesStoryNumero,
                                     setPerfisSeguidosNumero,
-                                    setMontarPerfisCriados
+                                    setMontarPerfisCriados,
+                                    setMontadorEmExecucao
                                 ) 
                             }}>
                             <span>Iniciar</span>
@@ -229,6 +232,14 @@ const Criador = ()=>{
                         </Opcao>
                         {montarPerfisCriados == true ?
                             <>
+                                {montadorEmExecucao == true ?
+                                    <Opcao cor='orange'>
+                                        <span>Montador em execução</span>
+                                        <RiAlertFill/>
+                                    </Opcao>
+                                    :
+                                    ''
+                                }
                                 <Opcao>
                                     <span>Fotos de perfil alteradas</span>
                                     {fotosPerfisNumero}

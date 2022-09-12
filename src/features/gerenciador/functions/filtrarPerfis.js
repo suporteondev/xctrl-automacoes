@@ -35,44 +35,124 @@ export async function filtrarPerfis(
             }
         }
 
-        if(filtro == 'perfisZerados'){
-            if(
-                Number(perfil.seguindo) == 0 && 
-                Number(perfil.publicacoes) == 0 && 
-                Number(perfil.seguidores) == 0 && 
-                perfil.status == 'Ativo'
-            ){
-                novoArray.push(perfil)
-            }
-        }
-
         if(filtro == 'qtdPublicacoes'){
             const quantidade = document.querySelector('#quantidade').value
-            if(
-                Number(perfil.publicacoes) == Number(quantidade) &&
-                perfil.status == 'Ativo'
-            ){
-                novoArray.push(perfil)
+            const como = document.querySelector('#como').value 
+
+            // MAIOR
+            if(como == '1' || como == 1){
+                if(Number(perfil.publicacoes) > Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // MENOR
+            if(como == '2' || como == 2){
+                if(Number(perfil.publicacoes) < Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // IGUAL
+            if(como == '3' || como == 3){
+                if(Number(perfil.publicacoes) == Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
             }
         }
 
         if(filtro == 'qtdSeguidores'){
             const quantidade = document.querySelector('#quantidade').value
-            if(
-                Number(perfil.seguidores) == Number(quantidade) &&
-                perfil.status == 'Ativo'
-            ){
-                novoArray.push(perfil)
+            const como = document.querySelector('#como').value 
+
+            // MAIOR
+            if(como == '1' || como == 1){
+                if(Number(perfil.seguidores) > Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // MENOR
+            if(como == '2' || como == 2){
+                if(Number(perfil.seguidores) < Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // IGUAL
+            if(como == '3' || como == 3){
+                if(Number(perfil.seguidores) == Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
             }
         }
 
         if(filtro == 'qtdSeguindo'){
             const quantidade = document.querySelector('#quantidade').value
-            if(
-                Number(perfil.seguindo) == Number(quantidade) &&
-                perfil.status == 'Ativo'
-            ){
-                novoArray.push(perfil)
+            const como = document.querySelector('#como').value 
+
+            // MAIOR
+            if(como == '1' || como == 1){
+                if(Number(perfil.seguindo) > Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // MENOR
+            if(como == '2' || como == 2){
+                if(Number(perfil.seguindo) < Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // IGUAL
+            if(como == '3' || como == 3){
+                if(Number(perfil.seguindo) == Number(quantidade) && perfil.status == 'Ativo'){
+                    novoArray.push(perfil)
+                }
+            }
+        }
+
+        if(filtro == 'modoCompleto'){
+            const quantidadePublicacoes = document.querySelector('#quantidadePublicacoes').value
+            const quantidadeSeguidores = document.querySelector('#quantidadeSeguidores').value
+            const quantidadeSeguindo = document.querySelector('#quantidadeSeguindo').value
+            const como = document.querySelector('#como').value 
+
+            // MAIOR
+            if(como == '1' || como == 1){
+                if(
+                    perfil.status == 'Ativo' &&
+                    Number(perfil.publicacoes) > Number(quantidadePublicacoes) && 
+                    Number(perfil.seguidores) > Number(quantidadeSeguidores) &&
+                    Number(perfil.seguindo) > Number(quantidadeSeguindo)
+                ){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // MENOR
+            if(como == '2' || como == 2){
+                if(
+                    perfil.status == 'Ativo' &&
+                    Number(perfil.publicacoes) < Number(quantidadePublicacoes) && 
+                    Number(perfil.seguidores) < Number(quantidadeSeguidores) &&
+                    Number(perfil.seguindo) < Number(quantidadeSeguindo)
+                ){
+                    novoArray.push(perfil)
+                }
+            }
+
+            // IGUAL
+            if(como == '3' || como == 3){
+                if(
+                    perfil.status == 'Ativo' &&
+                    Number(perfil.publicacoes) == Number(quantidadePublicacoes) && 
+                    Number(perfil.seguidores) == Number(quantidadeSeguidores) &&
+                    Number(perfil.seguindo) == Number(quantidadeSeguindo)
+                ){
+                    novoArray.push(perfil)
+                }
             }
         }
     }

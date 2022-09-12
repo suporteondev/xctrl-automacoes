@@ -11,7 +11,8 @@ export async function iniciar(
     setPublicacoesRealizadasNumero,
     setPublicacoesStoryNumero,
     setPerfisSeguidosNumero,
-    setMontarPerfisCriados
+    setMontarPerfisCriados,
+    setMontadorEmExecucao
 ){
     
     // CAPTURANDO SELETORES
@@ -113,6 +114,7 @@ export async function iniciar(
             setPublicacoesRealizadasNumero(publicacoesRealizadas)
             setPublicacoesStoryNumero(publicacoesRealizadasStory)
             setPerfisSeguidosNumero(perfisSeguidos)
+            setMontadorEmExecucao(montadorEmExecucaoValor)
 
             setMeusLogs(window.api.ipcRenderer.sendSync('logCriador'))
             logs.scrollTop = logs.scrollHeight

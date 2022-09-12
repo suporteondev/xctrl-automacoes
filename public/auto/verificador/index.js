@@ -152,7 +152,7 @@ const verificador = async(
         // VERIFICANDO OS PERFIS
         for (let x = 0; x < seusPerfis.length; x++) {
 
-            const { usuario: usuarioPerfil } = seusPerfis[x]
+            const { usuario: usuarioPerfil, senha: senhaPerfil } = seusPerfis[x]
 
             // Capturando os perfis já adicionados no gerenciador
             let perfisGerenciador = store.get('perfisGerenciador')
@@ -165,7 +165,7 @@ const verificador = async(
             let ano = dataAtual.getFullYear()
             let data = `${dia}/${mes}/${ano}`
 
-            await verificarPerfil(pagina, novoArrayPerfisGerenciador, usuarioPerfil, senha, data, logs)
+            await verificarPerfil(pagina, novoArrayPerfisGerenciador, usuarioPerfil, senhaPerfil, data, logs)
 
             if(esperarEntre != 0){
                 logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)

@@ -120,6 +120,7 @@ const Seguidores = ()=>{
                         logs === 'Acessando o instagram' || 
                         logs === 'Verificando o perfil' || 
                         logs === 'Limpando atividade de login' ||
+                        logs === 'Seguindo sua lista de perfis' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
                         <p key={index}>{logs}</p>

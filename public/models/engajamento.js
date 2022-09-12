@@ -8,9 +8,7 @@ const EngajamentoSchema = new Schema({
     seguidores: String,
     seguindo: String,
     publicacoes: String,
-    data: String,
-    cookie: Array,
-    userAgent: String
+    data: String
 })
 
 module.exports = model('Engajamento', EngajamentoSchema)
