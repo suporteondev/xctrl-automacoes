@@ -232,33 +232,9 @@ const Criador = ()=>{
                         </Opcao>
                         {montarPerfisCriados == true ?
                             <>
-                                {montadorEmExecucao == true ?
-                                    <Opcao cor='orange'>
-                                        <span>Montador em execução</span>
-                                        <RiAlertFill/>
-                                    </Opcao>
-                                    :
-                                    ''
-                                }
-                                <Opcao>
-                                    <span>Fotos de perfil alteradas</span>
-                                    {fotosPerfisNumero}
-                                </Opcao>
-                                <Opcao>
-                                    <span>Biografias alteradas</span>
-                                    {biografiasAlteradasNumero}
-                                </Opcao>
-                                <Opcao>
-                                    <span>Publicações no Feed</span>
-                                    {publicacoesRealizadasNumero}
-                                </Opcao>
-                                <Opcao>
-                                    <span>Perfis seguidos</span>
-                                    {perfisSeguidosNumero}
-                                </Opcao>
-                                <Opcao>
-                                    <span>Publicações no Story</span>
-                                    {publicacoesStoryNumero}
+                                <Opcao cor={montadorEmExecucao == true ? 'orange' : ''}>
+                                    <span>Montador em execução</span>
+                                    <RiAlertFill/>
                                 </Opcao>
                             </> : ''
                         }

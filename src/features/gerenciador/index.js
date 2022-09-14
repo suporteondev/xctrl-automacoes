@@ -325,7 +325,7 @@ const Gerenciador = ()=>{
                     <span>Filtrar perfis</span>
                     <HiFilter/>
                 </Opcao>
-                <Opcao 
+                {/* <Opcao 
                     funcao={()=>{
                         setDisplayTransferir(true) 
                         setBlur(true)
@@ -334,7 +334,7 @@ const Gerenciador = ()=>{
                 >
                     <span>Transferir perfis</span>
                     <BiTransferAlt/>
-                </Opcao>
+                </Opcao> */}
                 <Opcao 
                     funcao={()=>{
                         setDisplayCopiar(true) 

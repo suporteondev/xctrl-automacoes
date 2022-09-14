@@ -13,7 +13,7 @@ async function limparPastaPrefetch(logs){
     try{
         arquivosPrefetch = fs.readdirSync(pastaPrefetch)
     }catch(erro){
-        logs.push('A pasta C:\\Windows\\Prefetch não está criada no seu computador!')
+        logs.push('A pasta prefetch não está criada no seu computador!')
         return true
     }
 
@@ -22,7 +22,8 @@ async function limparPastaPrefetch(logs){
         return true
     }
 
-    logs.push('Foram encontrados ' + arquivosPrefetch.length +  ' arquivos temporários na pasta Prefetch')
+    logs.push('Encontramos ' + arquivosPrefetch.length +  ' arquivos na pasta Prefetch')
+    logs.push('Apagando os arquivos da pasta Prefetch')
 
     // FAZENDO UM LAÇO NOS ARQUIVOS DA PASTA PREFETCH
     for(let x = 0; x < arquivosPrefetch.length; x++){
@@ -31,10 +32,10 @@ async function limparPastaPrefetch(logs){
         const arquivo = arquivosPrefetch[x]
 
         // APAGANDO ARQUIVO DA PASTA PREFETCH
-        logs.push('Apagando o arquivo: ' + arquivo)
         fs.rmSync(pastaPrefetch + '\\' + arquivo, { recursive: true })
-        logs.push('Arquivo apagado com sucesso!')
     }
+
+    logs.push('Arquivos apagados com sucesso!')
 
     return true
 }

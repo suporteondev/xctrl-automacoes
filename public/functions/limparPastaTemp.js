@@ -12,7 +12,7 @@ async function limparPastaTemp(logs){
     try{
         arquivosTemp = fs.readdirSync(pastaTemp)
     }catch(erro){
-        logs.push('A pasta C:\\Windows\\Temp não está criada no seu computador!')
+        logs.push('A pasta Temp não está criada no seu computador!')
         return true
     }
 
@@ -21,7 +21,8 @@ async function limparPastaTemp(logs){
         return true
     }
 
-    logs.push('Foram encontrados ' + arquivosTemp.length +  ' arquivos temporários na pasta Temp')
+    logs.push('Encontramos ' + arquivosTemp.length +  ' arquivos na pasta Temp')
+    logs.push('Apagando os arquivos da pasta Temp')
 
     // FAZENDO UM LAÇO NOS ARQUIVOS DA PASTA PREFETCH
     for(let x = 0; x < arquivosTemp.length; x++){
@@ -30,10 +31,10 @@ async function limparPastaTemp(logs){
         const arquivo = arquivosTemp[x]
 
         // APAGANDO ARQUIVO DA PASTA PREFETCH
-        logs.push('Apagando o arquivo: ' + arquivo)
         fs.rmSync(pastaTemp + '\\' + arquivo, { recursive: true })
-        logs.push('Arquivo apagado com sucesso!')
     }
+
+    logs.push('Arquivos apagados com sucesso!')
 
     return true
 }

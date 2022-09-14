@@ -47,12 +47,11 @@ export async function iniciar(
     }else{
 
         setExecutando(true)
-        
+        window.api.ipcRenderer.sendSync('tamanho-pequeno-2x')
+
         if(montarPerfis == 'sim'){
-            window.api.ipcRenderer.sendSync('tamanho-pequeno-3x')
             setMontarPerfisCriados(true)
         }else{
-            window.api.ipcRenderer.sendSync('tamanho-pequeno')
             setMontarPerfisCriados(false)
         }
 
