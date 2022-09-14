@@ -45,7 +45,7 @@ export async function iniciar(
         }
     
         setExecutando(true)
-        window.api.ipcRenderer.sendSync('tamanho-pequeno')
+        window.api.ipcRenderer.sendSync('tamanho-pequeno-2x')
     
         var intervalo = setInterval(()=>{
     

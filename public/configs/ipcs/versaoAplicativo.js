@@ -1,6 +1,6 @@
 function versaoAplicativo(ipcMain){
     ipcMain.on('versaoAplicativo', (event)=>{
-        event.returnValue = '1.0.4'
+        event.returnValue = '1.0.5'
     })
 }
 
