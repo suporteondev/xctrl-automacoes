@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import Acessar from './pages/acessar'
 import Painel from './pages/painel'
 import Gerenciador from './pages/gerenciador'
+import ControleVps from './pages/controlevps'
 import Verificador from './pages/verificador'
 import Criador from './pages/criador'
 import Montador from './pages/montador'
@@ -56,6 +57,7 @@ export default function App() {
                                                                     <Route exact path='/comprarcriador' element={<ComprarCriador/>} />
                                                                     <Route exact path='/comprarmontador' element={<ComprarMontador/>} />
                                                                     <Route exact path='/gerenciador' element={<Gerenciador/>} />
+                                                                    <Route exact path='/controlevps' element={<ControleVps/>} />
                                                                     <Route exact path='/engajamentos' element={<Engajamentos/>} />
                                                                     <Route exact path='/realizador' element={<Realizador/>} />
                                                                     <Route exact path='/adicionador' element={<Adicionador/>} />

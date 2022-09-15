@@ -75,7 +75,7 @@ app.on('ready', async () => {
     const mainWindow = await abrirJanela(350, 500, '')
 
     // ATALHOS
-    esconderConsole(globalShortcut)
+    // esconderConsole(globalShortcut)
 
     // STORES
     usuarioLogado(store)

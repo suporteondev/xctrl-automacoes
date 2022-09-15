@@ -30,6 +30,7 @@
     "gerador": "^0.1.0",
     "mercadopago": "^1.5.13",
     "mongoose": "^6.2.7",
+    "node-openvpn": "^0.1.1",
     "open": "^8.4.0",
     "puppeteer-core": "^13.5.1",
     "react-icons": "^4.4.0",

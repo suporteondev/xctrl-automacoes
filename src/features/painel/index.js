@@ -94,7 +94,7 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
                         </p>
                     </Servico>
-                    {/* <Servico 
+                    <Servico 
                         ativo={acessoGerenciador.status}
                         onClick={()=>{ 
                             {acessoGerenciador.status == true ? 
@@ -113,6 +113,24 @@ const Painel = ()=>{
                         </p>
                     </Servico>
                     <Servico 
+                        ativo={acessoGerenciador.status}
+                        onClick={()=>{ 
+                            {acessoGerenciador.status == true ? 
+                                redirecionar(Router, '/controlevps')
+                                : 
+                                redirecionar(Router, '/comprar')
+                            }
+                        }}
+                    >
+                        <div>
+                            <img src={gerenciadorIMG}/>
+                        </div>
+                        <h1>Controle VPS</h1>
+                        <p>
+                            {acessoGerenciador.status == true ? 'Ativo': 'Inativo'}
+                        </p>
+                    </Servico>
+                    {/* <Servico 
                         ativo={acessoGerenciador.status}
                         onClick={()=>{ 
                             {acessoGerenciador.status == true ? 
