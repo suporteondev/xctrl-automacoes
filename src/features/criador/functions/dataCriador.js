@@ -8,7 +8,7 @@ async function dataCriador(setDataAcessoCriador){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessocriador`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/criador/acesso`, configs)
     const resultado = await api.json()
 
     if(resultado.ok == true){

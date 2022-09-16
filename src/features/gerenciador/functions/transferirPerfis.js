@@ -25,7 +25,7 @@ async function transferirPerfis(
         })
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/transferirPerfis`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/gerenciador/transferir`, configs)
     const resultado = await api.json()
 
     setPerfisGerenciador(resultado.perfis)

@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const logado = require('../../middlewares/logado')
+const logado = require('../../../middlewares/logado')
 const open = require('open')
 
-router.post('/abrirnavegador', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
     const { url } = req.body
 
     await open(url)

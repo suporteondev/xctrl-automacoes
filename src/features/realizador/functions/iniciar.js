@@ -120,7 +120,7 @@ export async function iniciar(
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/realizador`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/realizador/iniciar`, configs)
         const resultado = await api.json()
 
         setMensagem(<Mensagem cor='sucesso'>Realizador iniciado com sucesso!</Mensagem>)

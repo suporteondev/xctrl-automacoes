@@ -2,10 +2,10 @@ const router = require('express').Router()
 const Store = require('electron-store')
 const connectDB = require('../../../middlewares/connectDB')
 const logado = require('../../../middlewares/logado')
-const Perfil = require('../../../models/perfil')
+const Engajamento = require('../../../models/engajamento')
 const store = new Store()
 
-router.post('/apagarperfis', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
 
     // Capturando os dados da requisição
     const { perfis } = req.body
@@ -17,13 +17,13 @@ router.post('/apagarperfis', logado, connectDB, async(req, res)=>{
     async function deletar(){
         for(let x = 0; x < perfis.length; x++){
             try{
-                await Perfil.findOneAndDelete({ ref: email, usuario: perfis[x] })
+                await Engajamento.findOneAndDelete({ ref: email, usuario: perfis[x] })
             }catch(erro){
-                await Perfil.findOneAndDelete({ ref: email, usuario: perfis[x] })
+                await Engajamento.findOneAndDelete({ ref: email, usuario: perfis[x] })
             }
         }
     
-        meusPerfis = await Perfil.find({ ref: email })
+        meusPerfis = await Engajamento.find({ ref: email })
     }
 
     await deletar()

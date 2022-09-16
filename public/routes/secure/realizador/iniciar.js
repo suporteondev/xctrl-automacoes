@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const logado = require('../../middlewares/logado')
-const realizador = require('../../auto/realizador')
+const logado = require('../../../middlewares/logado')
+const realizador = require('../../../auto/realizador')
 
-router.post('/realizador', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
 
     global.realizador = []
 

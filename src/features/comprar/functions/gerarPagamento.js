@@ -10,7 +10,7 @@ export async function gerarPagamento(setPagamentoGerado, setPixQrCode, setPixCop
         })
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/pagamentos`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/geral/pagamentos`, configs)
     const resultado = await api.json()
 
     setPagamentoGerado(true)

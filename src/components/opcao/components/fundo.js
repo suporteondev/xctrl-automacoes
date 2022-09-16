@@ -24,6 +24,15 @@ const Fundo = styled.div`
         font-family: 'Poppins', sans-serif;
     }
 
+    input.vps{
+        border: none;
+        width: 20px;
+        height: 40px;
+        background-color: unset;
+        color: ${props => props.theme.textos};
+        font-family: 'Poppins', sans-serif;
+    }
+
     span{
         visibility: hidden;
         position: absolute;

@@ -2,17 +2,18 @@ const router = require('express').Router()
 const Store = require('electron-store')
 const connectDB = require('../../../middlewares/connectDB')
 const logado = require('../../../middlewares/logado')
-const Perfil = require('../../../models/perfil')
+const Engajamento = require('../../../models/engajamento')
 const store = new Store()
 
-router.post('/listarperfis', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
 
     try{
 
+        // CAPTURANDO O EMAIL DO USUÁRIO LOGADO
         const { email : ref } = store.get('usuarioLogado')
 
         // BUSCANDO OS PERFIS NO BD
-        const perfis = await Perfil.find({ ref })
+        const perfis = await Engajamento.find({ ref })
 
         // RETORNANDO O RESULTADO
         return res.json({

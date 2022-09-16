@@ -30,6 +30,7 @@ import { transferirPerfis } from './functions/transferirPerfis'
 import { BiTransferAlt } from 'react-icons/bi'
 import { adicionarVps } from './functions/adicionarVps'
 import { listarVps } from './functions/listarVps'
+import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
 
 const ControleVps = ()=>{
 
@@ -131,7 +132,15 @@ const ControleVps = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao>
+                <Opcao funcao={()=>{}}>
+                    <span>Limite total</span>
+                    <input className='vps' type='text'/>
+                </Opcao>
+                <Opcao
+                    funcao={()=>{
+                        copiarTotalPerfis(perfisGerenciador.length)
+                    }}
+                >
                     <span>Total de VPS</span>
                     {perfisGerenciador.length}
                 </Opcao>

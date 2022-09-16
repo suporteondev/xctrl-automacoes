@@ -5,7 +5,7 @@ const logado = require('../../../middlewares/logado')
 const Vps = require('../../../models/vps')
 const store = new Store()
 
-router.post('/controlevps/apagarperfis', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
 
     // Capturando os dados da requisição
     const { perfis } = req.body

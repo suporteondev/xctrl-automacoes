@@ -8,7 +8,7 @@ async function acessoMontador(setMeuAcessoMontador){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessomontador`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/montador/acesso`, configs)
     const resultado = await api.json()
 
     if(resultado.ok == true){

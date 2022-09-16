@@ -80,7 +80,7 @@ export async function iniciar(
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/seguidores`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamento/seguidores`, configs)
         const resultado = await api.json()
     }
 

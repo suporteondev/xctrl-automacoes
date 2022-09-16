@@ -8,7 +8,7 @@ async function filtrarTodosPerfis(){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamentos/listarperfis`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamento/listar`, configs)
     const resultado = await api.json()
 
     return resultado.perfis

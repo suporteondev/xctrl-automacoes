@@ -2,19 +2,19 @@ const router = require('express').Router()
 const connectDB = require('../../../middlewares/connectDB')
 const logado = require('../../../middlewares/logado')
 const Store = require('electron-store')
-const Montador = require('../../../models/montador')
+const Criador = require('../../../models/criador')
 const store = new Store()
 
-router.post('/acessomontador', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
     
     const { email } = store.get('usuarioLogado')
-    const acessoMontador = await Montador.findOne({ ref: email })
-    let meuAcesso = acessoMontador
+    const acessoCriador = await Criador.findOne({ ref: email })
+    let meuAcesso = acessoCriador
 
-    if(acessoMontador){
+    if(acessoCriador){
 
-        if(acessoMontador.data != 'permanente'){
-            const dataPlano = acessoMontador.data
+        if(acessoCriador.data != 'permanente'){
+            const dataPlano = acessoCriador.data
             const diaPlano = dataPlano.split('/')[0]
             const mesPlano = dataPlano.split('/')[1]
             const anoPlano = dataPlano.split('/')[2]
@@ -27,11 +27,11 @@ router.post('/acessomontador', logado, connectDB, async(req, res)=>{
             const numeroDataAtual = Number(anoAtual + mesAtual + diaAtual)
 
             if(numeroDataPlano < numeroDataAtual){
-                await Montador.findOneAndDelete({
+                await Criador.findOneAndDelete({
                     ref: email
                 })
 
-                meuAcesso = await Montador.findOne({ ref: email })
+                meuAcesso = await Criador.findOne({ ref: email })
             }
         }
 

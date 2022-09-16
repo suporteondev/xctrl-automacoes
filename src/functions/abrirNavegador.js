@@ -9,7 +9,7 @@ async function abrirNavegador(url){
         body: JSON.stringify({ url })
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/abrirnavegador`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/geral/abrirnavegador`, configs)
     const resultado = await api.json()
 }
 

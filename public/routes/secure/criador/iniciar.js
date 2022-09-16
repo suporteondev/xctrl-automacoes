@@ -1,10 +1,10 @@
 const router = require('express').Router()
-const logado = require('../../middlewares/logado')
+const logado = require('../../../middlewares/logado')
 const Store = require('electron-store')
 const store = new Store()
-const criador = require('../../auto/criador/index')
+const criador = require('../../../auto/criador/index')
 
-router.post('/iniciarcriador', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
 
     const { 
         navegador,

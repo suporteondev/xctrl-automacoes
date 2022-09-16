@@ -149,7 +149,7 @@ export async function iniciar(
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/iniciarcriador`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/criador/iniciar`, configs)
         const resultado = await api.json()
     }
 }

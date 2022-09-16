@@ -37,7 +37,7 @@ const Filtrar = styled.div`
 
         input{
             height: 45px;
-            width: 100%;
+            max-width: 45px;
             border: 0.5px solid ${props => props.theme.linhas};
             background-color: ${props => props.theme.fundos};
             color: ${props => props.theme.textos};

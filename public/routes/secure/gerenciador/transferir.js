@@ -6,7 +6,7 @@ const Engajamento = require('../../../models/engajamento')
 const Perfil = require('../../../models/perfil')
 const store = new Store()
 
-router.post('/transferirperfis', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
 
     // Capturando os dados da requisição
     const { perfis } = req.body

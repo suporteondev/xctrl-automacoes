@@ -101,7 +101,7 @@ export async function iniciar(
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/iniciarverificador`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/gerenciador/verificar`, configs)
         const resultado = await api.json()
         
     }

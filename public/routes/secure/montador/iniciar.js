@@ -1,8 +1,10 @@
 const router = require('express').Router()
-const logado = require('../../middlewares/logado')
-const montador = require('../../auto/montador/index')
+const logado = require('../../../middlewares/logado')
+const montador = require('../../../auto/montador/index')
 
-router.post('/iniciarmontador', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
+
+    global.montador = []
 
     const { 
         navegador,
@@ -25,8 +27,6 @@ router.post('/iniciarmontador', logado, async(req, res)=>{
     const alterarFotoPerfilConfigurado = alterarFotoPerfil === 'sim' ? true : false
     const alterarBiografiaConfigurado = alterarBiografia === 'sim' ? true : false
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
-
-    global.montador = []
 
     await montador(
         navegador,

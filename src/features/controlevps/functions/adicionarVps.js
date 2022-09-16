@@ -10,7 +10,7 @@ async function adicionarVps(setPerfisGerenciador){
         body: JSON.stringify({ nome: nomeVPS })
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/controlevps/adicionar`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/vps/adicionar`, configs)
     const resultado = await api.json()
 
     setPerfisGerenciador(resultado.perfis)

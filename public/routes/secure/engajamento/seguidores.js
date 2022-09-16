@@ -2,7 +2,7 @@ const router = require('express').Router()
 const seguidores = require('../../../auto/seguidores/index')
 const logado = require('../../../middlewares/logado')
 
-router.post('/seguidores', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
 
     global.seguidores = []
 
@@ -10,9 +10,9 @@ router.post('/seguidores', logado, async(req, res)=>{
         navegador,
         verAcontecendo, 
         modoAnonimo,
+        perfis,
         usuarios,
-        esperarEntre,
-        perfisEngajamentos
+        esperarEntre
     } = req.body
 
     const verAcontecendoConfigurado = verAcontecendo === 'sim' ? false : true
@@ -22,9 +22,9 @@ router.post('/seguidores', logado, async(req, res)=>{
         navegador,
         verAcontecendoConfigurado, 
         modoAnonimoConfigurado,
+        perfis,
         usuarios,
         esperarEntre,
-        perfisEngajamentos,
         global.seguidores
     )
    

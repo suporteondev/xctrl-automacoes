@@ -8,7 +8,7 @@ async function listarVps(){
         }
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/controlevps/listar`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/vps/listar`, configs)
     const resultado = await api.json()
 
     return resultado.perfis

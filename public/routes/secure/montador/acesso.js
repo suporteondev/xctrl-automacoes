@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const connectDB = require('../../middlewares/connectDB')
-const logado = require('../../middlewares/logado')
+const connectDB = require('../../../middlewares/connectDB')
+const logado = require('../../../middlewares/logado')
 const Store = require('electron-store')
-const Montador = require('../../models/montador')
+const Montador = require('../../../models/montador')
 const store = new Store()
 
-router.post('/acessomontador', logado, connectDB, async(req, res)=>{
+router.post('/', logado, connectDB, async(req, res)=>{
     
     const { email } = store.get('usuarioLogado')
     const acessoMontador = await Montador.findOne({ ref: email })

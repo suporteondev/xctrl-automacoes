@@ -28,6 +28,7 @@ import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
 import { selecionarPerfis } from './functions/selecionarPerfis'
 import { transferirPerfis } from './functions/transferirPerfis'
 import { BiTransferAlt } from 'react-icons/bi'
+import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
 
 const Gerenciador = ()=>{
 
@@ -295,7 +296,11 @@ const Gerenciador = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao>
+                <Opcao 
+                    funcao={()=>{
+                        copiarTotalPerfis(perfisGerenciador.length)
+                    }}  
+                >
                     <span>Total de perfis</span>
                     {perfisGerenciador.length}
                 </Opcao>

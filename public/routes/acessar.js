@@ -6,7 +6,7 @@ const Store = require('electron-store')
 const Versao = require('../models/versao')
 const store = new Store();
 
-router.post('/acessar', connectDB, async(req, res)=>{
+router.post('/', connectDB, async(req, res)=>{
 
     const { email, senha } = req.body
 

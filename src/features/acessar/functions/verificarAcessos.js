@@ -12,7 +12,7 @@ async function verificarAcessos(
         }
     }
 
-    const apiCriador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessocriador`, configs)
+    const apiCriador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/criador/acesso`, configs)
     const resultadoCriador = await apiCriador.json()
 
     if(resultadoCriador.ok == true){
@@ -27,7 +27,7 @@ async function verificarAcessos(
         })
     }
 
-    const apiMontador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessomontador`, configs)
+    const apiMontador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/montador/acesso`, configs)
     const resultadoMontador = await apiMontador.json()
 
     if(resultadoMontador.ok == true){
@@ -42,7 +42,7 @@ async function verificarAcessos(
         })
     }
 
-    const apiGerenciador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/acessogerenciador`, configs)
+    const apiGerenciador = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/gerenciador/acesso`, configs)
     const resultadoGerenciador = await apiGerenciador.json()
 
     if(resultadoGerenciador.ok == true){

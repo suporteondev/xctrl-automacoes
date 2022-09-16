@@ -28,6 +28,7 @@ import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
 import { selecionarPerfis } from './functions/selecionarPerfis'
 import { usePerfisSelecionadosEngajamentos } from '../../providers/perfisSelecionadosEngajamentos'
 import { Titulo } from '../../components/cabeca/components/titulo'
+import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
 
 const Engajamentos = ()=>{
 
@@ -264,7 +265,11 @@ const Engajamentos = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao>
+                <Opcao
+                    funcao={()=>{
+                        copiarTotalPerfis(perfisEngajamentos.length)
+                    }}  
+                >
                     <span>Total de perfis</span>
                     {perfisEngajamentos.length}
                 </Opcao>

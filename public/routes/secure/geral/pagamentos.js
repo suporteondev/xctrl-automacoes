@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const mercadopago = require('mercadopago')
-const logado = require('../../middlewares/logado')
+const logado = require('../../../middlewares/logado')
 const Store = require('electron-store')
 const store = new Store();
 
-router.post('/pagamentos', logado, async(req, res)=>{
+router.post('/', logado, async(req, res)=>{
 
     const { email } = store.get('usuarioLogado')
     const { servico } = req.body

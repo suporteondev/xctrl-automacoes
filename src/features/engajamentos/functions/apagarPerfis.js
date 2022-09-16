@@ -25,7 +25,7 @@ async function apagarPerfis(
         })
     }
 
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamentos/apagarperfis`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/engajamento/apagar`, configs)
     const resultado = await api.json()
 
     setPerfisGerenciador(resultado.perfis)
