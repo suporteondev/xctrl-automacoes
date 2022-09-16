@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const logado = require('../../../middlewares/logado')
-const montador = require('../../../auto/montador/index')
+const montador = require('../../../auto/automacoes/montador')
 
 router.post('/', logado, async(req, res)=>{
 

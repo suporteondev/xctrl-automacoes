@@ -1,3 +1,5 @@
+const procurarBloqueios = require("./procurarBloqueios")
+
 const perfis = [
     'agathagn_',
     'kyliejenner',
@@ -60,6 +62,9 @@ const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, l
         for(let x = 0; x < perfis.length; x++){
             try{
 
+                const bloqueio = await procurarBloqueios(pagina, usuario, logs)
+                if(bloqueio == true){ break }
+
                 // CAPTURANDO O USUÁRIO DO PERFIL A SER SEGUIDO
                 const usuarioPerfil = perfis[x]
 
@@ -69,8 +74,8 @@ const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, l
 
                 // SEGUINDO O USUÁRIO
                 logs.push(`${usuario} - Seguindo o perfil ${usuarioPerfil}`)
-                await pagina.waitForSelector('._aacl._aaco._aacw._adda._aad6._aade')
-                await pagina.click('._aacl._aaco._aacw._adda._aad6._aade')
+                await pagina.waitForSelector('._acan._acap._acas')
+                await pagina.click('._acan._acap._acas')
                 logs.push(`${usuario} - Perfil seguido com sucesso!`)
 
                 // AGUARDANDO O TEMPO CONFIGURADO
@@ -83,6 +88,7 @@ const seguirPerfisFamosos = async(pagina, usuario, seguirPerfis, esperarEntre, l
                     break
                 }
             }catch(erro){
+                logs.push(`${usuario} - Não conseguimos seguir o perfil!`)
                 if(x == (seguirPerfis - 1)){
                     break
                 }

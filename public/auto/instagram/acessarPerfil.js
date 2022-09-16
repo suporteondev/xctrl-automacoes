@@ -1,17 +1,10 @@
+const procurarBloqueios = require("./procurarBloqueios")
+
 const acessarPerfil = async(pagina, usuario, senha, logs)=>{
     try{
 
         logs.push('Acessando o instagram')
         await pagina.goto('https://www.instagram.com/accounts/login/', { timeout: 60000 })
-
-        try{
-            logs.push(usuario + ' - Aceitando os cookies')
-            await pagina.waitForSelector('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K', { timeout: 5000 })
-            await pagina.click('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K')
-            await pagina.waitForTimeout(5000)
-        }catch(erro){
-            
-        }
 
         logs.push(usuario + ' - Digitando usuário.')
         await pagina.waitForSelector('input[name="username"]', { timeout: 60000 })
@@ -27,6 +20,10 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
 
         logs.push(usuario + ' - Esperando carregar.')
         await pagina.waitForNavigation({ timeout: 60000 })
+
+        await pagina.waitForTimeout(5000)
+        const bloqueio = await procurarBloqueios(pagina, usuario, logs)
+        if(bloqueio == true){ return false }
 
         // Apertando em agora não
         try{
@@ -54,15 +51,6 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
             logs.push('Acessando o instagram')
             await pagina.goto('https://www.instagram.com/accounts/login/', { timeout: 60000 })
 
-            try{
-                logs.push(usuario + ' - Aceitando os cookies')
-                await pagina.waitForSelector('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K', { timeout: 5000 })
-                await pagina.click('.sqdOP.L3NKy._4pI4F.y3zKF.cB_4K')
-                await pagina.waitForTimeout(5000)
-            }catch(erro){
-                
-            }
-
             logs.push(usuario + ' - Digitando usuário.')
             await pagina.waitForSelector('input[name="username"]', { timeout: 60000 })
             await pagina.type('input[name="username"]', usuario)
@@ -77,6 +65,9 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
 
             logs.push(usuario + ' - Esperando carregar.')
             await pagina.waitForNavigation({ timeout: 60000 })
+            await pagina.waitForTimeout(5000)
+            const bloqueio2 = await procurarBloqueios(pagina, usuario, logs)
+            if(bloqueio2 == true){ return false }
 
             // Apertando em agora não
             try{
