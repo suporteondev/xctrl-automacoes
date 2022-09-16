@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const verificador = require('../../../auto/verificador/index')
+const verificador = require('../../../auto/automacoes/verificador')
 const Store = require('electron-store')
 const store = new Store()
 const logado = require('../../../middlewares/logado')
