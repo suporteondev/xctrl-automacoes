@@ -1,5 +1,3 @@
-const atalhos = require('../atalhos')
-
 const selecionarData = async(identificador, pagina, logs)=>{
     try{
         // Capturando dados da data

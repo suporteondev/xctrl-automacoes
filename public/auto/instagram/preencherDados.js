@@ -1,4 +1,4 @@
-const atalhos = require('../atalhos')
+const atalhos = require('../atalhos/atalhos')
 const { pessoa } = require('gerador')
 
 const preencherDados = async(identificador, pagina, email, senha, genero, logs)=>{

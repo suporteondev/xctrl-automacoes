@@ -1,7 +1,6 @@
 const fs = require('fs')
 const { rootPath } = require('electron-root-path')
 const path = require('path')
-const capturarCodigoVerificacao = require('../mailtm/capturarCodigoVerificacao')
 
 const digitandoCodigo = async(
     identificador, 

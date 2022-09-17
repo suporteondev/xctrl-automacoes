@@ -2,7 +2,7 @@ const router = require('express').Router()
 const logado = require('../../../middlewares/logado')
 const Store = require('electron-store')
 const store = new Store()
-const criador = require('../../../auto/criador/index')
+const criador = require('../../../auto/automacoes/criador')
 
 router.post('/', logado, async(req, res)=>{
 

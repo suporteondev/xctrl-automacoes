@@ -4,6 +4,7 @@ const acessarPerfil = require('../instagram/acessarPerfil')
 const limparAtividadeLogin = require('../instagram/limparAtividadeLogin')
 const verificarPerfil = require('../instagram/verificarPerfil')
 const Store = require('electron-store')
+const abrirNavegador = require('../atalhos/abrirNavegador')
 const store = new Store()
 
 const verificador = async(
@@ -17,127 +18,17 @@ const verificador = async(
     logs
 )=>{
 
-    // DECLARANDO AS VARIAVEIS REUTILIZAVEIS
-    let navegador, pagina, context
-
     // MONTANDO OS PERFIS
     for(let x = 0; x < seusPerfis.length; x++){
 
         // ABRINDO O NAVEGADOR
-        if(navegadorEscolhido == 'google'){
-            try{
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }catch(erro){
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }
-        }else if(navegadorEscolhido == 'edge'){
-            try{
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }catch(erro){
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }
-        }else if(navegadorEscolhido == 'brave'){
-            try{
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }catch(erro){
-                navegador = await puppeteer.launch({
-                    ignoreHTTPSErrors: true,
-                    headless: verAcontecendo,
-                    executablePath: "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
-                    args: [
-                        '--no-sandbox',
-                        '--disabled-setuid-sandbox'
-                    ],
-                    defaultViewport: {
-                        width: 320,
-                        height: 580
-                    }
-                })   
-            }
-        }
-
-        // CONFIGURANDO O MODO ANÔNIMO
-        if(modoAnonimo == true){
-            context = await navegador.createIncognitoBrowserContext()
-            pagina = await context.newPage()
-            const paginas = await navegador.pages()
-            await paginas[0].close()
-        }else{
-            const paginas = await navegador.pages()
-            pagina = paginas[0]
-        }
-
-        // SELECIONANDO UM USER AGENT MOBILE
-        if(userAgent == 'aleatorio'){
-            await selecionarUserAgentAleatorio(pagina, 'mobile')
-        }else{
-            await pagina.setUserAgent(userAgent)
-        }
-
-        // ALTERANDO A LINGUAGEM DO NAVEGADOR
-        await pagina.setExtraHTTPHeaders({
-            'Accept-Language': 'pt-br'
-        })
+        const { navegador, pagina } = await abrirNavegador(
+            navegadorEscolhido,
+            verAcontecendo,
+            modoAnonimo,
+            userAgent,
+            'mobile'
+        )
 
         // CAPTURANDO O USUÁRIO E SENHA DO PERFIL A SER MONTADO
         const { usuario, senha } = seusPerfis[x]
@@ -180,6 +71,7 @@ const verificador = async(
 
         // FECHANDO O NAVEGADOR
         await navegador.close()
+
         break
     }
 

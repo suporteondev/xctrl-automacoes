@@ -1,8 +1,6 @@
 const puppeteer = require('puppeteer-core')
 const acessarPerfil = require('../instagram/acessarPerfil')
 const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
-const acessarDIZU = require('./dizu/acessar')
-const cadastrarPerfilDIZU = require('./dizu/cadastrarPerfil')
 const acessarGni = require('./gni/acessar')
 const cadastrarPerfilGNR = require('./gni/cadastrarPerfil')
 const iniciarAcoesGNR = require('./gni/iniciarAcoes')
@@ -205,40 +203,6 @@ const realizador = async(
             // APAGANDO OS COOKIES DO INSTAGRAM
             const cookies = await paginaInstagram.cookies()
             await paginaInstagram.deleteCookie(...cookies)
-        }
-
-    }else if(qualPlataforma == 'dizu'){
-
-        // ACESSANDO O DIZU
-        const resultadoAcessarDIZU = await acessarDIZU(pagina, emailPlataforma, senhaPlataforma, logs)
-        if(resultadoAcessarDIZU == false){
-            await navegador.close()
-            return false
-        }
-
-        for(let x = 0; x < seusPerfis.length; x++){
-            
-            // CAPTURANDO O USUÁRIO E SENHA DO PERFIL
-            const { usuario, senha } = seusPerfis[x]
-
-            // TRAZENDO A PÁGINA PARA FRENTE
-            await paginaInstagram.bringToFront()
-
-            // ACESSANDO O PERFIL DO INSTAGRAM
-            const acessarPerfilInstagram = await acessarPerfil(paginaInstagram, usuario, senha, logs)
-            if(acessarPerfilInstagram == false){
-                const cookies = await paginaInstagram.cookies()
-                await paginaInstagram.deleteCookie(...cookies)
-                continue
-            }
-
-            // CADASTRANDO O PERFIL NA PLATAFORMA
-            const resultadoCadastrarPerfilDIZU = await cadastrarPerfilDIZU(pagina, paginaInstagram, usuario, logs)
-            if(resultadoCadastrarPerfilDIZU == false){
-                const cookies = await paginaInstagram.cookies()
-                await paginaInstagram.deleteCookie(...cookies)
-                continue
-            }
         }
     }
 

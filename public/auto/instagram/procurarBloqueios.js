@@ -19,13 +19,9 @@ async function procurarBloqueios(pagina, usuario, logs){
                 }
             }
 
-            if(resultado == true){
-                return resultado
-            }
-
-            for(let x = 0; x < refsH3.length; x++){
-                const e2 = refsH3[x]
-                if(e2.innerText == 'Sua conta foi temporariamente bloqueada'){
+            for(let y = 0; y < refsH3.length; y++){
+                const e2 = refsH3[y]
+                if(e2.innerText == 'Adicionar telefone para voltar ao Instagram'){
                     resultado = true
                     break
                 }
