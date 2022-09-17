@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-core')
-const acessarGanharNoInsta = require('./gni/acessar')
-const removerPerfisGni = require('./gni/removerPerfis')
-const verInformacoesGni = require('./gni/verInformacoes')
+const acessarGanharNoInsta = require('../ganharnasredes/acessar')
+const removerPerfisGni = require('../ganharnasredes/removerPerfis')
+const verInformacoesGni = require('../ganharnasredes/verInformacoes')
 
 const removedor = async(
     caminhoNavegador,

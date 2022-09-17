@@ -1,10 +1,10 @@
 const puppeteer = require('puppeteer-core')
 const acessarPerfil = require('../instagram/acessarPerfil')
 const selecionarUserAgentAleatorio = require('../selecionarUserAgentAleatorio')
-const acessarGni = require('./gni/acessar')
-const cadastrarPerfilGNR = require('./gni/cadastrarPerfil')
-const iniciarAcoesGNR = require('./gni/iniciarAcoes')
-const realizarAcoesGNR = require('./gni/realizarAcoes')
+const acessarGni = require('../ganharnasredes/acessar')
+const cadastrarPerfilGNR = require('../ganharnasredes/cadastrarPerfil')
+const iniciarAcoesGNR = require('../ganharnasredes/iniciarAcoes')
+const realizarAcoesGNR = require('../ganharnasredes/realizarAcoes')
 
 const realizador = async(
     navegadorEscolhido,
