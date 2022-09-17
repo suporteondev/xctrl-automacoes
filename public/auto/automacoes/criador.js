@@ -1,12 +1,12 @@
 const puppeteer = require('puppeteer-core')
 
 // cryptogmail
-const capturarEmail = require('../emails/cryptogmail/capturarEmail')
-const capturarCodigo = require('../emails/cryptogmail/capturarCodigo')
-const capturarEmailDisposablemail = require('../emails/disposablemail/capturarEmail')
-const capturarCodigoDisposablemail = require('../emails/disposablemail/capturarCodigo')
-const capturarEmailTM = require('../emails/mailtm/capturarEmail')
-const capturarCodigoTM = require('../emails/mailtm/capturarCodigo')
+const capturarEmail = require('../tempmails/cryptogmail/capturarEmail')
+const capturarCodigo = require('../tempmails/cryptogmail/capturarCodigo')
+const capturarEmailDisposablemail = require('../tempmails/disposablemail/capturarEmail')
+const capturarCodigoDisposablemail = require('../tempmails/disposablemail/capturarCodigo')
+const capturarEmailTM = require('../tempmails/mailtm/capturarEmail')
+const capturarCodigoTM = require('../tempmails/mailtm/capturarCodigo')
 const preencherDados = require('../instagram/preencherDados')
 const selecionarData = require('../instagram/selecionarData')
 const digitandoCodigo = require('../instagram/digitandoCodigo')
