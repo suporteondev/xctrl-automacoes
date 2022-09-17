@@ -18,12 +18,14 @@ const alterarBiografiaPerfil = require('../instagram/alterarBiografiaPerfil')
 const realizarPublicacoesFeed = require('../instagram/realizarPublicacoesFeed')
 const realizarPublicacoesStory = require('../instagram/realizarPublicacoesStory')
 const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
+const procurarBloqueios = require('../instagram/procurarBloqueios')
 const limparPastaPrefetch = require('../atalhos/limparPastaPrefetch')
 const limparPastaTemp = require('../atalhos/limparPastaTemp')
 const { rootPath } = require('electron-root-path')
 const path = require('path')
 const fs = require('fs')
-var pastaEscolhida = []
+const selecionarPastaFotos = require('../atalhos/selecionarPastaFotos')
+const pastasEscolhidas = []
 
 const listaEmailsTemporarios = [
     'cryptogmail',
@@ -290,131 +292,32 @@ const criador = async(
 
             logs.push(usuario + ' - Montador em execução')
 
-            // ALTERANDO O GÊNERO DOS PERFIS
+            // ALTERANDO O GÊNERO DO PERFIL
             await alterarGeneroPerfil(paginaInstagram, usuario, generoPerfis, logs)
-            if(esperarEntre != 0){
-                logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                await paginaInstagram.waitForTimeout(esperarEntre)
-            }
-
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
-            }
 
             // CAPTURANDO A PASTA DE PUBLICAÇÕES
             const caminhoPublicacoes = path.join(rootPath, `./publicacoes/${generoPerfis == 'masculino' ? 'masculinas' : 'femininas'}`)
-            const pastas = fs.readdirSync(caminhoPublicacoes)
-            let caminhoPasta = ''
-            async function selecionarCaminho(){
-                pastaEscolhida.length == pastas.length ? pastaEscolhida = [] : ''
-                caminhoPasta = `${caminhoPublicacoes}\\${pastas[Math.floor(Math.random() * pastas.length)]}`
-                if(pastaEscolhida.indexOf(caminhoPasta) >=0){
-                    return selecionarCaminho()
-                }
-                return pastaEscolhida.push(caminhoPasta)
-            }
-            await selecionarCaminho()
-
+            const pastasPublicacoes = fs.readdirSync(caminhoPublicacoes)
+            const caminhoPasta = selecionarPastaFotos(pastasEscolhidas, pastasPublicacoes, caminhoPublicacoes)
+            
             // POSTANDO A FOTO DE PERFIL
             if(alterarFotoPerfil == true){
                 await postarFotoPerfil(paginaInstagram, usuario, caminhoPasta, logs)
-                if(esperarEntre != 0){
-                    logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                    await paginaInstagram.waitForTimeout(esperarEntre)
-                }
-            }
-
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
             }
 
             // ALTERANDO A BIOGRAFIA DO PERFIL
             if(alterarBiografia == true){
                 await alterarBiografiaPerfil(paginaInstagram, usuario, logs)
-                if(esperarEntre != 0){
-                    logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                    await paginaInstagram.waitForTimeout(esperarEntre)
-                }
-            }
-
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
             }
 
             // POSTANDO FOTOS NO FEED
             if(quantidadePublicacoesFeed != 0 && quantidadePublicacoesFeed != '0' && quantidadePublicacoesFeed != ''){
                 logs.push(`Postando fotos no Feed`)
                 for(let x = 0; x < quantidadePublicacoesFeed; x++){
+                    const bloqueio = await procurarBloqueios(paginaInstagram, usuario, logs)
+                    if(bloqueio == true){ break }
                     await realizarPublicacoesFeed(paginaInstagram, x + 1, usuario, caminhoPasta, logs)
-                    if(esperarEntre != 0){
-                        logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                        await paginaInstagram.waitForTimeout(esperarEntre)
-                    }
                 }
-            }
-
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
             }
 
             // SEGUINDO PERFIS FAMOSOS
@@ -422,54 +325,14 @@ const criador = async(
                 await seguirPerfisFamosos(paginaInstagram, usuario, seguirPerfis, esperarEntre, logs)
             }
 
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
-            }
-
             // POSTANDO FOTOS NO STORY
             if(quantidadePublicacoesStory != 0 && quantidadePublicacoesStory != '0' && quantidadePublicacoesStory != ''){
                 logs.push(`Postando fotos no story`)
                 for(let x = 0; x < quantidadePublicacoesStory; x++){
+                    const bloqueio2 = await procurarBloqueios(paginaInstagram, usuario, logs)
+                    if(bloqueio2 == true){ break }
                     await realizarPublicacoesStory(paginaInstagram, x + 1 , usuario, caminhoPasta, logs)
-                    if(esperarEntre != 0){
-                        logs.push(`${usuario} - Aguardando ${esperarEntre / 1000} segundos.`)
-                        await paginaInstagram.waitForTimeout(esperarEntre)
-                    }
                 }
-            }
-
-            var perfilBloqueado = await paginaInstagram.evaluate(()=>{
-
-                let resultado = false
-    
-                document.querySelectorAll('span').forEach((e)=>{
-                    if(e.innerText == 'Se não pudermos confirmar sua conta, ela será desativada permanentemente.'){
-                        resultado = true
-                    }
-                })
-    
-                return resultado
-            })
-    
-            if(perfilBloqueado == true){
-                logs.push(`${usuario} - O perfil foi bloqueado, iremos pulá-lo para poupar tempo.`)
-                await navegador.close()
-                continue
             }
 
             var buscar = `${usuario} - Montador em execução`
@@ -483,12 +346,6 @@ const criador = async(
         // LIMPANDO A ATIVIDADE DE LOGIN
         if(limparLoginConfigurado == true){
             await limparAtividadeLogin(paginaInstagram, usuario, logs)
-        }
-
-        // ESPERANDO OS SEGUNDOS CONFIGURADOS ANTES DE CRIAR O PRÓXIMO PERFIL
-        if(esperarEntre != 0){
-            logs.push(`perfil ${x} - Aguardando ${esperarEntre / 1000} segundos.`)
-            await paginaInstagram.waitForTimeout(esperarEntre)
         }
 
         // FECHANDO O NAVEGADOR

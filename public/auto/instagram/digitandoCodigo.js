@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { rootPath } = require('electron-root-path')
 const path = require('path')
+const procurarBloqueios = require('./procurarBloqueios')
 
 const digitandoCodigo = async(
     identificador, 
@@ -32,6 +33,14 @@ const digitandoCodigo = async(
         await pagina.waitForSelector('button[type="submit"]', { timeout: 60000 })
         await pagina.click('button[type="submit"]')
         await pagina.waitForTimeout(30000)
+
+        const bloqueio = await procurarBloqueios(pagina, `perfil ${identificador}`, logs)
+        if(bloqueio == true){
+            logs.push(`perfil ${identificador} - Erro ao tentar criar o perfil.`)
+            return {
+                ok: false
+            }
+        } 
 
         // Ocorreu um erro ao criar sua conta. Tente novamente em breve.
         const ocorreuUmErro = await pagina.evaluate(()=>{

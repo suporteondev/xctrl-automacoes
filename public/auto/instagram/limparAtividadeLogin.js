@@ -5,6 +5,8 @@ const limparAtividadeLogin = async(pagina, usuario, logs)=>{
 
         // Verificando quantos logins possuem
         logs.push('Limpando atividade de login')
+        const bloqueio3 = await procurarBloqueios(pagina, usuario, logs)
+        if(bloqueio3 == true){ return false }
         logs.push(`${usuario} - Acessando configurações`)
         await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
 
@@ -55,6 +57,8 @@ const limparAtividadeLogin = async(pagina, usuario, logs)=>{
             logs.push(usuario + ' - Não conseguimos limpar a atividade de login desse perfil, mas iremos tentar novamente.')
             // Verificando quantos logins possuem
             logs.push('Limpando atividade de login')
+            const bloqueio4 = await procurarBloqueios(pagina, usuario, logs)
+            if(bloqueio4 == true){ return false }
             logs.push(`${usuario} - Acessando configurações`)
             await pagina.goto('https://www.instagram.com/session/login_activity/', { timeout: 60000 })
 
