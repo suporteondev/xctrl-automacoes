@@ -1,2 +1,5 @@
-# xctrl-desktop-gerenciador
-Gerenciador de perfis da XCtrl na versão desktop.
+# XCtrl
+
+Central de automações para o Instagram
+
+[] - teste
