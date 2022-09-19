@@ -1,12 +1,13 @@
 # XCtrl
 
-Central de automações para o Instagram
+Central de automações para o Instagram.
 
-# Telas
+# Features
 
 - [x] Acesar plataforma
 - [x] Painel de controle
 - [x] Criador de perfis
 - [x] Montador de perfis
+- [x] Movimentador de perfis
 - [x] Gerenciador de perfis
-- [x] Realizador de ações GNI
+- [x] Realizador de ações
