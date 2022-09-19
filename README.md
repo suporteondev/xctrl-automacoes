@@ -2,8 +2,11 @@
 
 Central de automações para o Instagram
 
-### Features
+# Telas
 
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos[x] - teste
+- [x] Acesar plataforma
+- [x] Painel de controle
+- [x] Criador de perfis
+- [x] Montador de perfis
+- [x] Gerenciador de perfis
+- [x] Realizador de ações GNI
