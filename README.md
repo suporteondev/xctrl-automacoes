@@ -2,4 +2,8 @@
 
 Central de automações para o Instagram
 
-[] - teste
+### Features
+
+- [x] Cadastro de usuário
+- [x] Cadastro de cliente
+- [ ] Cadastro de produtos[x] - teste
