@@ -7,7 +7,6 @@ import { Etiqueta } from './components/etiqueta'
 import { Entrada } from './components/entrada'
 import { Mensagem } from './components/mensagem'
 import { Botao } from './components/botao'
-import { cadastrarPerfil } from './functions/cadastrarPerfil'
 import { Cabeca } from '../../components/cabeca/index'
 import { Rodape } from '../../components/rodape/index'
 import { Opcao } from '../../components/opcao/index'
@@ -19,6 +18,7 @@ import { useAcessoMontador } from '../../providers/acessoMontador'
 import { redirecionar } from '../../functions/redirecionar'
 import { AiOutlineUserAdd } from 'react-icons/ai'
 import { TbLockOpen } from 'react-icons/tb'
+import { atualizarInformacoes } from './functions/atualizarInformacoes'
 
 const Informacoes = ()=>{
 
@@ -27,13 +27,12 @@ const Informacoes = ()=>{
 
     return (
         <Conteudos>
-            <Cabeca voltar='false'/>
+            <Cabeca voltar='/painel'/>
             <Formulario 
-                onSubmit={e => cadastrarPerfil(
+                onSubmit={e => atualizarInformacoes(
                     e, 
                     Router,
-                    document.querySelector('[name="nome"]').value, 
-                    document.querySelector('[name="email"]').value, 
+                    document.querySelector('[name="nome"]').value,
                     document.querySelector('[name="senha"]').value, 
                     document.querySelector('[name="confirmar"]').value, 
                     Mensagem,
@@ -66,18 +65,6 @@ const Informacoes = ()=>{
                 <Botao id='teste'>Salvar alterações</Botao>
             </Formulario>
             <Rodape>
-                <Opcao
-                    funcao={()=>{
-                        redirecionar(Router, '/')
-                    }}
-                >
-                    <span>Acessar plataforma</span>
-                    <TbLockOpen/>
-                </Opcao>
-                <Opcao>
-                    <span>Efetuar cadastro</span>
-                    <AiOutlineUserAdd/>
-                </Opcao>
                 V{window.api.ipcRenderer.sendSync('versaoAplicativo')}
             </Rodape>
         </Conteudos>

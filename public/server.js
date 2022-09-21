@@ -44,5 +44,6 @@ server.use('/api/realizador/iniciar', require(`./routes/secure/realizador/inicia
 // ROTAS GERAIS
 server.use('/api/geral/pagamentos', require(`./routes/secure/geral/pagamentos`))
 server.use('/api/geral/abrirnavegador', require(`./routes/secure/geral/abrirnavegador`))
+server.use('/api/geral/informacoes', require(`./routes/secure/geral/informacoes`))
 
 module.exports = server

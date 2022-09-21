@@ -1,12 +1,11 @@
 import { verificarAcessos } from './verificarAcessos'
 
-async function cadastrarPerfil(
+async function atualizarInformacoes(
     e, 
     Router,
-    nome, 
-    email, 
+    nome,
     senha, 
-    confirmar, 
+    confirmar,
     Mensagem,
     setMensagem
 ){
@@ -22,14 +21,13 @@ async function cadastrarPerfil(
         },
         body: JSON.stringify({ 
             nome,
-            email, 
             senha,
             confirmar
         })
     }
 
     // Chamando a rota de cadastro
-    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/cadastrar`, configs)
+    const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/geral/informacoes`, configs)
     const resultado = await api.json()
 
     if(resultado.ok === false){
@@ -39,4 +37,4 @@ async function cadastrarPerfil(
     }
 }
 
-export { cadastrarPerfil }
+export { atualizarInformacoes }
