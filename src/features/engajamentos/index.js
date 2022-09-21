@@ -53,13 +53,6 @@ const Engajamentos = ()=>{
         <div>
             <Cabeca blur={blur} voltar='/painel'/>
             <div>
-                {/* <Titulo 
-                    style={{ 
-                        marginTop: '10px', 
-                        marginBottom: '-10px',
-                        textAlign: 'center'
-                    }}
-                >Engajamento</Titulo> */}
                 <Filtrar display={displaySelecionar}>
                     <div className='form'>
                         <label>Selecionar do perfil:</label>

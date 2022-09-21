@@ -22,6 +22,7 @@ server.use('/api/gerenciador/verificar', require(`./routes/secure/gerenciador/ve
 server.use('/api/gerenciador/listar', require(`./routes/secure/gerenciador/listar`))
 server.use('/api/gerenciador/apagar', require(`./routes/secure/gerenciador/apagar`))
 server.use('/api/gerenciador/transferir', require(`./routes/secure/gerenciador/transferir`))
+server.use('/api/gerenciador/trocarsenha', require(`./routes/secure/gerenciador/trocarsenha`))
 
 // ROTAS DO ENGAJAMENTO
 server.use('/api/engajamento/listar', require(`./routes/secure/engajamento/listar`))

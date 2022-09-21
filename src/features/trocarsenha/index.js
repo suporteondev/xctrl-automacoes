@@ -31,10 +31,8 @@ const TrocarSenha = ()=>{
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ executando, setExecutando ] = useState(false)
     const [ displayVoltar, setDisplayVoltar ] = useState('false')
-    const [ ativos, setAtivos ] = useState(0)
-    const [ inativos, setInativos ] = useState(0)
-    const [ novamentes, setNovamentes ] = useState(0)
-    const [ averificar, setAverificar ] = useState(0)
+    const [ senhasAlteradas, setSenhasAlteradas ] = useState(0)
+    const [ senhasNaoAlteradas, setSenhasNaoAlteradas ] = useState(0)
 
     return (
         <>
@@ -89,7 +87,7 @@ const TrocarSenha = ()=>{
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Nova senha</Etiqueta>
-                                <Entrada name='novaSenha' defaultValue={configuracoesTrocarSenha.novaSenha}/>
+                                <Entrada name='novaSenha' type='text' defaultValue={configuracoesTrocarSenha.novaSenha}/>
                             </Caixa>
                             <Caixa>
                                 <Etiqueta>Limpar atividade de login</Etiqueta>
@@ -127,10 +125,8 @@ const TrocarSenha = ()=>{
                                 setMeusLogs,
                                 setDisplayVoltar,
                                 setExecutando,
-                                setAtivos,
-                                setInativos,
-                                setAverificar,
-                                setNovamentes
+                                setSenhasAlteradas,
+                                setSenhasNaoAlteradas
                             ) 
                         }}>
                             <span>Iniciar</span>
@@ -145,28 +141,21 @@ const TrocarSenha = ()=>{
                     {meusLogs.map((logs, index)=>(
                         logs === 'Acessando o instagram' || 
                         logs === 'Verificando o perfil' || 
+                        logs === 'Trocando a senha do perfil' ||
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 
                         <h1 key={index}>{logs}</h1> : 
-                        <p key={index}>{logs}</p>
+                        <p key={index} style={{ color: logs.includes('sucesso') ? '#28a745' : '' }}>{logs}</p>
                     ))}
                 </Logs>
                 <Rodape>
-                    <Opcao cor='#236EFF'>
-                        <span>Não verificados</span>
-                        {averificar}
-                    </Opcao>
                     <Opcao cor='#05A660'>
-                        <span>Perfis ativos</span>
-                        {ativos}
-                    </Opcao>
-                    <Opcao cor='#FFA500'>
-                        <span>Tentar novamente</span>
-                        {novamentes}
+                        <span>Senhas alteradas</span>
+                        {senhasAlteradas}
                     </Opcao>
                     <Opcao cor='#E53535'>
-                        <span>Perfis inativos</span>
-                        {inativos}
+                        <span>Senhas não alteradas</span>
+                        {senhasNaoAlteradas}
                     </Opcao>
                 </Rodape>
             </>

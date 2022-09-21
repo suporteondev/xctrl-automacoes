@@ -4,10 +4,8 @@ export async function iniciar(
     setMeusLogs,
     setDisplayVoltar,
     setExecutando,
-    setAtivos,
-    setInativos,
-    setAverificar,
-    setNovamentes
+    setSenhasAlteradas,
+    setSenhasNaoAlteradas
 ){
 
     const navegador = document.querySelector('[name="navegador"]').value
@@ -16,6 +14,7 @@ export async function iniciar(
     const userAgent = document.querySelector('[name="userAgent"]').value
     const modoPerfis = document.querySelector('[name="modoPerfis"]').value
     const seusPerfis = document.querySelector('[name="seusPerfis"]').value    
+    const novaSenha = document.querySelector('[name="novaSenha"]').value    
     const limparLogin = document.querySelector('[name="limparLogin"]').value    
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value    
     const logs = document.querySelector('#logs')
@@ -24,7 +23,12 @@ export async function iniciar(
     if(seusPerfis === ''){
         setMensagem(<Mensagem>Preencha seus perfis antes de iniciar</Mensagem>)
         logs.scrollTop = logs.scrollHeight
-    }else{
+    }
+    else if(novaSenha.length < 6){
+        setMensagem(<Mensagem>A nova senha deve ter mais do que 6 dígitos</Mensagem>)
+        logs.scrollTop = logs.scrollHeight
+    }
+    else{
 
         if(modoPerfis == 'linha'){
             seusPerfis.split('\n').forEach((usuario)=>{
@@ -49,34 +53,30 @@ export async function iniciar(
     
         var intervalo = setInterval(()=>{
     
-            var perfisAtivos = 0 
-            var perfisInativos = 0 
-            var perfisNovamente = 0 
+            var senhasAltearadasNumero = 0 
+            var senhasNaoAlteradasNumero = 0
     
-            window.api.ipcRenderer.sendSync('logVerificador').forEach((mensagem)=>{
-                if(mensagem.includes('Perfil ativo') == true){
-                    perfisAtivos += 1
+            window.api.ipcRenderer.sendSync('logTrocarSenha').forEach((mensagem)=>{
+                if(mensagem.includes('Senha alterada com sucesso!') == true){
+                    senhasAltearadasNumero += 1
                 }
     
-                if(mensagem.includes('Tentar novamente') == true){
-                    perfisNovamente += 1
-                }
-    
-                if(mensagem.includes('Perfil inativo') == true){
-                    perfisInativos += 1
+                if(
+                    mensagem.includes('Não conseguimos alterar a senha desse perfil!') == true ||
+                    mensagem.includes('Erro ao tentar acessar o perfil!') == true
+                ){
+                    senhasNaoAlteradasNumero += 1
                 }
             })
     
-            setAtivos(perfisAtivos)
-            setInativos(perfisInativos)
-            setNovamentes(perfisNovamente)
-            setAverificar(arrayPerfis.length - (perfisAtivos + perfisInativos + perfisNovamente))
+            setSenhasAlteradas(senhasAltearadasNumero)
+            setSenhasNaoAlteradas(senhasNaoAlteradasNumero)
             
-            setMeusLogs(window.api.ipcRenderer.sendSync('logVerificador'))
+            setMeusLogs(window.api.ipcRenderer.sendSync('logTrocarSenha'))
             logs.scrollTop = logs.scrollHeight
     
-            if(window.api.ipcRenderer.sendSync('logVerificador')[window.api.ipcRenderer.sendSync('logVerificador').length - 1] == 'O robô terminou, pode voltar!'){
-                setMeusLogs(window.api.ipcRenderer.sendSync('logVerificador'))
+            if(window.api.ipcRenderer.sendSync('logTrocarSenha')[window.api.ipcRenderer.sendSync('logTrocarSenha').length - 1] == 'O robô terminou, pode voltar!'){
+                setMeusLogs(window.api.ipcRenderer.sendSync('logTrocarSenha'))
                 setTimeout(clearInterval(intervalo), 3000)
                 logs.scrollTop = logs.scrollHeight
                 setDisplayVoltar('/gerenciador')
@@ -96,12 +96,13 @@ export async function iniciar(
                 modoAnonimo, 
                 userAgent,
                 seusPerfis: arrayPerfis, 
+                novaSenha,
                 limparLogin,
                 esperarEntre: Number(esperarEntre) * 1000
             })
         }
     
-        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/gerenciador/verificar`, configs)
+        const api = await fetch(`http://localhost:${window.api.ipcRenderer.sendSync('porta')}/api/gerenciador/trocarsenha`, configs)
         const resultado = await api.json()
         
     }

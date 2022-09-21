@@ -1,12 +1,12 @@
 const router = require('express').Router()
-const verificador = require('../../../auto/automacoes/verificador')
+const trocarsenha = require('../../../auto/automacoes/trocarsenha')
 const Store = require('electron-store')
 const store = new Store()
 const logado = require('../../../middlewares/logado')
 
 router.post('/', logado, async(req, res)=>{
 
-    global.verificador = []
+    global.trocarsenha = []
 
     const { 
         navegador,
@@ -14,6 +14,7 @@ router.post('/', logado, async(req, res)=>{
         modoAnonimo, 
         userAgent,
         seusPerfis, 
+        novaSenha,
         limparLogin,
         esperarEntre
     } = req.body
@@ -22,15 +23,16 @@ router.post('/', logado, async(req, res)=>{
     const modoAnonimoConfigurado = modoAnonimo === 'sim' ? true : false
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
 
-    await verificador(
+    await trocarsenha(
         navegador,
         verAcontecendoConfigurado,
         modoAnonimoConfigurado,
         userAgent,
         seusPerfis,
+        novaSenha,
         limparLoginConfigurado,
         esperarEntre,
-        global.verificador
+        global.trocarsenha
     )
    
     return res.json({
