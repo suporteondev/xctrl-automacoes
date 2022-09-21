@@ -210,6 +210,7 @@ const Criador = ()=>{
                             logs === 'Alterando o gênero do perfil' ||
                             logs === 'Alterando a biografia' || 
                             logs === 'Alterando a foto de perfil' ||
+                            logs === 'Capturando token do siga' ||
                             logs === 'Postando fotos no story' ||
                             logs === 'Postando fotos no Feed' ||
                             logs === 'Seguindo perfis verificados' ||

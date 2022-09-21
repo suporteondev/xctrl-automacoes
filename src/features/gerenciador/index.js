@@ -28,6 +28,7 @@ import { filtrarTodosPerfis } from './functions/filtrarTodosPerfis'
 import { selecionarPerfis } from './functions/selecionarPerfis'
 import { transferirPerfis } from './functions/transferirPerfis'
 import { BiTransferAlt } from 'react-icons/bi'
+import { TbLock } from 'react-icons/tb'
 import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
 
 const Gerenciador = ()=>{
@@ -339,6 +340,14 @@ const Gerenciador = ()=>{
                 >
                     <span>Transferir perfis</span>
                     <BiTransferAlt/>
+                </Opcao>
+                <Opcao
+                    funcao={()=>{
+                        redirecionar(Router, '/trocarsenha')
+                    }}
+                >
+                    <span>Trocar a senha dos perfis</span>
+                    <TbLock/>
                 </Opcao>
                 <Opcao 
                     funcao={()=>{

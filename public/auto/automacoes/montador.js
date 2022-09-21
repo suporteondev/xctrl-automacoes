@@ -119,22 +119,6 @@ const montador = async(
         }
 
         // LIMPANDO A ATIVIDADE DE LOGIN
-        if(userToken != ''){
-            await cadastrarPerfilSigaSocial(
-                pagina,
-                logs,
-                usuario,
-                userToken,
-                quantidadeAcoesSigaSocial,
-                metaSigaSocial,
-                tempoEntreAcoesSigaSocial
-            )
-
-            // FECHANDO O NAVEGADOR
-            await navegador.close()
-            continue
-        }
-        
         if(limparLogin == true){
             if(userToken == ''){
                 await limparAtividadeLogin(pagina, usuario, logs)

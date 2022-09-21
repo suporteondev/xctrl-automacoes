@@ -25,6 +25,7 @@ const { rootPath } = require('electron-root-path')
 const path = require('path')
 const fs = require('fs')
 const selecionarPastaFotos = require('../atalhos/selecionarPastaFotos')
+const cadastrarPerfilSigaSocial = require('../sigasocial/cadastrarPerfil')
 const pastasEscolhidas = []
 
 const listaEmailsTemporarios = [
@@ -53,6 +54,9 @@ const criador = async(
     quantidadePublicacoesFeed,
     quantidadePublicacoesStory,
     seguirPerfis,
+    metaSigaSocial,
+    quantidadeAcoesSigaSocial,
+    tempoEntreAcoesSigaSocial,
     logs
 )=>{
 
@@ -332,6 +336,30 @@ const criador = async(
                     const bloqueio2 = await procurarBloqueios(paginaInstagram, usuario, logs)
                     if(bloqueio2 == true){ break }
                     await realizarPublicacoesStory(paginaInstagram, x + 1 , usuario, caminhoPasta, logs)
+                }
+            }
+
+            // CADASTRANDO O PERFIL NO SIGA SOCIAL
+            if(userToken != ''){
+                await cadastrarPerfilSigaSocial(
+                    pagina,
+                    logs,
+                    usuario,
+                    userToken,
+                    quantidadeAcoesSigaSocial,
+                    metaSigaSocial,
+                    tempoEntreAcoesSigaSocial
+                )
+
+                // FECHANDO O NAVEGADOR
+                await navegador.close()
+                continue
+            }
+
+            // LIMPANDO A ATIVIDADE DE LOGIN
+            if(limparLogin == true){
+                if(userToken == ''){
+                    await limparAtividadeLogin(pagina, usuario, logs)
                 }
             }
 
