@@ -4,7 +4,7 @@ const { BrowserWindow, screen } = require('electron')
 const { rootPath } = require('electron-root-path')
 const isDev = require('electron-is-dev')
 const fs = require('fs')
-const titulo = 'xctrl'
+const titulo = fs.readFileSync(rootPath + '\\versao.txt', { encoding:'utf8', flag:'r' })
 var contador = 1
 
 async function abrirJanela(largura, altura, logs){
