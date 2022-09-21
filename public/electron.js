@@ -76,7 +76,7 @@ app.on('ready', async () => {
         global.porta = portaEscolhida.address().port
     })
 
-    const mainWindow = await abrirJanela(350, 500, '')
+    const mainWindow = await abrirJanela(350, 550, '')
 
     // ATALHOS
     // esconderConsole(globalShortcut)

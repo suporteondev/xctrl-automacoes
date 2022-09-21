@@ -7,7 +7,7 @@ import { Etiqueta } from './components/etiqueta'
 import { Entrada } from './components/entrada'
 import { Mensagem } from './components/mensagem'
 import { Botao } from './components/botao'
-import { acessarPlataforma } from './functions/acessarPlataforma'
+import { cadastrarPerfil } from './functions/cadastrarPerfil'
 import { Cabeca } from '../../components/cabeca/index'
 import { Rodape } from '../../components/rodape/index'
 import { Opcao } from '../../components/opcao/index'
@@ -20,12 +20,8 @@ import { redirecionar } from '../../functions/redirecionar'
 import { AiOutlineUserAdd } from 'react-icons/ai'
 import { TbLockOpen } from 'react-icons/tb'
 
-const Acessar = ()=>{
+const Informacoes = ()=>{
 
-    const { usuarioLogado, setUsuarioLogado } = useUsuarioLogado()
-    const { setAcessoGerenciador } = useAcessoGerenciador()
-    const { setAcessoCriador } = useAcessoCriador()
-    const { setAcessoMontador } = useAcessoMontador()
     const [ mensagem, setMensagem ] = useState(<Mensagem color='#fff'></Mensagem>)
     const Router = useNavigate()
 
@@ -33,26 +29,23 @@ const Acessar = ()=>{
         <Conteudos>
             <Cabeca voltar='false'/>
             <Formulario 
-                onSubmit={e => acessarPlataforma(
+                onSubmit={e => cadastrarPerfil(
                     e, 
                     Router,
+                    document.querySelector('[name="nome"]').value, 
                     document.querySelector('[name="email"]').value, 
                     document.querySelector('[name="senha"]').value, 
+                    document.querySelector('[name="confirmar"]').value, 
                     Mensagem,
-                    setMensagem, 
-                    setUsuarioLogado,
-                    setAcessoGerenciador,
-                    setAcessoCriador,
-                    setAcessoMontador
+                    setMensagem
                 )}
             >
-                <Titulo>Acessar plataforma</Titulo>
+                <Titulo>Minhas informações</Titulo>
                 <Caixa>
-                    <Etiqueta>Email</Etiqueta>
+                    <Etiqueta>Nome e sobrenome</Etiqueta>
                     <Entrada 
-                        name='email' 
+                        name='nome' 
                         type='text'
-                        defaultValue={usuarioLogado.email}
                     />
                 </Caixa>
                 <Caixa>
@@ -60,22 +53,28 @@ const Acessar = ()=>{
                     <Entrada 
                         name='senha' 
                         type='password'
-                        defaultValue={usuarioLogado.senha}
+                    />
+                </Caixa>
+                <Caixa>
+                    <Etiqueta>Confirmar senha</Etiqueta>
+                    <Entrada 
+                        name='confirmar' 
+                        type='password'
                     />
                 </Caixa>
                 {mensagem}
-                <Botao id='teste'>Acessar conta</Botao>
+                <Botao id='teste'>Salvar alterações</Botao>
             </Formulario>
             <Rodape>
-                <Opcao>
+                <Opcao
+                    funcao={()=>{
+                        redirecionar(Router, '/')
+                    }}
+                >
                     <span>Acessar plataforma</span>
                     <TbLockOpen/>
                 </Opcao>
-                <Opcao
-                    funcao={()=>{
-                        redirecionar(Router, '/cadastrar')
-                    }}
-                >
+                <Opcao>
                     <span>Efetuar cadastro</span>
                     <AiOutlineUserAdd/>
                 </Opcao>
@@ -85,4 +84,4 @@ const Acessar = ()=>{
     )
 }
 
-export { Acessar }
+export { Informacoes }

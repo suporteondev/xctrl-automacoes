@@ -12,8 +12,10 @@ import ComprarMontador from './pages/comprarmontador'
 import Comprar from './pages/comprar'
 import Engajamentos from './pages/engajamentos'
 import Adicionador from './pages/adicionador'
+import Cadastrar from './pages/cadastrar'
 import Seguidores from './pages/seguidores'
 import Realizador from './pages/realizador'
+import Informacoes from './pages/informacoes'
 import Manual from './pages/manual'
 import MegaPromocao from './pages/megapromocao'
 import LogsMontador from './pages/logsmontador'
@@ -54,6 +56,8 @@ export default function App() {
                                                                     <HashRouter>
                                                                         <Routes>
                                                                             <Route exact path='/' element={<Acessar/>} />
+                                                                            <Route exact path='/cadastrar' element={<Cadastrar/>} />
+                                                                            <Route exact path='/informacoes' element={<Informacoes/>} />
                                                                             <Route exact path='/painel' element={<Painel/>} />
                                                                             <Route exact path='/seguidores' element={<Seguidores/>} />
                                                                             <Route exact path='/manual' element={<Manual/>} />

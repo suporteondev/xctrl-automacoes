@@ -20,7 +20,7 @@ import { useAcessoCriador } from '../../providers/acessoCriador'
 import { useAcessoMontador } from '../../providers/acessoMontador'
 import { FaWhatsapp, FaYoutube } from 'react-icons/fa'
 import { HiDownload } from 'react-icons/hi'
-import { MdOutlineMoneyOff } from 'react-icons/md'
+import { FaUserEdit } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
 const Painel = ()=>{
@@ -46,7 +46,7 @@ const Painel = ()=>{
                             {acessoCriador.status == true ? 
                                 redirecionar(Router, '/criador')
                                 : 
-                                redirecionar(Router, '/comprarcriador')
+                                redirecionar(Router, '/painel')
                             }
                         }}
                     >
@@ -64,7 +64,7 @@ const Painel = ()=>{
                             {acessoMontador.status == true ? 
                                 redirecionar(Router, '/montador')
                                 : 
-                                redirecionar(Router, '/comprarmontador')
+                                redirecionar(Router, '/painel')
                             }
                         }}
                     >
@@ -82,7 +82,7 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/gerenciador')
                                 : 
-                                redirecionar(Router, '/comprar')
+                                redirecionar(Router, '/painel')
                             }
                         }}
                     >
@@ -100,7 +100,7 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/engajamentos')
                                 : 
-                                redirecionar(Router, '/comprar')
+                                redirecionar(Router, '/painel')
                             }
                         }}
                     >
@@ -118,7 +118,7 @@ const Painel = ()=>{
                             {acessoGerenciador.status == true ? 
                                 redirecionar(Router, '/controlevps')
                                 : 
-                                redirecionar(Router, '/comprar')
+                                redirecionar(Router, '/painel')
                             }
                         }}
                     >
@@ -151,9 +151,11 @@ const Painel = ()=>{
                 </Servicos>
             </Conteudos>
             <Rodape>
-                <Opcao funcao={()=> { redirecionar(Router, '/manual') }}>
-                    <span>Manual de uso</span>
-                    <FaYoutube/>
+                <Opcao funcao={()=> { 
+                    redirecionar(Router, '/informacoes') 
+                }}>
+                    <span>Alterar informações</span>
+                    <FaUserEdit/>
                 </Opcao>
                 <Opcao funcao={()=> abrirNavegador('https://api.whatsapp.com/send?phone=5561995162761&text=Ol%C3%A1,%20tudo%20bem?') }>
                     <span>Suporte da plataforma</span>

@@ -22,11 +22,11 @@ async function abrirJanela(largura, altura, logs){
             show: false,
             resizable: false,
             name: titulo,
-            height: 500,
+            height: 550,
             width: 350,
             title: titulo,
             x: (width / 2) - 175,
-            y: (height / 2) - 250,
+            y: (height / 2) - 275,
             icon: __dirname + '/icon.png',
             webPreferences: {
                 devTools: true,

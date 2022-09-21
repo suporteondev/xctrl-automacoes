@@ -8,6 +8,10 @@ server.use(cors())
 server.use(express.urlencoded({ extended: true, limit: '100mb'}))
 server.use(express.json({limit: '100mb'}))
 
+// ROTAS NÃO SEGURAS
+server.use('/api/acessar', require(`./routes/acessar`))
+server.use('/api/cadastrar', require(`./routes/cadastrar`))
+
 // ROTAS DO CRIADOR
 server.use('/api/criador/acesso', require(`./routes/secure/criador/acesso`))
 server.use('/api/criador/iniciar', require(`./routes/secure/criador/iniciar`))
@@ -40,8 +44,5 @@ server.use('/api/realizador/iniciar', require(`./routes/secure/realizador/inicia
 // ROTAS GERAIS
 server.use('/api/geral/pagamentos', require(`./routes/secure/geral/pagamentos`))
 server.use('/api/geral/abrirnavegador', require(`./routes/secure/geral/abrirnavegador`))
-
-// ROTAS NÃO SEGURAS
-server.use('/api/acessar', require(`./routes/acessar`))
 
 module.exports = server
