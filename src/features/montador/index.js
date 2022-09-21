@@ -34,6 +34,7 @@ const Montador = ()=>{
     const [ publicacoesRealizadasNumero, setPublicacoesRealizadasNumero ] = useState(0)
     const [ publicacoesStoryNumero, setPublicacoesStoryNumero ] = useState(0)
     const [ perfisSeguidosNumero, setPerfisSeguidosNumero ] = useState(0)
+    const [ cadastrarSigaSocial, setCadastrarSigaSocial ] = useState('false')
 
     return (
         <>
@@ -127,6 +128,36 @@ const Montador = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
+                                <Etiqueta>Cadastrar perfil no siga social?</Etiqueta>
+                                <Select name='cadastrarSigaSocial' defaultValue={configuracoesMontador.cadastrarSigaSocial}>
+                                    <option value='sim'>Sim</option>
+                                    <option value='nao'>Não</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Email do siga social</Etiqueta>
+                                <Entrada name='emailSigaSocial' type='text' defaultValue={configuracoesMontador.emailSigaSocial}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Senha do siga social</Etiqueta>
+                                <Entrada name='senhaSigaSocial' type='text' defaultValue={configuracoesMontador.senhaSigaSocial}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Meta do siga social</Etiqueta>
+                                <Select name='metaSigaSocial' defaultValue={configuracoesMontador.metaSigaSocial}>
+                                    <option value='unica'>Única</option>
+                                    <option value='diaria'>Diária</option>
+                                </Select>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Quantidade de ações por perfil</Etiqueta>
+                                <Entrada name='quantidadeAcoesSigaSocial' type='number' defaultValue={configuracoesMontador.quantidadeAcoesSigaSocial}/>
+                            </Caixa>
+                            <Caixa>
+                                <Etiqueta>Tempo entre ações do siga social</Etiqueta>
+                                <Entrada name='tempoEntreAcoesSigaSocial' type='number' defaultValue={configuracoesMontador.tempoEntreAcoesSigaSocial}/>
+                            </Caixa>
+                            <Caixa>
                                 <Etiqueta>Esperar entre as ações (Segundos)</Etiqueta>
                                 <Entrada name='esperarEntre' type='number' min={0} defaultValue={configuracoesMontador.esperarEntre}/>
                             </Caixa>
@@ -184,6 +215,7 @@ const Montador = ()=>{
                         logs === 'Alterando a foto de perfil' ||
                         logs === 'Postando fotos no story' ||
                         logs === 'Postando fotos no Feed' ||
+                        logs === 'Cadastrando no siga social' ||
                         logs === 'Seguindo perfis verificados' ||
                         logs === 'Limpando atividade de login' ||
                         logs === 'O robô terminou, pode voltar!' ? 

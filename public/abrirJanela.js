@@ -35,6 +35,7 @@ async function abrirJanela(largura, altura, logs){
                 webSecurity: false,
                 overlayFullscreenVideo: true,
                 enableRemoteModule: true,
+                allowRunningInsecureContent: false,
                 preload: join(__dirname , './preload.js'),
             },
         })

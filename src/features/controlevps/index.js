@@ -31,6 +31,8 @@ import { BiTransferAlt } from 'react-icons/bi'
 import { adicionarVps } from './functions/adicionarVps'
 import { listarVps } from './functions/listarVps'
 import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
+import { RiAlertFill } from 'react-icons/ri'
+import { Entrada } from '../criador/components/entrada'
 
 const ControleVps = ()=>{
 
@@ -39,6 +41,7 @@ const ControleVps = ()=>{
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayAdicionar, setDisplayAdicionar ] = useState(false)
+    const [ limiteVps, setLimiteVps ] = useState(0)
 
     useEffect(async()=>{
         const perfisEncontrados = await listarVps()
@@ -86,6 +89,14 @@ const ControleVps = ()=>{
                 </Filtrar>
             </div>
             <Conteudos blur={blur}>
+                <Entrada 
+                    id='limitevps'
+                    placeholder='Limite de VPS' 
+                    style={{ marginBottom: '10px'}}
+                    onChange={()=>{
+                        setLimiteVps(Number(document.querySelector('#limitevps').value))
+                    }}
+                />
                 <Tabela>
                     <table>
                         <thead>
@@ -132,10 +143,18 @@ const ControleVps = ()=>{
                     }
                     <IoTime/>
                 </Opcao>
-                <Opcao funcao={()=>{}}>
-                    <span>Limite total</span>
-                    <input className='vps' type='text'/>
-                </Opcao>
+                {perfisGerenciador.length == limiteVps ? 
+                    <Opcao
+                        cor='orange'
+                        funcao={()=>{
+                            setDisplayAdicionar(true) 
+                            setBlur(true)
+                        }}
+                    >
+                        <span>Limite de VPS atingido</span>
+                        <RiAlertFill/>
+                    </Opcao> : ''
+                }
                 <Opcao
                     funcao={()=>{
                         copiarTotalPerfis(perfisGerenciador.length)

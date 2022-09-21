@@ -18,7 +18,7 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
         await selecionarPublicacao()
 
         // ACESSANDO O PERFIL
-        await pagina.goto('https://www.instagram.com/' + usuario, { timeout: 60000 })
+        await pagina.goto('https://www.instagram.com/', { timeout: 60000 })
         await pagina.waitForSelector('[aria-label="Página inicial"]', { timeout: 60000 })
 
         // Selecionando a publicação
@@ -34,6 +34,7 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
         }catch(erro){
 
             await pagina.click('[d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552z"]')
+            d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552z"
             await pagina.waitForTimeout(2000)
 
             const [ uploadPublicacoes ] = await Promise.all([
@@ -78,7 +79,7 @@ const realizarPublicacoesFeed = async(pagina, x, usuario, pastaFotos, logs)=>{
             await selecionarPublicacao()
 
             // ACESSANDO O PERFIL
-            await pagina.goto('https://www.instagram.com/' + usuario, { timeout: 60000 })
+            await pagina.goto('https://www.instagram.com/', { timeout: 60000 })
             await pagina.waitForSelector('[aria-label="Página inicial"]', { timeout: 60000 })
 
             // Selecionando a publicação

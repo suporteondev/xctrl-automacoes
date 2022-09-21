@@ -13,6 +13,12 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
     const quantidadePublicacoesStory = document.querySelector('[name="quantidadePublicacoesStory"]').value
     const seguirPerfis = document.querySelector('[name="seguirPerfis"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
+    const cadastrarSigaSocial = document.querySelector('[name="cadastrarSigaSocial"]').value
+    const emailSigaSocial = document.querySelector('[name="emailSigaSocial"]').value
+    const senhaSigaSocial = document.querySelector('[name="senhaSigaSocial"]').value
+    const metaSigaSocial = document.querySelector('[name="metaSigaSocial"]').value
+    const quantidadeAcoesSigaSocial = document.querySelector('[name="quantidadeAcoesSigaSocial"]').value
+    const tempoEntreAcoesSigaSocial = document.querySelector('[name="tempoEntreAcoesSigaSocial"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
 
@@ -30,6 +36,12 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesMontador){
         quantidadePublicacoesStory,
         seguirPerfis,
         limparLogin,
+        cadastrarSigaSocial,
+        emailSigaSocial,
+        senhaSigaSocial,
+        metaSigaSocial,
+        quantidadeAcoesSigaSocial,
+        tempoEntreAcoesSigaSocial,
         esperarEntre
     }
     

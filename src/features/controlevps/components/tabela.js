@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 const Tabela = styled.div`
     width: 100%;
-    min-height: calc(100vh - 140px);
-    max-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
+    max-height: calc(100vh - 200px);
     overflow-y: auto;
 
     ::-webkit-scrollbar {

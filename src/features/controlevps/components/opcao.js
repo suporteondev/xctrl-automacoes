@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 const Opcao = styled.div`
     min-width: 40px;
+    width: 100%;
     height: 40px;
     border-radius: 10px;
     border: 1px solid ${props => props.cor ? props.cor : props.theme.linhas};

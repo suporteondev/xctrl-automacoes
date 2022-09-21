@@ -12,6 +12,7 @@ const seguirPerfisFamosos = require('../instagram/seguirPerfisFamosos')
 const abrirNavegador = require('../atalhos/abrirNavegador')
 const selecionarPastaFotos = require('../atalhos/selecionarPastaFotos')
 const procurarBloqueios = require('../instagram/procurarBloqueios')
+const cadastrarPerfilSigaSocial = require('../sigasocial/cadastrarPerfil')
 const pastasEscolhidas = []
 
 const montador = async(
@@ -28,6 +29,10 @@ const montador = async(
     seguirPerfis,
     limparLogin,
     esperarEntre,
+    userToken,
+    metaSigaSocial,
+    quantidadeAcoesSigaSocial,
+    tempoEntreAcoesSigaSocial,
     logs
 )=>{
 
@@ -96,9 +101,44 @@ const montador = async(
             }
         }
 
+        // CADASTRANDO O PERFIL NO SIGA SOCIAL
+        if(userToken != ''){
+            await cadastrarPerfilSigaSocial(
+                pagina,
+                logs,
+                usuario,
+                userToken,
+                quantidadeAcoesSigaSocial,
+                metaSigaSocial,
+                tempoEntreAcoesSigaSocial
+            )
+
+            // FECHANDO O NAVEGADOR
+            await navegador.close()
+            continue
+        }
+
         // LIMPANDO A ATIVIDADE DE LOGIN
+        if(userToken != ''){
+            await cadastrarPerfilSigaSocial(
+                pagina,
+                logs,
+                usuario,
+                userToken,
+                quantidadeAcoesSigaSocial,
+                metaSigaSocial,
+                tempoEntreAcoesSigaSocial
+            )
+
+            // FECHANDO O NAVEGADOR
+            await navegador.close()
+            continue
+        }
+        
         if(limparLogin == true){
-            await limparAtividadeLogin(pagina, usuario, logs)
+            if(userToken == ''){
+                await limparAtividadeLogin(pagina, usuario, logs)
+            }
         }
 
         // FECHANDO O NAVEGADOR

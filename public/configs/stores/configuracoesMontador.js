@@ -17,6 +17,12 @@ function configuracoesMontador(store){
             quantidadePublicacoesStory: 3,
             seguirPerfis: 5,
             limparLogin: 'sim',
+            cadastrarSigaSocial: 'sim',
+            emailSigaSocial: '',
+            senhaSigaSocial: '',
+            metaSigaSocial: 'unica',
+            quantidadeAcoesSigaSocial: '100',
+            tempoEntreAcoesSigaSocial: '120',
             esperarEntre: 0
         })
     }

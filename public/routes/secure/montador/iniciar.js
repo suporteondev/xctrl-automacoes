@@ -19,6 +19,10 @@ router.post('/', logado, async(req, res)=>{
         quantidadePublicacoesStory,
         seguirPerfis,
         limparLogin,
+        userToken,
+        metaSigaSocial,
+        quantidadeAcoesSigaSocial,
+        tempoEntreAcoesSigaSocial,
         esperarEntre
     } = req.body
 
@@ -27,6 +31,9 @@ router.post('/', logado, async(req, res)=>{
     const alterarFotoPerfilConfigurado = alterarFotoPerfil === 'sim' ? true : false
     const alterarBiografiaConfigurado = alterarBiografia === 'sim' ? true : false
     const limparLoginConfigurado = limparLogin === 'sim' ? true : false
+    const metaSigaSocialConfigurado = metaSigaSocial === 'diaria' ? 0 : 1
+    const quantidadeAcoesSigaSocialConfigurado = Number(quantidadeAcoesSigaSocial)
+    const tempoEntreAcoesSigaSocialConfigurado = Number(tempoEntreAcoesSigaSocial)
 
     await montador(
         navegador,
@@ -42,6 +49,10 @@ router.post('/', logado, async(req, res)=>{
         seguirPerfis,
         limparLoginConfigurado,
         esperarEntre,
+        userToken,
+        metaSigaSocialConfigurado,
+        quantidadeAcoesSigaSocialConfigurado,
+        tempoEntreAcoesSigaSocialConfigurado,
         global.montador
     )
 

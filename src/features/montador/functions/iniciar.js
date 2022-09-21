@@ -24,6 +24,12 @@ export async function iniciar(
     const quantidadePublicacoesStory = document.querySelector('[name="quantidadePublicacoesStory"]').value
     const seguirPerfis = document.querySelector('[name="seguirPerfis"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
+    const cadastrarSigaSocial = document.querySelector('[name="cadastrarSigaSocial"]').value
+    const emailSigaSocial = document.querySelector('[name="emailSigaSocial"]').value
+    const senhaSigaSocial = document.querySelector('[name="senhaSigaSocial"]').value
+    const metaSigaSocial = document.querySelector('[name="metaSigaSocial"]').value
+    const quantidadeAcoesSigaSocial = document.querySelector('[name="quantidadeAcoesSigaSocial"]').value
+    const tempoEntreAcoesSigaSocial = document.querySelector('[name="tempoEntreAcoesSigaSocial"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
     const logs = document.querySelector('#logs')
     
@@ -50,9 +56,63 @@ export async function iniciar(
     else if(esperarEntre === ''){
         setMensagem(<Mensagem>Preencha quantos segundos você quer esperar entre as ações</Mensagem>)
         logs.scrollTop = logs.scrollHeight
-    }
-    
-    else{
+    }else{
+
+        let user_token = ''
+
+        if(cadastrarSigaSocial == 'sim'){
+            if(emailSigaSocial == ''){
+                setMensagem(<Mensagem>Preencha seu email do siga social</Mensagem>)
+                logs.scrollTop = logs.scrollHeight
+                return
+            }
+        
+            else if(senhaSigaSocial == ''){
+                setMensagem(<Mensagem>Preencha sua senha do siga social</Mensagem>)
+                logs.scrollTop = logs.scrollHeight
+                return
+            }
+        
+            else if(quantidadeAcoesSigaSocial == '' || quantidadeAcoesSigaSocial == '0' || quantidadeAcoesSigaSocial == 0){
+                setMensagem(<Mensagem>Preencha a quantidade de ações do siga social</Mensagem>)
+                logs.scrollTop = logs.scrollHeight
+                return
+            }
+        
+            else if(tempoEntreAcoesSigaSocial == '' || tempoEntreAcoesSigaSocial == '0' || tempoEntreAcoesSigaSocial == 0){
+                setMensagem(<Mensagem>Preencha o tempo entre as ações do siga social</Mensagem>)
+                logs.scrollTop = logs.scrollHeight
+                return
+            }
+
+            const configAPI = {
+                c: "api",
+                m: "loginUserC",
+                api_key: "f06dcea2defb2f9b8aa948a3cbac0d17",
+                login: emailSigaSocial,
+                password: senhaSigaSocial
+            }
+
+            const configs = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(configAPI)
+            }
+        
+            const api2 = await fetch('https://siga.social/', configs)
+            const resultadoSigaSocial = await api2.json()
+        
+            if(resultadoSigaSocial.status == 'error'){
+                setMensagem(<Mensagem cor='sucesso'>Siga social diz: {resultadoSigaSocial.error}</Mensagem>)
+                logs.scrollTop = logs.scrollHeight
+                return false
+            }else{
+                user_token = resultadoSigaSocial.data.usertoken
+            }
+        }
+
         setMensagem(<Mensagem cor='sucesso'>Montador iniciado com sucesso!</Mensagem>)
         logs.scrollTop = logs.scrollHeight
 
@@ -144,6 +204,10 @@ export async function iniciar(
                 quantidadePublicacoesStory: Number(quantidadePublicacoesStory),
                 seguirPerfis,
                 limparLogin,
+                userToken: user_token,
+                metaSigaSocial,
+                quantidadeAcoesSigaSocial,
+                tempoEntreAcoesSigaSocial,
                 esperarEntre: Number(esperarEntre) * 1000
             })
         }

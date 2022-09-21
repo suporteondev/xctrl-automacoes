@@ -26,12 +26,7 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
         if(bloqueio == true){ return false }
 
         // Apertando em agora não
-        try{
-            await pagina.waitForSelector('.cmbtv > button', { timeout: 10000 })
-            await pagina.click('.cmbtv > button')
-        }catch(erro){
-            
-        }
+        await pagina.goto('https://www.instagram.com/')
 
         // Esperando o direct aparecer
         await pagina.waitForSelector('[aria-label="Página inicial"]') 
@@ -70,12 +65,7 @@ const acessarPerfil = async(pagina, usuario, senha, logs)=>{
             if(bloqueio2 == true){ return false }
 
             // Apertando em agora não
-            try{
-                await pagina.waitForSelector('.cmbtv > button', { timeout: 10000 })
-                await pagina.click('.cmbtv > button')
-            }catch(erro){
-                
-            }
+            await pagina.goto('https://www.instagram.com/')
 
             // Esperando o direct aparecer
             await pagina.waitForSelector('[aria-label="Página inicial"]') 
