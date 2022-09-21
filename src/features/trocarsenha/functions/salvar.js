@@ -5,7 +5,6 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const modoPerfis = document.querySelector('[name="modoPerfis"]').value
-    const seusPerfis = document.querySelector('[name="seusPerfis"]').value
     const novaSenha = document.querySelector('[name="novaSenha"]').value
     const limparLogin = document.querySelector('[name="limparLogin"]').value
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value
@@ -17,7 +16,6 @@ export function salvar(Mensagem, setMensagem, setConfiguracoesVerificador){
         modoAnonimo,
         userAgent,
         modoPerfis,
-        seusPerfis,
         novaSenha,
         limparLogin,
         esperarEntre

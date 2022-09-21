@@ -5,7 +5,8 @@ export async function iniciar(
     setDisplayVoltar,
     setExecutando,
     setSenhasAlteradas,
-    setSenhasNaoAlteradas
+    setSenhasNaoAlteradas,
+    perfis
 ){
 
     const navegador = document.querySelector('[name="navegador"]').value
@@ -13,41 +14,18 @@ export async function iniciar(
     const modoAnonimo = document.querySelector('[name="modoAnonimo"]').value
     const userAgent = document.querySelector('[name="userAgent"]').value
     const modoPerfis = document.querySelector('[name="modoPerfis"]').value
-    const seusPerfis = document.querySelector('[name="seusPerfis"]').value    
     const novaSenha = document.querySelector('[name="novaSenha"]').value    
     const limparLogin = document.querySelector('[name="limparLogin"]').value    
     const esperarEntre = document.querySelector('[name="esperarEntre"]').value    
     const logs = document.querySelector('#logs')
     const arrayPerfis = []
 
-    if(seusPerfis === ''){
-        setMensagem(<Mensagem>Preencha seus perfis antes de iniciar</Mensagem>)
-        logs.scrollTop = logs.scrollHeight
-    }
-    else if(novaSenha.length < 6){
+    if(novaSenha.length < 6){
         setMensagem(<Mensagem>A nova senha deve ter mais do que 6 dígitos</Mensagem>)
         logs.scrollTop = logs.scrollHeight
     }
     else{
 
-        if(modoPerfis == 'linha'){
-            seusPerfis.split('\n').forEach((usuario)=>{
-                const arrayDados = usuario.split(' ')
-                arrayPerfis.push({ 
-                    usuario: arrayDados[0], 
-                    senha: arrayDados[1] 
-                })
-            })
-        }else if(modoPerfis == 'coluna'){
-            const meusPerfis = seusPerfis.split('\n\n')
-            meusPerfis.forEach((perfil)=>{
-                arrayPerfis.push({
-                    usuario: perfil.split('\n')[0],
-                    senha: perfil.split('\n')[1]
-                })
-            })
-        }
-    
         setExecutando(true)
         window.api.ipcRenderer.sendSync('tamanho-pequeno-2x')
     
@@ -95,7 +73,7 @@ export async function iniciar(
                 verAcontecendo, 
                 modoAnonimo, 
                 userAgent,
-                seusPerfis: arrayPerfis, 
+                seusPerfis: perfis, 
                 novaSenha,
                 limparLogin,
                 esperarEntre: Number(esperarEntre) * 1000

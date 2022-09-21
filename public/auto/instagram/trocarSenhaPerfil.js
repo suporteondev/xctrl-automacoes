@@ -1,6 +1,12 @@
 const procurarBloqueios = require("./procurarBloqueios")
+const Perfil = require('../../models/perfil')
+const Store = require('electron-store')
+const store = new Store()
 
 const trocarSenhaPerfil = async(pagina, usuario, senha, novaSenha, logs)=>{
+
+    const { email: ref } = store.get('usuarioLogado')
+
     try{
 
         logs.push('Trocando a senha do perfil')
@@ -24,6 +30,10 @@ const trocarSenhaPerfil = async(pagina, usuario, senha, novaSenha, logs)=>{
         await pagina.waitForTimeout(5000)
 
         logs.push(usuario + ' - Senha alterada com sucesso!')
+
+        logs.push(usuario + ' - Atualizando a senha do perfil no gerenciador...')
+        await Perfil.findOneAndUpdate({ ref, usuario}, { senha: novaSenha })
+        logs.push(usuario + ' - Senha atualizada com sucesso!')
         return true
 
     }catch(erro){
@@ -51,6 +61,9 @@ const trocarSenhaPerfil = async(pagina, usuario, senha, novaSenha, logs)=>{
             await pagina.waitForTimeout(5000)
 
             logs.push(usuario + ' - Senha alterada com sucesso!')
+            logs.push(usuario + ' - Atualizando a senha do perfil no gerenciador...')
+            await Perfil.findOneAndUpdate({ ref, usuario }, { senha: novaSenha })
+            logs.push(usuario + ' - Senha atualizada com sucesso!')
             return true 
         }catch(erro){
             console.log(erro.message)

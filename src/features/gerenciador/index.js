@@ -30,11 +30,13 @@ import { transferirPerfis } from './functions/transferirPerfis'
 import { BiTransferAlt } from 'react-icons/bi'
 import { TbLock } from 'react-icons/tb'
 import { copiarTotalPerfis } from './functions/copiarTotalPerfis'
+import { usePerfisSelecionadosGerenciador } from '../../providers/perfisSelecionadosGerenciador'
 
 const Gerenciador = ()=>{
 
     const { acessoGerenciador } = useAcessoGerenciador()
     const [ perfisGerenciador, setPerfisGerenciador ] = useState([])
+    const { setPerfisSelecionadosGerenciador } = usePerfisSelecionadosGerenciador() 
     const [ blur, setBlur ] = useState(false)
     const [ displayApagar, setDisplayApagar ] = useState(false)
     const [ displayTransferir, setDisplayTransferir ] = useState(false)
@@ -343,7 +345,30 @@ const Gerenciador = ()=>{
                 </Opcao>
                 <Opcao
                     funcao={()=>{
-                        redirecionar(Router, '/trocarsenha')
+                        const check = document.querySelectorAll('.checkbox')
+                        const perfis = []
+
+                        check.forEach((e)=>{
+                            if(e.checked == true){
+                                
+                                const usuario = e.parentElement.parentNode.querySelector('.usuario').innerText
+                                
+                                // CAPTURANDO A POSIÇÃO DO PERFIL QUE SERÁ ATUALIZADO
+                                const indexPerfil = perfisGerenciador.findIndex(perfil => perfil.usuario === usuario)
+
+                                // ATUALIZANDO O PERFIL  
+                                const perfil = perfisGerenciador[indexPerfil]
+
+                                perfis.push(perfil)
+                            }
+                        })
+
+                        if(perfis.length > 0){
+                            setPerfisSelecionadosGerenciador(perfis)
+                            redirecionar(Router, '/trocarsenha')
+                        }else{
+                            window.alert('Selecione ao menos um perfil!')
+                        }
                     }}
                 >
                     <span>Trocar a senha dos perfis</span>

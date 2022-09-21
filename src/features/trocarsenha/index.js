@@ -21,12 +21,14 @@ import { FaYoutube } from 'react-icons/fa'
 import { IoIosSave } from 'react-icons/io'
 import { IoPlay, IoTime } from 'react-icons/io5'
 import { userAgentsMobile } from '../../userAgentsMobile'
+import { usePerfisSelecionadosGerenciador } from '../../providers/perfisSelecionadosGerenciador'
 
 const TrocarSenha = ()=>{
 
     const [ mensagem, setMensagem ] = useState(<Mensagem></Mensagem>)
     const { acessoGerenciador } = useAcessoGerenciador()
     const { configuracoesTrocarSenha, setConfiguracoesTrocarSenha } = useConfiguracoesTrocarSenha()
+    const { perfisSelecionadosGerenciador, setPerfisSelecionadosGerenciador } = usePerfisSelecionadosGerenciador()
     const listaDeUserAgentsMobile = [...new Set(userAgentsMobile)]
     const [ meusLogs, setMeusLogs ] = useState([])
     const [ executando, setExecutando ] = useState(false)
@@ -82,10 +84,6 @@ const TrocarSenha = ()=>{
                                 </Select>
                             </Caixa>
                             <Caixa>
-                                <Etiqueta>Seus perfis</Etiqueta>
-                                <Textarea name='seusPerfis'></Textarea>
-                            </Caixa>
-                            <Caixa>
                                 <Etiqueta>Nova senha</Etiqueta>
                                 <Entrada name='novaSenha' type='text' defaultValue={configuracoesTrocarSenha.novaSenha}/>
                             </Caixa>
@@ -126,7 +124,8 @@ const TrocarSenha = ()=>{
                                 setDisplayVoltar,
                                 setExecutando,
                                 setSenhasAlteradas,
-                                setSenhasNaoAlteradas
+                                setSenhasNaoAlteradas,
+                                perfisSelecionadosGerenciador
                             ) 
                         }}>
                             <span>Iniciar</span>

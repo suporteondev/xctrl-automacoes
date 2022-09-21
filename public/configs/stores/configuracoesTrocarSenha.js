@@ -9,7 +9,6 @@ function configuracoesTrocarSenha(store){
             modoAnonimo: 'sim',
             userAgent: 'aleatorio',
             modoPerfis: 'linha',
-            seusPerfis: '',
             novaSenha: '',
             limparLogin: 'sim',
             esperarEntre: 0
